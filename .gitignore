@@ -1,0 +1,51 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build & Compilation Outputs
+dist
+build
+out
+.turbo
+.tanstack
+
+# SQLite Database Files
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+rynarouter.db
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# Logs & Debug
+logs
+!apps/web/src/components/logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System & IDE Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/*.code-snippets
+
+# TypeScript incremental build metadata
+apps/web/tsconfig.tsbuildinfo
+
+# Lockfiles from alternative package managers (pnpm-lock.yaml is tracked for CI/Docker)
+package-lock.json
+yarn.lock
+bun.lock
+bun.lockb

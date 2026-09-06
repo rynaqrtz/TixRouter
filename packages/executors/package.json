@@ -1,0 +1,43 @@
+{
+    "name": "@rynarouter/executors",
+    "version": "1.0.0",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryna/RYNArouter.git",
+        "directory": "packages/executors"
+    },
+    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "bugs": {
+        "url": "https://github.com/ryna/RYNArouter/issues"
+    },
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist",
+        "assets"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "test": "tsx --test tests/**/*.test.ts",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "@rynarouter/constants": "workspace:*",
+        "@rynarouter/pricing": "workspace:*",
+        "@rynarouter/translator": "workspace:*",
+        "@rynarouter/types": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/node": "^26.4.1",
+        "tsx": "^4.23.13",
+        "typescript": "^5.9.3"
+    }
+}

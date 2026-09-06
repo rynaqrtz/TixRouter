@@ -1,0 +1,33 @@
+{
+    "name": "@rynarouter/constants",
+    "version": "1.0.0",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryna/RYNArouter.git",
+        "directory": "packages/constants"
+    },
+    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "bugs": {
+        "url": "https://github.com/ryna/RYNArouter/issues"
+    },
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "@rynarouter/types": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3"
+    }
+}

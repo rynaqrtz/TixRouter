@@ -1,0 +1,35 @@
+{
+    "name": "@rynarouter/db",
+    "version": "1.0.0",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryna/RYNArouter.git",
+        "directory": "packages/db"
+    },
+    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "bugs": {
+        "url": "https://github.com/ryna/RYNArouter/issues"
+    },
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "@rynarouter/constants": "workspace:*",
+        "@rynarouter/types": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/node": "^26.4.1",
+        "typescript": "^5.9.3"
+    }
+}
