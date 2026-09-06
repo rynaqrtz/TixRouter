@@ -1,0 +1,55 @@
+{
+    "name": "RYNArouter",
+    "version": "1.0.0",
+    "description": "High-performance multi-provider AI Gateway and LLM proxy router built with Hono, TypeScript, and SQLite WAL",
+    "author": "RYNA",
+    "license": "MIT",
+    "type": "module",
+    "private": true,
+    "packageManager": "pnpm@9.15.9",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryna/RYNArouter.git"
+    },
+    "keywords": [
+        "ai-gateway",
+        "llm-proxy",
+        "openai-compatible",
+        "anthropic-compatible",
+        "hono",
+        "sqlite",
+        "antigravity",
+        "gemini",
+        "claude",
+        "chatgpt",
+        "router"
+    ],
+    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "bugs": {
+        "url": "https://github.com/ryna/RYNArouter/issues"
+    },
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "dev": "turbo run dev",
+        "dev:api": "pnpm --filter api dev",
+        "dev:web": "pnpm --filter web dev",
+        "start": "pnpm --filter api start",
+        "build": "turbo run build",
+        "build:api": "pnpm --filter api build",
+        "build:web": "pnpm --filter web build",
+        "clean": "rm -rf apps/*/dist packages/*/dist .turbo node_modules/.cache",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "engines": {
+        "node": ">=22.0.0"
+    },
+    "devDependencies": {
+        "prettier": "^3.9.6",
+        "turbo": "^2.5.0",
+        "typescript": "^5.9.3"
+    }
+}

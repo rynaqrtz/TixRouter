@@ -1,0 +1,255 @@
+import { DatabaseSync } from "node:sqlite";
+import path from "node:path";
+import fs from "node:fs";
+import os from "node:os";
+
+/** Directory holding the RYNArouter database (and backups) in the user's home directory. */
+export const RYNAROUTER_DIR = path.join(os.homedir(), ".rynarouter");
+
+/** Default database location: ~/.rynarouter/rynarouter.db */
+export const DEFAULT_DB_PATH = path.join(RYNAROUTER_DIR, "rynarouter.db");
+
+/** Legacy database locations checked for backward compatibility (relative to cwd). */
+export const LEGACY_DB_LOCATIONS = [
+    path.resolve(process.cwd(), "apps/api/rynarouter.db"),
+    path.resolve(process.cwd(), "rynarouter.db")
+];
+
+function getDatabasePath(): string {
+    // Allow explicit override via DATABASE_PATH environment variable
+    if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
+
+    // Fallback for legacy installations (keep existing for backward compatibility)
+    for (const legacyPath of LEGACY_DB_LOCATIONS) {
+        if (fs.existsSync(legacyPath)) return legacyPath;
+    }
+
+    // Return new default path and create directory if needed
+    return DEFAULT_DB_PATH;
+}
+
+const dbPath = getDatabasePath();
+
+// Ensure parent folder exists if path contains subdirectories
+const dbDir = path.dirname(dbPath);
+if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+}
+
+export const db = new DatabaseSync(dbPath);
+
+// Wait up to 5s instead of failing immediately when another connection
+// (e.g. a parallel test process or the CLI) holds the write lock.
+db.exec("PRAGMA busy_timeout = 5000;");
+
+// Enable WAL mode for high performance concurrency.
+// Retry briefly — concurrent processes initializing on the same DB file
+// (CI runs app test suites in parallel) can transiently hold the lock.
+function execWithRetry(sql: string, attempts = 5): void {
+    for (let i = 0; i < attempts; i++) {
+        try {
+            db.exec(sql);
+            return;
+        } catch (error) {
+            const code = (error as { code?: string }).code;
+            if (code === "SQLITE_BUSY" && i < attempts - 1) {
+                Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 200 * (i + 1));
+                continue;
+            }
+            throw error;
+        }
+    }
+}
+
+execWithRetry("PRAGMA journal_mode = WAL;");
+execWithRetry("PRAGMA foreign_keys = ON;");
+execWithRetry("PRAGMA synchronous = NORMAL;");
+execWithRetry("PRAGMA temp_store = MEMORY;");
+execWithRetry("PRAGMA cache_size = -20000;");
+
+/**
+ * Adds columns to a table if they do not already exist.
+ * Declarative replacement for repeated try/catch ALTER TABLE blocks.
+ */
+function ensureColumns(table: string, columns: Array<{ name: string; definition: string }>): void {
+    const existing = new Set(
+        (db.prepare(`PRAGMA table_info("${table}")`).all() as Array<{ name: string }>).map(
+            (col) => col.name
+        )
+    );
+    for (const col of columns) {
+        if (existing.has(col.name)) continue;
+        try {
+            db.exec(`ALTER TABLE ${table} ADD COLUMN ${col.definition};`);
+            existing.add(col.name);
+        } catch (error) {
+            const message = (error as Error).message || "";
+            if (!message.includes("duplicate column name")) {
+                throw error;
+            }
+        }
+    }
+}
+
+/**
+ * Initialize database schema tables if they do not exist
+ */
+export function initDatabase(): void {
+    // 1. Table for Providers configuration
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS providers (
+            id TEXT PRIMARY KEY,
+            provider_id TEXT NOT NULL,
+            name TEXT NOT NULL,
+            category TEXT NOT NULL,
+            protocol TEXT NOT NULL,
+            base_url TEXT,
+            api_key TEXT,
+            access_token TEXT,
+            refresh_token TEXT,
+            custom_headers TEXT,
+            enabled INTEGER NOT NULL DEFAULT 1,
+            created_at INTEGER NOT NULL
+        );
+    `);
+
+    ensureColumns("providers", [
+        { name: "refresh_token", definition: "refresh_token TEXT" },
+        // Multi-account OAuth binding (e.g. Codex ChatGPT-Account-ID)
+        { name: "account_id", definition: "account_id TEXT" },
+        // Provider-specific metadata (for example Kiro auth method/region/profile ARN)
+        { name: "provider_specific_data", definition: "provider_specific_data TEXT" },
+        // Token expiry tracking
+        { name: "token_expires_at", definition: "token_expires_at INTEGER" },
+        { name: "last_refreshed_at", definition: "last_refreshed_at INTEGER" },
+        // Claude OAuth organization binding
+        { name: "organization_id", definition: "organization_id TEXT" }
+    ]);
+
+    // 2. Table for Client API Keys / Endpoint Keys
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS api_keys (
+            id TEXT PRIMARY KEY,
+            key TEXT UNIQUE NOT NULL,
+            name TEXT NOT NULL,
+            enabled INTEGER NOT NULL DEFAULT 1,
+            rate_limit INTEGER DEFAULT 0,
+            quota_limit INTEGER DEFAULT 0,
+            usage_tokens INTEGER DEFAULT 0,
+            credit_limit REAL DEFAULT 0,
+            usage_cost REAL DEFAULT 0,
+            allowed_models TEXT,
+            created_at INTEGER NOT NULL
+        );
+    `);
+
+    ensureColumns("api_keys", [
+        { name: "allowed_models", definition: "allowed_models TEXT" },
+        { name: "credit_limit", definition: "credit_limit REAL DEFAULT 0" },
+        { name: "usage_cost", definition: "usage_cost REAL DEFAULT 0" }
+    ]);
+
+    // 3. Table for Request Logs & Token Analytics
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS request_logs (
+            id TEXT PRIMARY KEY,
+            api_key_id TEXT,
+            provider_id TEXT NOT NULL,
+            model TEXT NOT NULL,
+            prompt_tokens INTEGER NOT NULL DEFAULT 0,
+            completion_tokens INTEGER NOT NULL DEFAULT 0,
+            total_tokens INTEGER NOT NULL DEFAULT 0,
+            status_code INTEGER NOT NULL,
+            latency_ms INTEGER NOT NULL,
+            created_at INTEGER NOT NULL
+        );
+    `);
+
+    db.exec(`
+        CREATE INDEX IF NOT EXISTS idx_request_logs_created_at
+        ON request_logs(created_at DESC);
+
+        CREATE INDEX IF NOT EXISTS idx_request_logs_provider_created
+        ON request_logs(provider_id, created_at DESC);
+
+        CREATE INDEX IF NOT EXISTS idx_request_logs_provider_model
+        ON request_logs(provider_id, model);
+
+        CREATE INDEX IF NOT EXISTS idx_request_logs_model
+        ON request_logs(model);
+    `);
+
+    // 4. Table for OAuth PKCE sessions (survive server restarts)
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS oauth_sessions (
+            state TEXT PRIMARY KEY,
+            code_verifier TEXT NOT NULL,
+            client_id TEXT NOT NULL,
+            redirect_uri TEXT NOT NULL,
+            created_at INTEGER NOT NULL
+        );
+    `);
+
+    // Ensure analytics columns and fallback audit columns exist if table was created previously
+    ensureColumns("request_logs", [
+        { name: "cached_tokens", definition: "cached_tokens INTEGER NOT NULL DEFAULT 0" },
+        {
+            name: "cache_creation_tokens",
+            definition: "cache_creation_tokens INTEGER NOT NULL DEFAULT 0"
+        },
+        { name: "reasoning_tokens", definition: "reasoning_tokens INTEGER NOT NULL DEFAULT 0" },
+        { name: "estimated_cost", definition: "estimated_cost REAL NOT NULL DEFAULT 0" },
+        { name: "fallback_occurred", definition: "fallback_occurred INTEGER NOT NULL DEFAULT 0" },
+        { name: "fallback_path", definition: "fallback_path TEXT" },
+        { name: "fallback_reason", definition: "fallback_reason TEXT" },
+        { name: "resolved_model", definition: "resolved_model TEXT" }
+    ]);
+
+    // 5. Table for Fallback Rules
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS fallback_rules (
+            id TEXT PRIMARY KEY,
+            source_model TEXT NOT NULL,
+            target_model TEXT NOT NULL,
+            priority INTEGER NOT NULL DEFAULT 1,
+            enabled INTEGER NOT NULL DEFAULT 1,
+            trigger_on_status TEXT,
+            max_retries INTEGER DEFAULT 1,
+            created_at INTEGER NOT NULL
+        );
+    `);
+
+    db.exec(`
+        CREATE INDEX IF NOT EXISTS idx_fallback_rules_priority
+        ON fallback_rules(priority ASC, created_at ASC);
+    `);
+
+    // 6. Table for Global System Settings
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS system_settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        );
+    `);
+
+    // 7. Table for user-added custom models per provider driver
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS custom_models (
+            provider_id TEXT NOT NULL,
+            model_id TEXT NOT NULL,
+            created_at INTEGER NOT NULL,
+            PRIMARY KEY (provider_id, model_id)
+        );
+    `);
+
+    db.exec(`
+        CREATE INDEX IF NOT EXISTS idx_providers_provider_id
+        ON providers(provider_id);
+
+        CREATE INDEX IF NOT EXISTS idx_custom_models_provider
+        ON custom_models(provider_id, created_at ASC);
+    `);
+}
+
+// Auto-run schema initialization
+initDatabase();

@@ -1,0 +1,397 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-heading:
+        "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --color-accent: var(--accent);
+    --color-accent-2: var(--accent-2);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: -0.015em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: -0.025em;
+}
+
+code,
+pre,
+kbd,
+samp,
+.font-mono {
+    font-family: "JetBrains Mono", monospace !important;
+}
+
+@theme inline {
+    --font-sans: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-heading:
+        "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+}
+
+:root {
+    --background: oklch(0.99 0 0);
+    --foreground: oklch(0.13 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.13 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.13 0 0);
+    --primary: oklch(0.13 0 0);
+    --primary-foreground: oklch(0.99 0 0);
+    --secondary: oklch(0.96 0 0);
+    --secondary-foreground: oklch(0.13 0 0);
+    --muted: oklch(0.55 0 0);
+    --muted-foreground: oklch(0.52 0 0);
+    --accent: oklch(0.13 0 0);
+    --accent-2: oklch(0.3 0 0);
+    --surface: oklch(0.99 0 0);
+    --surface-2: oklch(0.96 0 0);
+    --accent-foreground: oklch(0.99 0 0);
+    --destructive: oklch(0.55 0.22 25);
+    --border: oklch(0.91 0 0);
+    --input: oklch(0.91 0 0);
+    --ring: oklch(0.13 0 0);
+    --radius: 0.375rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.13 0 0);
+    --sidebar-primary: oklch(0.13 0 0);
+    --sidebar-primary-foreground: oklch(0.99 0 0);
+    --sidebar-accent: oklch(0.95 0 0);
+    --sidebar-accent-foreground: oklch(0.13 0 0);
+    --sidebar-border: oklch(0.92 0 0);
+    --sidebar-ring: oklch(0.13 0 0);
+
+    /* Beautiful UI Tokens */
+    --canvas: oklch(0.985 0 0);
+    --field: oklch(0.95 0 0);
+    --line: oklch(0.9 0 0);
+    --line-strong: oklch(0.65 0 0);
+    --ink: oklch(0.13 0 0);
+    --ink-2: oklch(0.38 0 0);
+    --ink-3: oklch(0.55 0 0);
+    --hover: oklch(0.94 0 0);
+    --hover-2: oklch(0.91 0 0);
+    --green: #1f7a5f;
+    --green-tint: rgba(31, 122, 95, 0.12);
+}
+
+.dark {
+    --background: oklch(0.11 0 0);
+    --foreground: oklch(0.94 0 0);
+    --card: oklch(0.14 0 0);
+    --card-foreground: oklch(0.94 0 0);
+    --popover: oklch(0.14 0 0);
+    --popover-foreground: oklch(0.94 0 0);
+    --primary: oklch(0.94 0 0);
+    --primary-foreground: oklch(0.11 0 0);
+    --secondary: oklch(0.17 0 0);
+    --secondary-foreground: oklch(0.94 0 0);
+    --muted: oklch(0.55 0 0);
+    --muted-foreground: oklch(0.55 0 0);
+    --accent: oklch(0.94 0 0);
+    --accent-2: oklch(0.7 0 0);
+    --surface: oklch(0.14 0 0);
+    --surface-2: oklch(0.17 0 0);
+    --accent-foreground: oklch(0.11 0 0);
+    --destructive: oklch(0.6 0.2 25);
+    --border: oklch(0.22 0 0);
+    --input: oklch(0.22 0 0);
+    --ring: oklch(0.94 0 0);
+    --sidebar: oklch(0.12 0 0);
+    --sidebar-foreground: oklch(0.94 0 0);
+    --sidebar-primary: oklch(0.94 0 0);
+    --sidebar-primary-foreground: oklch(0.11 0 0);
+    --sidebar-accent: oklch(0.18 0 0);
+    --sidebar-accent-foreground: oklch(0.94 0 0);
+    --sidebar-border: oklch(0.2 0 0);
+    --sidebar-ring: oklch(0.94 0 0);
+
+    /* Beautiful UI Dark Tokens */
+    --canvas: oklch(0.11 0 0);
+    --field: oklch(0.16 0 0);
+    --line: oklch(0.22 0 0);
+    --line-strong: oklch(0.42 0 0);
+    --ink: oklch(0.94 0 0);
+    --ink-2: oklch(0.72 0 0);
+    --ink-3: oklch(0.52 0 0);
+    --hover: oklch(0.18 0 0);
+    --hover-2: oklch(0.22 0 0);
+    --green: #2ecc71;
+    --green-tint: rgba(46, 204, 113, 0.15);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground antialiased selection:bg-foreground selection:text-background;
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+    html {
+        @apply font-sans;
+    }
+    /* Remove spinner arrows from number inputs */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+}
+
+/* Custom scrollbars for clean modern SaaS feel */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: oklch(0.4 0 0 / 25%);
+    border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.4 0 0 / 45%);
+}
+
+/* Fullscreen Circular Ripple Screen Wipe View Transition */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+    z-index: 1;
+}
+::view-transition-new(root) {
+    z-index: 9999;
+}
+.dark::view-transition-old(root) {
+    z-index: 9999;
+}
+.dark::view-transition-new(root) {
+    z-index: 1;
+}
+
+/* Beautiful UI inspired AI-native primitives */
+@keyframes shimmer-text {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes pixel-on {
+    0%,
+    100% {
+        opacity: 0.15;
+    }
+    50% {
+        opacity: 0.95;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-shimmer-text {
+    background-image: linear-gradient(
+        90deg,
+        var(--muted-foreground) 25%,
+        var(--foreground) 50%,
+        var(--muted-foreground) 75%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer-text 1.6s linear infinite;
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes eq-bounce {
+    0%,
+    100% {
+        transform: scaleY(0.25);
+    }
+    50% {
+        transform: scaleY(1);
+    }
+}
+
+/* ==========================================================================
+   Sleek Minimal Monochrome Toast (Black & White Cockpit Design)
+   ========================================================================== */
+[data-sonner-toaster] {
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--font-mono);
+}
+
+[data-sonner-toast] {
+    font-family: var(--font-mono) !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--card) !important;
+    color: var(--foreground) !important;
+    box-shadow:
+        0 10px 30px -5px rgba(0, 0, 0, 0.4),
+        0 4px 12px -2px rgba(0, 0, 0, 0.3) !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
+    align-items: flex-start !important;
+    min-width: 320px !important;
+}
+
+[data-sonner-toast] [data-icon] {
+    margin-top: 2px !important;
+    margin-right: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+[data-sonner-toast] [data-content] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+[data-sonner-toast] [data-title] {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.01em !important;
+}
+
+[data-sonner-toast] [data-description] {
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    color: var(--muted-foreground) !important;
+    line-height: 1.4 !important;
+}
+
+[data-sonner-toast] [data-close-button] {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    left: auto !important;
+    transform: none !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 6px !important;
+    color: var(--muted-foreground) !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    opacity: 0.5 !important;
+    transition: all 0.15s ease !important;
+}
+
+[data-sonner-toast]:hover [data-close-button] {
+    opacity: 1 !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+    background: var(--muted) !important;
+    border-color: var(--border) !important;
+    color: var(--foreground) !important;
+}
+
+/* Concentric Bezel Utilities */
+.bezel-container {
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 0 1px var(--border);
+    backdrop-filter: blur(8px);
+}

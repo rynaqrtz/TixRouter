@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>RYNArouter — AI Gateway Dashboard</title>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.jpg" />
+        <meta name="description" content="RYNArouter — local-first multi-provider AI gateway. One endpoint for OpenAI, Claude, Gemini, DeepSeek and 50+ providers with failover routing, virtual API keys and live telemetry." />
+        <meta name="theme-color" content="#0a0a0f" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="RYNArouter — AI Gateway Dashboard" />
+        <meta property="og:description" content="One endpoint for 50+ AI providers. Failover routing, virtual keys, DeepSeek Free and live telemetry." />
+        <meta property="og:image" content="/logo.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="RYNArouter — AI Gateway Dashboard" />
+        <meta name="twitter:description" content="One endpoint for 50+ AI providers. Failover routing, virtual keys, DeepSeek Free and live telemetry." />
+        <meta name="twitter:image" content="/logo.jpg" />
+
+        <script>
+            (function () {
+                try {
+                    var stored = localStorage.getItem("rynarouter-theme");
+                    var theme =
+                        stored === "light" || stored === "dark"
+                            ? stored
+                            : window.matchMedia("(prefers-color-scheme: light)").matches
+                              ? "light"
+                              : "dark";
+                    var root = document.documentElement;
+                    root.classList.toggle("dark", theme === "dark");
+                    root.style.colorScheme = theme;
+                } catch (e) {}
+            })();
+        </script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
+</html>

@@ -1,0 +1,122 @@
+[
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 3080/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 3070/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 3060/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 1080 Ti Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce GTX 1080 Ti/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 1060 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce GTX 1060/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2080 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 2080/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2070 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 2070/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4090 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 4090/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 4070/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (AMD)",
+    "renderer": "ANGLE (AMD, AMD Radeon RX 6800 XT Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "AMD",
+    "rendererUnmasked": "AMD Radeon RX 6800 XT"
+  },
+  {
+    "vendor": "Google Inc. (AMD)",
+    "renderer": "ANGLE (AMD, AMD Radeon RX 6700 XT Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "AMD",
+    "rendererUnmasked": "AMD Radeon RX 6700 XT"
+  },
+  {
+    "vendor": "Google Inc. (AMD)",
+    "renderer": "ANGLE (AMD, AMD Radeon RX 5700 XT Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "AMD",
+    "rendererUnmasked": "AMD Radeon RX 5700 XT"
+  },
+  {
+    "vendor": "Google Inc. (AMD)",
+    "renderer": "ANGLE (AMD, AMD Radeon RX 580 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "AMD",
+    "rendererUnmasked": "AMD Radeon RX 580"
+  },
+  {
+    "vendor": "Google Inc. (AMD)",
+    "renderer": "ANGLE (AMD, AMD Radeon RX 7900 XTX Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "AMD",
+    "rendererUnmasked": "AMD Radeon RX 7900 XTX"
+  },
+  {
+    "vendor": "Google Inc. (Intel)",
+    "renderer": "ANGLE (Intel, Intel(R) UHD Graphics 630 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "Intel Inc.",
+    "rendererUnmasked": "Intel(R) UHD Graphics 630"
+  },
+  {
+    "vendor": "Google Inc. (Intel)",
+    "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "Intel Inc.",
+    "rendererUnmasked": "Intel(R) Iris(R) Xe Graphics"
+  },
+  {
+    "vendor": "Google Inc. (Intel)",
+    "renderer": "ANGLE (Intel, Intel(R) UHD Graphics 770 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "Intel Inc.",
+    "rendererUnmasked": "Intel(R) UHD Graphics 770"
+  },
+  {
+    "vendor": "Google Inc. (Intel)",
+    "renderer": "ANGLE (Intel, Intel(R) HD Graphics 620 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "Intel Inc.",
+    "rendererUnmasked": "Intel(R) HD Graphics 620"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce MX450 Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce MX450/PCIe/SSE2"
+  },
+  {
+    "vendor": "Google Inc. (NVIDIA)",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3050 Laptop GPU Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendorUnmasked": "NVIDIA Corporation",
+    "rendererUnmasked": "NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2"
+  }
+]

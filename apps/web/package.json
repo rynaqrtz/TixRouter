@@ -1,0 +1,59 @@
+{
+    "name": "web",
+    "version": "1.0.0",
+    "type": "module",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryna/RYNArouter.git",
+        "directory": "apps/web"
+    },
+    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "bugs": {
+        "url": "https://github.com/ryna/RYNArouter/issues"
+    },
+    "license": "MIT",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "lint": "tsc --noEmit",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "@base-ui/react": "^1.8.0",
+        "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
+        "@fontsource/jetbrains-mono": "^5.3.0",
+        "@rynarouter/constants": "workspace:*",
+        "@rynarouter/types": "workspace:*",
+        "@tanstack/react-query": "^5.102.8",
+        "@tanstack/react-router": "^1.170.32",
+        "@tanstack/react-table": "^8.21.3",
+        "@xyflow/react": "^12.11.6",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "lucide-react": "^1.41.0",
+        "motion": "^13.2.0",
+        "next-themes": "^0.4.6",
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8",
+        "shadcn": "^4.16.2",
+        "sonner": "^2.0.8",
+        "tailwind-merge": "^3.6.0",
+        "tw-animate-css": "^1.4.0",
+        "zod": "^3.25.76"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.3.3",
+        "@tanstack/router-plugin": "^1.168.35",
+        "@types/react": "^19.2.18",
+        "@types/react-dom": "^19.2.7",
+        "@vitejs/plugin-react": "^4.7.0",
+        "tailwindcss": "^4.3.3",
+        "typescript": "^5.9.3",
+        "vite": "^6.4.3"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "^4.63.1"
+    }
+}

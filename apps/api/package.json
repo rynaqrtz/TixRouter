@@ -1,0 +1,41 @@
+{
+    "name": "api",
+    "version": "1.0.0",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryna/RYNArouter.git",
+        "directory": "apps/api"
+    },
+    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "bugs": {
+        "url": "https://github.com/ryna/RYNArouter/issues"
+    },
+    "license": "MIT",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "build": "tsup",
+        "clean": "rm -rf dist",
+        "start": "node dist/index.js",
+        "test": "tsx --test --test-concurrency=1 tests/**/*.test.ts"
+    },
+    "dependencies": {
+        "@hono/node-server": "^2.1.1",
+        "@hono/zod-validator": "^0.4.3",
+        "@rynarouter/constants": "workspace:*",
+        "@rynarouter/db": "workspace:*",
+        "@rynarouter/executors": "workspace:*",
+        "@rynarouter/pricing": "workspace:*",
+        "@rynarouter/providers": "workspace:*",
+        "@rynarouter/translator": "workspace:*",
+        "@rynarouter/types": "workspace:*",
+        "hono": "^4.13.7",
+        "zod": "^3.25.76"
+    },
+    "devDependencies": {
+        "@types/node": "^26.4.1",
+        "tsup": "^8.5.1",
+        "tsx": "^4.23.13",
+        "typescript": "^5.9.3"
+    }
+}

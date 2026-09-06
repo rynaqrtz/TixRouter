@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "strict": true,
+        "verbatimModuleSyntax": true,
+        "skipLibCheck": true,
+        "types": ["node"],
+        "jsx": "react-jsx",
+        "jsxImportSource": "hono/jsx",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@rynarouter/types": ["../../packages/types/src/index.ts"],
+            "@rynarouter/constants": ["../../packages/constants/src/index.ts"],
+            "@rynarouter/pricing": ["../../packages/pricing/src/index.ts"],
+            "@rynarouter/translator": ["../../packages/translator/src/index.ts"],
+            "@rynarouter/providers": ["../../packages/providers/src/index.ts"],
+            "@rynarouter/executors": ["../../packages/executors/src/index.ts"],
+            "@rynarouter/db": ["../../packages/db/src/index.ts"]
+        },
+        "rootDir": "./src",
+        "outDir": "./dist"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
