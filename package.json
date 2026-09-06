@@ -38,6 +38,7 @@
         "dev:web": "pnpm --filter web dev",
         "start": "pnpm --filter api start",
         "build": "turbo run build",
+        "test": "turbo run test",
         "build:api": "pnpm --filter api build",
         "build:web": "pnpm --filter web build",
         "clean": "rm -rf apps/*/dist packages/*/dist .turbo node_modules/.cache",
