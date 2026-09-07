@@ -4,8 +4,8 @@ import {
     AnthropicToOpenAIRequest,
     OpenAIToAnthropicResponse,
     OpenAIToAnthropicStream
-} from "@rynarouter/translator";
-import type { AnthropicMessageRequest } from "@rynarouter/types";
+} from "@tixrouter/translator";
+import type { AnthropicMessageRequest } from "@tixrouter/types";
 import { ChatLogic } from "@/logic/chat.logic.js";
 import { AnthropicErr, FormatAnthropicErrorPayload, Ok } from "@/utils/response.js";
 import { GetApiKeyRow } from "@/middleware/ModelAccess.js";

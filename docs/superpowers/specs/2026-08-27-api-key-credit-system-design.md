@@ -1,6 +1,6 @@
 # Design Specification: Virtual API Key Credit & Balance System
 
-- **Author**: Antigravity & RYNA
+- **Author**: Antigravity & TixRouter
 - **Date**: 2026-08-27
 - **Status**: Approved
 
@@ -8,11 +8,11 @@
 
 ## 1. Overview & Goals
 
-Allow RYNArouter administrators to monetize and allocate prepaid spending balances (Credits in USD) to virtual API keys (`ryna-live-*`). 
+Allow TixRouter administrators to monetize and allocate prepaid spending balances (Credits in USD) to virtual API keys (`tix-live-*`). 
 
 ### Key Capabilities
 1. **Prepaid Credit Limit & Tracking**: Virtual keys can be configured with an optional credit limit in USD (e.g. `$5.00`, `$10.00`) or left as Unlimited.
-2. **Live Usage Deduction**: Each request completed through `/v1/chat/completions` (OpenAI format) or `/v1/messages` (Anthropic format) computes exact inference cost via `@rynarouter/pricing` (`calculateCostFromTokens`) and accumulates `usage_cost` (and `usage_tokens`).
+2. **Live Usage Deduction**: Each request completed through `/v1/chat/completions` (OpenAI format) or `/v1/messages` (Anthropic format) computes exact inference cost via `@tixrouter/pricing` (`calculateCostFromTokens`) and accumulates `usage_cost` (and `usage_tokens`).
 3. **Pre-flight Quota & Balance Guards**: Rejects requests with HTTP 402 (`insufficient_quota` / `insufficient_credit`) when credit balance is exhausted, and HTTP 429 (`quota_exceeded`) when token quota is exceeded.
 4. **Add Credit Action**: Admin can top up / add balance directly to any key via a dedicated popup modal (`AddCreditDialog`) and backend endpoint (`POST /v1/keys/:id/credit`).
 5. **Dashboard Visibility**: Displays current remaining balance, lifetime cost consumed, progress bar, and credit limits inside `KeyTable`, `CreateKeyDialog`, and `KeySecretModal`.

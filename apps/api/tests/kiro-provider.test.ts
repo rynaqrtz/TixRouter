@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { deleteProviderDB, getProviderByIdDB, upsertProviderDB } from "@rynarouter/db";
-import type { ProviderConfig } from "@rynarouter/types";
+import { deleteProviderDB, getProviderByIdDB, upsertProviderDB } from "@tixrouter/db";
+import type { ProviderConfig } from "@tixrouter/types";
 
 const createdIds: string[] = [];
 

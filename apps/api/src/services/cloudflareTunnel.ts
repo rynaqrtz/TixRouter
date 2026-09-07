@@ -4,7 +4,7 @@ import fs from "node:fs";
 import https from "node:https";
 import os from "node:os";
 import path from "node:path";
-import { getSettingDB, setSettingDB } from "@rynarouter/db";
+import { getSettingDB, setSettingDB } from "@tixrouter/db";
 
 const SETTING_TUNNEL_TOKEN = "cloudflare_tunnel_token";
 const SETTING_TUNNEL_DOMAIN = "cloudflare_tunnel_domain";
@@ -202,7 +202,7 @@ function httpsDownloadFile(
     return new Promise((resolve, reject) => {
         const req = https.get(
             url,
-            { headers: { "User-Agent": "rynarouter-cloudflared-installer" } },
+            { headers: { "User-Agent": "tixrouter-cloudflared-installer" } },
             (res) => {
                 const status = res.statusCode ?? 0;
                 if (status >= 300 && status < 400 && res.headers.location && redirects < 5) {

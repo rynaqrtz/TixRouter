@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import { api } from "@/lib/api";
-import type { RequestLogEntry } from "@rynarouter/types";
+import type { RequestLogEntry } from "@tixrouter/types";
 import type { ListResponse } from "@/lib/types";
 import { LogsSkeleton } from "@/components/skeletons";
 import { useLogs } from "@/hooks/useLogs";

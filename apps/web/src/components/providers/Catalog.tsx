@@ -1,6 +1,6 @@
-import { CATEGORY_DESCRIPTIONS, CATEGORY_LABELS } from "@rynarouter/constants";
+import { CATEGORY_DESCRIPTIONS, CATEGORY_LABELS } from "@tixrouter/constants";
 import { Search } from "lucide-react";
-import type { ProviderDefinition } from "@rynarouter/types";
+import type { ProviderDefinition } from "@tixrouter/types";
 import { ProviderRow } from "./ProviderRow";
 import { ProviderCard } from "./ProviderCard";
 

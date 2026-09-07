@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { isKnownProvider, providerById, BAI_PROVIDER } from "@rynarouter/constants";
+import { isKnownProvider, providerById, BAI_PROVIDER } from "@tixrouter/constants";
 
 describe("BAI Provider Constants", () => {
     it("is registered as a known provider", () => {

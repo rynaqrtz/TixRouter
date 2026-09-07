@@ -1,6 +1,6 @@
-import { providerTypeForAlias } from "@rynarouter/constants";
-import { getAllProvidersDB, updateProviderTokensDB, getProviderByIdDB } from "@rynarouter/db";
-import type { AIProvider, ProviderConfig } from "@rynarouter/types";
+import { providerTypeForAlias } from "@tixrouter/constants";
+import { getAllProvidersDB, updateProviderTokensDB, getProviderByIdDB } from "@tixrouter/db";
+import type { AIProvider, ProviderConfig } from "@tixrouter/types";
 import { authProviderHandlers } from "@/services/authHandlers.js";
 import { registry } from "./registry.js";
 

@@ -5,8 +5,8 @@ import { ChatRouter } from "../src/routes/v1/chat.js";
 import { ModelsRouter } from "../src/routes/v1/models.js";
 import { ProvidersRouter } from "../src/routes/v1/providers.js";
 import { registry } from "../src/services/registry.js";
-import type { AIProvider, ChatCompletionRequest, ChatCompletionResponse } from "@rynarouter/types";
-import { deleteLogsByProviderDB } from "@rynarouter/db";
+import type { AIProvider, ChatCompletionRequest, ChatCompletionResponse } from "@tixrouter/types";
+import { deleteLogsByProviderDB } from "@tixrouter/db";
 
 test("OpenCode Compatibility - supports both /v1 and root endpoints", async (t) => {
     const mockProviderId = "opencode_mock_provider";
@@ -27,7 +27,7 @@ test("OpenCode Compatibility - supports both /v1 and root endpoints", async (t) 
                         index: 0,
                         message: {
                             role: "assistant",
-                            content: "RYNArouter siap digunakan!"
+                            content: "TixRouter siap digunakan!"
                         },
                         finish_reason: "stop"
                     }
@@ -86,14 +86,14 @@ test("OpenCode Compatibility - supports both /v1 and root endpoints", async (t) 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer sk-local-rynarouter"
+                Authorization: "Bearer sk-local-tixrouter"
             },
             body: JSON.stringify({
                 model: mockModelId,
                 messages: [
                     {
                         role: "user",
-                        content: "Halo RYNArouter, tolong jawab singkat 'RYNArouter siap digunakan!'"
+                        content: "Halo TixRouter, tolong jawab singkat 'TixRouter siap digunakan!'"
                     }
                 ]
             })
@@ -101,7 +101,7 @@ test("OpenCode Compatibility - supports both /v1 and root endpoints", async (t) 
     );
     assert.equal(chatRes.status, 200);
     const chatBody = (await chatRes.json()) as ChatCompletionResponse;
-    assert.equal(chatBody.choices[0].message.content, "RYNArouter siap digunakan!");
+    assert.equal(chatBody.choices[0].message.content, "TixRouter siap digunakan!");
 
     // 4. Test POST /chat/completions (root level)
     const rootChatRes = await app.fetch(
@@ -109,14 +109,14 @@ test("OpenCode Compatibility - supports both /v1 and root endpoints", async (t) 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer sk-local-rynarouter"
+                Authorization: "Bearer sk-local-tixrouter"
             },
             body: JSON.stringify({
                 model: mockModelId,
                 messages: [
                     {
                         role: "user",
-                        content: "Halo RYNArouter root endpoint"
+                        content: "Halo TixRouter root endpoint"
                     }
                 ]
             })
@@ -124,5 +124,5 @@ test("OpenCode Compatibility - supports both /v1 and root endpoints", async (t) 
     );
     assert.equal(rootChatRes.status, 200);
     const rootChatBody = (await rootChatRes.json()) as ChatCompletionResponse;
-    assert.equal(rootChatBody.choices[0].message.content, "RYNArouter siap digunakan!");
+    assert.equal(rootChatBody.choices[0].message.content, "TixRouter siap digunakan!");
 });

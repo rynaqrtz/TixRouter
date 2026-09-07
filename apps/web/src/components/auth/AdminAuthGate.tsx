@@ -46,10 +46,10 @@ function AdminAuthForm({ setupRequired, onAuthenticated }: AdminAuthFormProps) {
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                        RYNA control plane
+                        TixRouter control plane
                     </p>
                     <CardTitle>
-                        {setupRequired ? "Create your admin password" : "Sign in to RYNA"}
+                        {setupRequired ? "Create your admin password" : "Sign in to TixRouter"}
                     </CardTitle>
                     <CardDescription>
                         {setupRequired
@@ -129,7 +129,7 @@ function AuthUnavailableScreen({ onRetry }: { onRetry: () => void }) {
                 <CardHeader>
                     <CardTitle>Gateway unavailable</CardTitle>
                     <CardDescription>
-                        RYNA could not verify the admin session. Make sure the API is running and
+                        TixRouter could not verify the admin session. Make sure the API is running and
                         try again.
                     </CardDescription>
                 </CardHeader>

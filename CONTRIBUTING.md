@@ -1,6 +1,6 @@
-# Contributing to RYNArouter
+# Contributing to TixRouter
 
-Thank you for your interest in contributing to **RYNArouter**! We welcome contributions from the community to help make RYNArouter the most reliable, high-performance, multi-provider AI gateway.
+Thank you for your interest in contributing to **TixRouter**! We welcome contributions from the community to help make TixRouter the most reliable, high-performance, multi-provider AI gateway.
 
 ---
 
@@ -23,8 +23,8 @@ Please treat everyone with respect, kindness, and professionalism. Constructive 
 1. **Fork and Clone**:
 
     ```bash
-    git clone https://github.com/<your-username>/RYNArouter.git
-    cd RYNArouter
+    git clone https://github.com/<your-username>/TixRouter.git
+    cd TixRouter
     ```
 
 2. **Install Dependencies**:
@@ -64,7 +64,7 @@ pnpm exec prettier --write "**/*.{ts,tsx,json,md,css}"
 ## 📂 Project Architecture
 
 ```
-RYNArouter/
+TixRouter/
 ├── apps/
 │   ├── api/             # Hono REST API server & OAuth controllers
 │   └── web/             # Modern Dashboard UI (TanStack Router, React 19)
@@ -109,4 +109,4 @@ _Example:_ `feat(quota): add live quota tracking for upstream accounts`
 
 ## 📄 License
 
-By contributing to RYNArouter, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+By contributing to TixRouter, you agree that your contributions will be licensed under the [MIT License](LICENSE).

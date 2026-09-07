@@ -3,14 +3,14 @@ import {
     providerAlias,
     providerBaseId,
     providerTypeForAlias
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import type {
     AIProvider,
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { CircuitBreaker, circuitBreaker as defaultCircuitBreaker } from "./circuitBreaker.js";
 
 const DEFAULT_MAX_TOKENS_CAP = 4096;

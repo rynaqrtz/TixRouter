@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import type { CreateAPIKeyZod, APIKeyZod, UpdateAPIKeyZod } from "@rynarouter/types";
+import type { CreateAPIKeyZod, APIKeyZod, UpdateAPIKeyZod } from "@tixrouter/types";
 
 export function useKeys() {
     const [keys, setKeys] = useState<APIKeyZod[]>([]);

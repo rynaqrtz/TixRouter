@@ -1,16 +1,16 @@
 {
     "name": "web",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "type": "module",
     "private": true,
     "repository": {
         "type": "git",
-        "url": "https://github.com/ryna/RYNArouter.git",
+        "url": "https://github.com/rynaqrtz/TixRouter.git",
         "directory": "apps/web"
     },
-    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "homepage": "https://github.com/rynaqrtz/TixRouter#readme",
     "bugs": {
-        "url": "https://github.com/ryna/RYNArouter/issues"
+        "url": "https://github.com/rynaqrtz/TixRouter/issues"
     },
     "license": "MIT",
     "scripts": {
@@ -24,8 +24,8 @@
         "@base-ui/react": "^1.8.0",
         "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
         "@fontsource/jetbrains-mono": "^5.3.0",
-        "@rynarouter/constants": "workspace:*",
-        "@rynarouter/types": "workspace:*",
+        "@tixrouter/constants": "workspace:*",
+        "@tixrouter/types": "workspace:*",
         "@tanstack/react-query": "^5.102.8",
         "@tanstack/react-router": "^1.170.32",
         "@tanstack/react-table": "^8.21.3",

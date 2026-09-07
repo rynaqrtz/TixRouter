@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Check, Copy, KeyRound, Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import type { APIKeyZod } from "@rynarouter/types";
+import type { APIKeyZod } from "@tixrouter/types";
 import { formatCompactNumber } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -47,7 +47,7 @@ export function KeyTable({
                 </div>
                 <h3 className="text-sm font-semibold text-foreground">No API Keys</h3>
                 <p className="mt-1 max-w-sm text-xs text-muted-foreground leading-relaxed">
-                    Generate an API key to authenticate requests against RYNA from your client
+                    Generate an API key to authenticate requests against TixRouter from your client
                     SDKs and applications.
                 </p>
                 <Button

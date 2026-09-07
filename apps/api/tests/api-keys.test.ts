@@ -6,7 +6,7 @@ import {
     getAllAPIKeysDB,
     getAPIKeyByKeyDB,
     incrementAPIKeyUsageDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 
 const createdIds: string[] = [];
 
@@ -16,7 +16,7 @@ afterEach(() => {
     }
 });
 
-test("createAPIKeyDB stores a new virtual key with prefix ryna-live-", () => {
+test("createAPIKeyDB stores a new virtual key with prefix tix-live-", () => {
     const created = createAPIKeyDB({
         name: "Test Client Key",
         rate_limit: 60,
@@ -26,7 +26,7 @@ test("createAPIKeyDB stores a new virtual key with prefix ryna-live-", () => {
     createdIds.push(created.id);
 
     assert.ok(created.id.startsWith("key_"));
-    assert.ok(created.key.startsWith("ryna-live-"));
+    assert.ok(created.key.startsWith("tix-live-"));
     assert.equal(created.name, "Test Client Key");
     assert.equal(created.enabled, true);
     assert.equal(created.rate_limit, 60);

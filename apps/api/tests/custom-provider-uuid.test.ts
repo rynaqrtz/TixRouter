@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { deleteProviderDB, getProviderByIdDB, getAllProvidersDB } from "@rynarouter/db";
-import { providerBaseId } from "@rynarouter/constants";
+import { deleteProviderDB, getProviderByIdDB, getAllProvidersDB } from "@tixrouter/db";
+import { providerBaseId } from "@tixrouter/constants";
 import { ProvidersLogic } from "../src/logic/providers.logic.js";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;

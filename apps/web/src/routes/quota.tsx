@@ -19,7 +19,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { ProviderIcon } from "@/components/ProviderIcon";
 import { cn } from "@/lib/utils";
 import { useQuota } from "@/hooks/useQuota";
-import type { LiveModelQuotaItem, ProviderUsageMetric } from "@rynarouter/types";
+import type { LiveModelQuotaItem, ProviderUsageMetric } from "@tixrouter/types";
 
 export const Route = createFileRoute("/quota")({
     staticData: { title: "Quotas & Limits" },

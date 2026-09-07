@@ -33,7 +33,7 @@ async function updateModelsDevData() {
     console.log(`[pricing] Fetching latest models from ${MODELS_DEV_URL}...`);
     const response = await fetch(MODELS_DEV_URL, {
         headers: {
-            "User-Agent": "RYNArouter-Pricing-Updater/1.0"
+            "User-Agent": "TixRouter-Pricing-Updater/1.0"
         }
     });
 

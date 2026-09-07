@@ -1,5 +1,5 @@
-import { CATEGORY_DESCRIPTIONS, CATEGORY_LABELS, CATEGORY_ORDER } from "@rynarouter/constants";
-import type { ProviderCategory, ProviderDefinition } from "@rynarouter/types";
+import { CATEGORY_DESCRIPTIONS, CATEGORY_LABELS, CATEGORY_ORDER } from "@tixrouter/constants";
+import type { ProviderCategory, ProviderDefinition } from "@tixrouter/types";
 import { getConnectedCount } from "@/utils/provider.utils";
 
 export interface CatalogSummary {

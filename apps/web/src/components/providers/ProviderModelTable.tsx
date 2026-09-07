@@ -22,7 +22,7 @@ import {
     Trash2,
     X
 } from "lucide-react";
-import type { ModelObject } from "@rynarouter/types";
+import type { ModelObject } from "@tixrouter/types";
 import {
     Table,
     TableHeader,

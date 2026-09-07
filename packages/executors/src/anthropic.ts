@@ -1,4 +1,4 @@
-import { ANTHROPIC_BASE_URL } from "@rynarouter/constants";
+import { ANTHROPIC_BASE_URL } from "@tixrouter/constants";
 import type {
     AIProvider,
     AnthropicMessageResponse,
@@ -6,12 +6,12 @@ import type {
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import {
     AnthropicEventToOpenAIChunk,
     AnthropicToOpenAIResponse,
     OpenAIToAnthropicRequest
-} from "@rynarouter/translator";
+} from "@tixrouter/translator";
 import { parseDataLine, streamLines } from "./base.js";
 
 export interface AnthropicExecutorOptions {

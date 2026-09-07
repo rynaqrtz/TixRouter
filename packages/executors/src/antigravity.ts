@@ -2,14 +2,14 @@ import {
     ANTIGRAVITY_BASE_URL,
     ANTIGRAVITY_IDE_BASE_URL,
     ANTIGRAVITY_MODELS
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import type {
     AIProvider,
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import {
     ANTIGRAVITY_IDE_USER_AGENT,
     accumulateChunks,
@@ -27,7 +27,7 @@ import {
     parseRetryFromErrorMessage,
     resolveAntigravityOutputCap,
     stripBlacklistedRequest
-} from "@rynarouter/translator";
+} from "@tixrouter/translator";
 import { OpenAIExecutor } from "./openai.js";
 import { parseDataLine, streamLines } from "./base.js";
 import { fetchWithRetry } from "./retry.js";
@@ -46,7 +46,7 @@ export interface AntigravityExecutorOptions {
 
 /**
  * ============================================================================
- * RYNArouter Antigravity Executor
+ * TixRouter Antigravity Executor
  *
  * Inspired by & ported from OmniRoute (open-sse/executors/antigravity)
  * Upstream Reference: https://github.com/diegosouzapw/OmniRoute

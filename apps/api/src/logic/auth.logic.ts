@@ -3,17 +3,17 @@ import {
     CODEBUDDY_CN_BASE_URL,
     CODEBUDDY_CN_DOMAIN,
     CODEBUDDY_CN_USER_AGENT
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import {
     cleanupExpiredOAuthSessionsDB,
     deleteOAuthSessionDB,
     getOAuthSessionDB,
     saveOAuthSessionDB,
     upsertProviderDB
-} from "@rynarouter/db";
-import { CodeBuddyCNOAuth, CodeBuddyOAuth, generatePKCE, QoderOAuth } from "@rynarouter/providers";
-import { CodeBuddyExecutor, QoderExecutor } from "@rynarouter/executors";
-import type { ProviderConfig } from "@rynarouter/types";
+} from "@tixrouter/db";
+import { CodeBuddyCNOAuth, CodeBuddyOAuth, generatePKCE, QoderOAuth } from "@tixrouter/providers";
+import { CodeBuddyExecutor, QoderExecutor } from "@tixrouter/executors";
+import type { ProviderConfig } from "@tixrouter/types";
 import { registry } from "@/services/registry.js";
 import {
     AuthPollStatus,
@@ -22,10 +22,10 @@ import {
     type OAuthLoginParams,
     type OAuthLoginResult,
     type TokenImportParams
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { AuthHandlers } from "@/services/authHandlers.js";
 
-export type { OAuthLoginParams, OAuthLoginResult, TokenImportParams } from "@rynarouter/types";
+export type { OAuthLoginParams, OAuthLoginResult, TokenImportParams } from "@tixrouter/types";
 
 const PKCE_SESSION_MAX_AGE_MS = 15 * 60 * 1000;
 

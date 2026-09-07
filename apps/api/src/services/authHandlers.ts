@@ -16,7 +16,7 @@ import {
     SEEKAI_BASE_URL,
     TABITOKEN_BASE_URL,
     TOKENROUTER_BASE_URL
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import {
     AntigravityExecutor,
     AnthropicExecutor,
@@ -30,7 +30,7 @@ import {
     SeekAIExecutor,
     TabiTokenExecutor,
     TokenRouterExecutor
-} from "@rynarouter/executors";
+} from "@tixrouter/executors";
 import {
     AntigravityOAuth,
     ClaudeOAuth,
@@ -38,8 +38,8 @@ import {
     CodeBuddyOAuth,
     OpenAICodexOAuth,
     QoderOAuth
-} from "@rynarouter/providers";
-import type { AuthProviderHandler } from "@rynarouter/types";
+} from "@tixrouter/providers";
+import type { AuthProviderHandler } from "@tixrouter/types";
 
 const openaiCodex: AuthProviderHandler = {
     providerId: "openai_codex",

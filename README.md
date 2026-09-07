@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://cdn.ryna.my.id/api/cdn/c36ac2c3354feab87741187e9d040099?raw=1" alt="RYNArouter banner" width="100%" />
+  <img src="docs/assets/tixrouter-logo.jpg" alt="TixRouter banner" width="100%" />
 </p>
 
-<h1 align="center">RYNArouter</h1>
+<h1 align="center">TixRouter</h1>
 
 <p align="center">
   <strong>Self-hosted multi-provider AI gateway. One endpoint, every model, free tiers included.</strong><br/>
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.1.0-blue" alt="version 1.1.0" />
+  <img src="https://img.shields.io/badge/version-1.2.0-blue" alt="version 1.2.0" />
   <img src="https://img.shields.io/badge/node-%E2%89%A522-green" alt="node >= 22" />
   <img src="https://img.shields.io/badge/license-MIT-orange" alt="MIT" />
   <img src="https://img.shields.io/badge/providers-57%2B-purple" alt="57+ providers" />
@@ -19,17 +19,17 @@
 
 ---
 
-## Why RYNArouter
+## Why TixRouter
 
-Every AI tool wants a different endpoint, a different key, a different bill. RYNArouter collapses all of it into **one OpenAI-compatible endpoint on your own hardware** — with your keys, your logs, your rules.
+Every AI tool wants a different endpoint, a different key, a different bill. TixRouter collapses all of it into **one OpenAI-compatible endpoint on your own hardware** — with your keys, your logs, your rules.
 
 ```
 Claude Code · Cline · Codex · any OpenAI SDK
                  │
-                 │  http://localhost:3000/v1  (one virtual key: ryna-live-…)
+                 │  http://localhost:3000/v1  (one virtual key: tix-live-…)
                  ▼
           ┌───────────────┐
-          │  RYNArouter   │  failover · pools · cache · token saver
+          │  TixRouter   │  failover · pools · cache · token saver
           └───────────────┘
                  │
     ┌────────────┼──────────────┬─────────────────┐
@@ -39,7 +39,7 @@ Claude Code · Cline · Codex · any OpenAI SDK
  Ollama      57+ more       …                no API key needed
 ```
 
-| | OpenRouter / 9Router | RYNArouter |
+| | OpenRouter / 9Router | TixRouter |
 |---|---|---|
 | Hosting | Their cloud | **Self-hosted** (localhost / Docker) |
 | API keys | They manage | You bring your own / OAuth / **free tiers** |
@@ -48,7 +48,7 @@ Claude Code · Cline · Codex · any OpenAI SDK
 
 ## ✨ Highlights
 
-- **One endpoint, 57+ providers** — OpenAI, Anthropic, Gemini, Groq, DeepSeek, Mistral, Ollama, and many more behind a single `/v1` API with virtual keys (`ryna-live-…`), quotas, and per-key usage tracking.
+- **One endpoint, 57+ providers** — OpenAI, Anthropic, Gemini, Groq, DeepSeek, Mistral, Ollama, and many more behind a single `/v1` API with virtual keys (`tix-live-…`), quotas, and per-key usage tracking.
 - **Built-in free tiers, zero keys**
   - `dsfree/*` — DeepSeek (V3, R1, V4-flash, V4-pro) via device login: email+password, vision upload, automatic 401 re-login, **multi-account pool** with 60s cooldown rotation.
   - `mfree/mistral-large` — Mistral Le Chat anonymous access, streaming, web search.
@@ -66,8 +66,8 @@ Claude Code · Cline · Codex · any OpenAI SDK
 ### 1. Run it
 
 ```bash
-git clone https://github.com/rynaqrtz/RYNArouter.git
-cd RYNArouter
+git clone https://github.com/rynaqrtz/TixRouter.git
+cd TixRouter
 pnpm install
 pnpm build
 pnpm --filter api start
@@ -76,7 +76,7 @@ pnpm --filter api start
 Or with Docker:
 
 ```bash
-docker run -d -p 3000:3000 -v ryna-data:/data ghcr.io/rynaqrtz/rynarouter:latest
+docker run -d -p 3000:3000 -v ryna-data:/data ghcr.io/rynaqrtz/tixrouter:latest
 ```
 
 The gateway is now at `http://localhost:3000/v1`, dashboard at `http://localhost:3000`.
@@ -87,9 +87,9 @@ Point any OpenAI-compatible tool at your gateway:
 
 | Tool | Base URL | Key |
 |---|---|---|
-| Claude Code | `http://localhost:3000` | your `ryna-live-…` key |
-| Codex CLI | `http://localhost:3000/v1` | your `ryna-live-…` key |
-| Cline / any SDK | `http://localhost:3000/v1` | your `ryna-live-…` key |
+| Claude Code | `http://localhost:3000` | your `tix-live-…` key |
+| Codex CLI | `http://localhost:3000/v1` | your `tix-live-…` key |
+| Cline / any SDK | `http://localhost:3000/v1` | your `tix-live-…` key |
 
 The dashboard's **CLI Tools** page generates copy-paste configs for each tool.
 
@@ -119,12 +119,12 @@ Manage everything from the dashboard (Providers, Settings, Combo, Keys):
 | Virtual keys + quotas | Dashboard → Keys |
 | Expose via Cloudflare tunnel | Settings → Tunnel |
 
-Environment variables (see `.env.example`): `PORT`, `RYNA_DATA_DIR`, and friends.
+Environment variables (see `.env.example`): `PORT`, `TixRouter_DATA_DIR`, and friends.
 
 ## 📦 Project structure
 
 ```
-RYNArouter/
+TixRouter/
 ├── apps/
 │   ├── api/        Hono 4 gateway + admin API (node:sqlite, Zod)
 │   └── web/        React 19 dashboard (TanStack Router/Query, Tailwind v4)
@@ -172,5 +172,5 @@ PRs are welcome — read [AGENTS.md](AGENTS.md) first so your code matches the h
 [MIT](LICENSE) — free as in speech, and as in the free tiers.
 
 <p align="center">
-  <img src="https://cdn.ryna.my.id/api/cdn/1fe98c4d46ce8f9a7e05b88d1b313e8d?raw=1" alt="RYNArouter" width="64" />
+  <img src="docs/assets/tixrouter-logo.jpg" alt="TixRouter" width="64" />
 </p>

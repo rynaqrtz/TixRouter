@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { Hono } from "hono";
-import { AnthropicMessageRequestSchema, ChatCompletionRequestSchema } from "@rynarouter/types";
+import { AnthropicMessageRequestSchema, ChatCompletionRequestSchema } from "@tixrouter/types";
 import { CreateBodyLimitMiddleware, MAX_BODY_BYTES } from "../src/middleware/BodyLimit.js";
 import { ValidateJson } from "../src/middleware/Validation.js";
 import { IsPrivateIpAddress } from "../src/utils/ssrf.js";
@@ -130,7 +130,7 @@ test("SSRF: private, loopback, link-local, CGNAT, and multicast addresses are bl
 });
 
 test("messages route rejects chunked oversized bodies with 413 (no Content-Length trust)", async () => {
-    const { setRequireApiKeyDB } = await import("@rynarouter/db");
+    const { setRequireApiKeyDB } = await import("@tixrouter/db");
     setRequireApiKeyDB(false);
     const { MessagesRouter } = await import("../src/routes/v1/messages.js");
     const app = new Hono();

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Key, X, Eye, EyeOff, Loader2, Plug, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
-import type { ProviderProtocol } from "@rynarouter/types";
+import type { ProviderProtocol } from "@tixrouter/types";
 import {
     Dialog,
     DialogContent,
@@ -144,7 +144,7 @@ export function ConnectionForm({
                     <DialogTitle className="sr-only">Add API Key for {providerName}</DialogTitle>
                     <DialogDescription className="text-xs text-[var(--ink-3)]">
                         Masukkan API Key / Access Token untuk menghubungkan {providerName} ke
-                        RYNA, lalu uji koneksinya sebelum menyimpan.
+                        TixRouter, lalu uji koneksinya sebelum menyimpan.
                     </DialogDescription>
                 </DialogHeader>
 

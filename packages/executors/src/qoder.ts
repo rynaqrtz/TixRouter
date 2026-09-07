@@ -14,19 +14,19 @@ import {
     QODER_MODEL_ALIASES,
     QODER_RSA_PUBLIC_KEY,
     QODER_USERINFO_URL
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import type {
     AIProvider,
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { parseDataLine, streamLines } from "./base.js";
 
 /**
  * ============================================================================
- * RYNArouter Qoder Executor
+ * TixRouter Qoder Executor
  *
  * Inspired by & ported from OmniRoute (open-sse/executors/qoder & services/qoder*)
  * Upstream Reference: https://github.com/diegosouzapw/OmniRoute

@@ -146,7 +146,7 @@ export function AppearanceSettings({
             <div className="rounded-lg border border-border/60 bg-muted/20 p-3.5 flex items-start gap-3">
                 <Type className="size-4 text-muted-foreground shrink-0 mt-0.5" />
                 <div className="text-[11px] text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">JetBrains Mono Engine:</strong> RYNA uses
+                    <strong className="text-foreground">JetBrains Mono Engine:</strong> TixRouter uses
                     monospaced typography throughout the operational cockpit for maximum visual
                     alignment of tokens, hashes, JSON payloads, and timestamps.
                 </div>

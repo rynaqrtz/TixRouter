@@ -1,9 +1,9 @@
 import type { Context, MiddlewareHandler } from "hono";
-import type { APIKeyZod } from "@rynarouter/types";
+import type { APIKeyZod } from "@tixrouter/types";
 import { Err, FormatAnthropicErrorPayload } from "@/utils/response.js";
 
 function NormalizeModelId(model: string): string {
-    return model.replace(/^rynarouter\//, "");
+    return model.replace(/^tixrouter\//, "");
 }
 
 export function IsModelAllowed(

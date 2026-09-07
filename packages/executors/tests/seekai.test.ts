@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import type { ChatCompletionRequest } from "@rynarouter/types";
+import type { ChatCompletionRequest } from "@tixrouter/types";
 import { SeekAIExecutor } from "../src/seekai.js";
 
 const originalFetch = globalThis.fetch;

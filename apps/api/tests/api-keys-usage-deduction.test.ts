@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@rynarouter/db";
+import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@tixrouter/db";
 import { ChatLogic } from "@/logic/chat.logic.js";
 import { registry } from "@/services/registry.js";
 

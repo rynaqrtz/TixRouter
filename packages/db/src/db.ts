@@ -3,28 +3,42 @@ import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
 
-/** Directory holding the RYNArouter database (and backups) in the user's home directory. */
-export const RYNAROUTER_DIR = path.join(os.homedir(), ".rynarouter");
+export const TIXROUTER_DIR = path.join(os.homedir(), ".tixrouter");
+export const DEFAULT_DB_PATH = path.join(TIXROUTER_DIR, "tixrouter.db");
 
-/** Default database location: ~/.rynarouter/rynarouter.db */
-export const DEFAULT_DB_PATH = path.join(RYNAROUTER_DIR, "rynarouter.db");
-
-/** Legacy database locations checked for backward compatibility (relative to cwd). */
 export const LEGACY_DB_LOCATIONS = [
     path.resolve(process.cwd(), "apps/api/rynarouter.db"),
     path.resolve(process.cwd(), "rynarouter.db")
 ];
 
-function getDatabasePath(): string {
-    // Allow explicit override via DATABASE_PATH environment variable
-    if (process.env.DATABASE_PATH) return process.env.DATABASE_PATH;
+const LEGACY_HOME_DIR = path.join(os.homedir(), ".rynarouter");
+const LEGACY_DB_NAME = "rynarouter.db";
 
-    // Fallback for legacy installations (keep existing for backward compatibility)
+function migrateLegacyHomeDir(): void {
+    if (fs.existsSync(LEGACY_HOME_DIR) && !fs.existsSync(TIXROUTER_DIR)) {
+        fs.renameSync(LEGACY_HOME_DIR, TIXROUTER_DIR);
+    }
+}
+
+function migrateLegacyDbFile(target: string): void {
+    if (fs.existsSync(target) || path.basename(target) === LEGACY_DB_NAME) return;
+    const legacy = path.join(path.dirname(target), LEGACY_DB_NAME);
+    if (!fs.existsSync(legacy)) return;
+    for (const suffix of ["", "-wal", "-shm"]) {
+        if (fs.existsSync(legacy + suffix)) fs.renameSync(legacy + suffix, target + suffix);
+    }
+}
+
+function getDatabasePath(): string {
+    migrateLegacyHomeDir();
+    if (process.env.DATABASE_PATH) {
+        const explicit = path.resolve(process.env.DATABASE_PATH);
+        migrateLegacyDbFile(explicit);
+        return explicit;
+    }
     for (const legacyPath of LEGACY_DB_LOCATIONS) {
         if (fs.existsSync(legacyPath)) return legacyPath;
     }
-
-    // Return new default path and create directory if needed
     return DEFAULT_DB_PATH;
 }
 

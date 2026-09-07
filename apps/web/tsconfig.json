@@ -13,8 +13,8 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["./src/*"],
-            "@rynarouter/types": ["../../packages/types/src/index.ts"],
-            "@rynarouter/constants": ["../../packages/constants/src/index.ts"]
+            "@tixrouter/types": ["../../packages/types/src/index.ts"],
+            "@tixrouter/constants": ["../../packages/constants/src/index.ts"]
         }
     },
     "include": ["src", "vite.config.ts"]

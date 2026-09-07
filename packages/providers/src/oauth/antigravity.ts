@@ -6,7 +6,7 @@ import {
     ANTIGRAVITY_OAUTH_REDIRECT_URI,
     ANTIGRAVITY_OAUTH_SCOPE,
     ANTIGRAVITY_OAUTH_TOKEN_URL
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import type { OAuthTokenResponse, PKCEPair } from "./base.js";
 
 export interface AntigravityOAuthOptions {

@@ -6,7 +6,7 @@ import {
     getAPIKeyByKeyDB,
     getRequireApiKeyDB,
     type AdminAuthStore
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 import { Err } from "@/utils/response.js";
 import {
     ADMIN_SESSION_COOKIE,
@@ -71,7 +71,7 @@ export function CreateApiKeyAuth(Options: ApiKeyAuthOptions = {}) {
             const ApiKeyRow = getAPIKeyByKeyDB(BearerKey);
             if (ApiKeyRow) {
                 if (!ApiKeyRow.enabled) {
-                    return Err(c, "The provided RYNArouter API Key is disabled", 401, {
+                    return Err(c, "The provided TixRouter API Key is disabled", 401, {
                         type: "invalid_request_error",
                         code: "api_key_disabled"
                     });
@@ -107,7 +107,7 @@ export function CreateApiKeyAuth(Options: ApiKeyAuthOptions = {}) {
             }
 
             if (IsRequired) {
-                return Err(c, "Invalid RYNArouter API Key", 401, {
+                return Err(c, "Invalid TixRouter API Key", 401, {
                     type: "invalid_request_error",
                     code: "invalid_api_key"
                 });
@@ -118,8 +118,8 @@ export function CreateApiKeyAuth(Options: ApiKeyAuthOptions = {}) {
             return Err(
                 c,
                 !IsLoopback
-                    ? "Remote/public requests require a valid RYNArouter API Key. Please provide your key via 'Authorization: Bearer ***' or 'x-api-key'."
-                    : "Missing RYNArouter API Key. Please provide a valid key via 'Authorization: Bearer ***' header or disable 'Require API Key' in Settings.",
+                    ? "Remote/public requests require a valid TixRouter API Key. Please provide your key via 'Authorization: Bearer ***' or 'x-api-key'."
+                    : "Missing TixRouter API Key. Please provide a valid key via 'Authorization: Bearer ***' header or disable 'Require API Key' in Settings.",
                 401,
                 {
                     type: "invalid_request_error",

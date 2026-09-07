@@ -23,7 +23,7 @@ export function ComboHeader({ isAdding, onToggleAdd }: ComboHeaderProps) {
 
                     <p className="text-xs text-muted-foreground max-w-2xl leading-relaxed">
                         Configure multi-model fallback cascades. When a primary model encounters
-                        rate limits (429), quota exhaustion (403), or errors (5xx), RYNA cascades
+                        rate limits (429), quota exhaustion (403), or errors (5xx), TixRouter cascades
                         down your priority list seamlessly.
                     </p>
                 </div>

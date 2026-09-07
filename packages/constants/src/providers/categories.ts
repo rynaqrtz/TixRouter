@@ -1,4 +1,4 @@
-import type { ProviderCategory } from "@rynarouter/types";
+import type { ProviderCategory } from "@tixrouter/types";
 
 export const PROVIDER_CATEGORIES: ProviderCategory[] = [
     "oauth",

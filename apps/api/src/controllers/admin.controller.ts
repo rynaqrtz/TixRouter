@@ -1,9 +1,9 @@
 import { getConnInfo } from "@hono/node-server/conninfo";
 import type { Context } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
-import { adminAuthStore, type AdminAuthStore } from "@rynarouter/db";
+import { adminAuthStore, type AdminAuthStore } from "@tixrouter/db";
 import { Err, Ok } from "@/utils/response.js";
-import { AdminChangePasswordSchema, AdminLoginSchema, AdminSetupSchema } from "@rynarouter/types";
+import { AdminChangePasswordSchema, AdminLoginSchema, AdminSetupSchema } from "@tixrouter/types";
 import {
     ADMIN_SESSION_COOKIE,
     ADMIN_SESSION_TTL_MS,
@@ -57,7 +57,7 @@ export class AdminController {
         c: Context,
         Store: AdminAuthStore = adminAuthStore,
         Now: () => number = () => Date.now(),
-        SecureCookies = process.env.RYNAROUTER_SECURE_COOKIES === "true"
+        SecureCookies = process.env.TIXROUTER_SECURE_COOKIES === "true"
     ): Promise<Response> {
         if (Store.hasAdminAccount()) {
             return Err(c, "Admin setup has already been completed", 409, {
@@ -106,7 +106,7 @@ export class AdminController {
         GetClientAddress: (
             c: Context
         ) => string | undefined = AdminController.GetDirectClientAddress,
-        SecureCookies = process.env.RYNAROUTER_SECURE_COOKIES === "true"
+        SecureCookies = process.env.TIXROUTER_SECURE_COOKIES === "true"
     ): Promise<Response> {
         const Address = GetClientAddress(c) ?? "unknown";
         const Timestamp = Now();
@@ -201,7 +201,7 @@ export class AdminController {
         c: Context,
         Store: AdminAuthStore = adminAuthStore,
         Now: () => number = () => Date.now(),
-        SecureCookies = process.env.RYNAROUTER_SECURE_COOKIES === "true"
+        SecureCookies = process.env.TIXROUTER_SECURE_COOKIES === "true"
     ): Response {
         const SessionToken = getCookie(c, ADMIN_SESSION_COOKIE);
         if (!verifyAdminSession(Store, SessionToken, Now())) {

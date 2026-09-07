@@ -1,4 +1,4 @@
-import type { TokenSaverSettings } from "@rynarouter/types";
+import type { TokenSaverSettings } from "@tixrouter/types";
 import { getSettingDB, setSettingDB } from "./settings.js";
 
 export const DEFAULT_TOKEN_SAVER_SETTINGS: TokenSaverSettings = {

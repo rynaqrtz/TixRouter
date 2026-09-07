@@ -1,12 +1,12 @@
 import type { Context } from "hono";
-import { getTokenSaverSettingsDB, setTokenSaverSettingsDB } from "@rynarouter/db";
-import { PreviewTokenSaver } from "@rynarouter/translator";
+import { getTokenSaverSettingsDB, setTokenSaverSettingsDB } from "@tixrouter/db";
+import { PreviewTokenSaver } from "@tixrouter/translator";
 import {
     TokenSaverPreviewRequestSchema,
     TokenSaverSettingsSchema,
     type TokenSaverPreviewRequest,
     type TokenSaverSettings
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { Err, Ok } from "@/utils/response.js";
 
 export class TokenSaverController {

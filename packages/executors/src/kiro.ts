@@ -6,7 +6,7 @@ import type {
     ChatCompletionResponse,
     ModelObject,
     ToolDefinition
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { iterEventStreamFrames } from "./stream-utils.js";
 
 const RUNTIME_URL = "https://runtime.us-east-1.kiro.dev/generateAssistantResponse";

@@ -13,8 +13,8 @@ export default defineConfig({
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
-            "@rynarouter/types": path.resolve(__dirname, "../../packages/types/src/index.ts"),
-            "@rynarouter/constants": path.resolve(__dirname, "../../packages/constants/src/index.ts")
+            "@tixrouter/types": path.resolve(__dirname, "../../packages/types/src/index.ts"),
+            "@tixrouter/constants": path.resolve(__dirname, "../../packages/constants/src/index.ts")
         }
     },
     build: {

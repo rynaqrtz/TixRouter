@@ -1,8 +1,8 @@
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
-import { adminAuthStore, type AdminAuthStore } from "@rynarouter/db";
+import { adminAuthStore, type AdminAuthStore } from "@tixrouter/db";
 
 export const ADMIN_SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
-export const ADMIN_SESSION_COOKIE = "rynarouter_admin_session";
+export const ADMIN_SESSION_COOKIE = "tixrouter_admin_session";
 
 const PASSWORD_HASH_ALGORITHM = "scrypt";
 const PASSWORD_HASH_LENGTH = 64;
@@ -108,7 +108,7 @@ export function isLoopbackAddress(address: string | undefined): boolean {
 
 /**
  * Bootstrap the admin account from the environment when requested.
- * - `RYNAROUTER_ADMIN_PASSWORD` set → creates the account if missing, or resets
+ * - `TIXROUTER_ADMIN_PASSWORD` set → creates the account if missing, or resets
  *   the password on every boot (documented recovery path for a forgotten password).
  * - Not set → no account is auto-created. First-run setup happens through the
  *   dashboard ("create your admin password"), which is first-come-wins until
@@ -118,7 +118,7 @@ export function bootstrapAdminAccountFromEnv(
     store: AdminAuthStore,
     now: number = Date.now()
 ): void {
-    const envPassword = process.env.RYNAROUTER_ADMIN_PASSWORD;
+    const envPassword = process.env.TIXROUTER_ADMIN_PASSWORD;
     if (envPassword === undefined || envPassword.length === 0) return;
 
     const hash = hashAdminPassword(envPassword);

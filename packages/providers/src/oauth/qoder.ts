@@ -1,5 +1,5 @@
-import { QODER_DEVICE_TOKEN_URL, QODER_LOGIN_URL, QODER_USERINFO_URL } from "@rynarouter/constants";
-import { AuthPollStatus } from "@rynarouter/types";
+import { QODER_DEVICE_TOKEN_URL, QODER_LOGIN_URL, QODER_USERINFO_URL } from "@tixrouter/constants";
+import { AuthPollStatus } from "@tixrouter/types";
 import type { OAuthTokenResponse, PKCEPair } from "./base.js";
 
 export interface QoderOAuthOptions {
@@ -19,7 +19,7 @@ export class QoderOAuth {
         this.userInfoUrl = options.userInfoUrl ?? QODER_USERINFO_URL;
     }
 
-    getAuthorizationUrl(pkce: PKCEPair, machineId = "rynarouter-device"): string {
+    getAuthorizationUrl(pkce: PKCEPair, machineId = "tixrouter-device"): string {
         const params = new URLSearchParams({
             challenge: pkce.codeChallenge,
             challenge_method: "S256",
@@ -123,7 +123,7 @@ export class QoderOAuth {
     }
 
     /**
-     * Generic OAuth token exchange implementation for RYNArouter framework.
+     * Generic OAuth token exchange implementation for TixRouter framework.
      */
     async exchangeCodeForTokens(code: string, codeVerifier: string): Promise<OAuthTokenResponse> {
         const poll = await this.pollDeviceToken({ nonce: code, codeVerifier });

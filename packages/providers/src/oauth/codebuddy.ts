@@ -10,8 +10,8 @@ import {
     CODEBUDDY_CN_DOMAIN,
     CODEBUDDY_CN_ORIGIN,
     CODEBUDDY_CN_USER_AGENT
-} from "@rynarouter/constants";
-import { AuthPollStatus } from "@rynarouter/types";
+} from "@tixrouter/constants";
+import { AuthPollStatus } from "@tixrouter/types";
 import type { OAuthTokenResponse } from "./base.js";
 
 export interface CodeBuddyOAuthOptions {

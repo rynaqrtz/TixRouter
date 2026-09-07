@@ -10,7 +10,7 @@ import {
     DialogTitle
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import type { ModelObject } from "@rynarouter/types";
+import type { ModelObject } from "@tixrouter/types";
 
 interface ImportModelsDialogProps {
     open: boolean;

@@ -3,7 +3,7 @@ import { DatabaseSync } from "node:sqlite";
 import { afterEach, test } from "node:test";
 import { Hono } from "hono";
 import { AdminAuthStore } from "../../../packages/db/src/adminAuth.js";
-import { setRequireApiKeyDB } from "@rynarouter/db";
+import { setRequireApiKeyDB } from "@tixrouter/db";
 import { ADMIN_SESSION_COOKIE, createAdminSession } from "../src/services/adminAuth.js";
 import { CreateAdminAuthMiddleware } from "../src/middleware/AdminAuth.js";
 import { CreateApiKeyAuth } from "../src/middleware/ApiKeyAuth.js";
@@ -39,7 +39,7 @@ test("client-identifying headers do not bypass API-key auth", async () => {
 
     const spoofed = await app.request("/chat/completions", {
         method: "POST",
-        headers: { "X-RYNArouter-Client": "playground" }
+        headers: { "X-TixRouter-Client": "playground" }
     });
     assert.equal(spoofed.status, 401);
 

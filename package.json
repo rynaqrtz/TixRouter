@@ -1,15 +1,15 @@
 {
-    "name": "RYNArouter",
-    "version": "1.1.0",
+    "name": "tixrouter",
+    "version": "1.2.0",
     "description": "High-performance multi-provider AI Gateway and LLM proxy router built with Hono, TypeScript, and SQLite WAL",
-    "author": "RYNA",
+    "author": "TixRouter",
     "license": "MIT",
     "type": "module",
     "private": true,
     "packageManager": "pnpm@9.15.9",
     "repository": {
         "type": "git",
-        "url": "https://github.com/rynaqrtz/RYNArouter.git"
+        "url": "https://github.com/rynaqrtz/TixRouter.git"
     },
     "keywords": [
         "ai-gateway",
@@ -24,9 +24,9 @@
         "chatgpt",
         "router"
     ],
-    "homepage": "https://github.com/rynaqrtz/RYNArouter#readme",
+    "homepage": "https://github.com/rynaqrtz/TixRouter#readme",
     "bugs": {
-        "url": "https://github.com/rynaqrtz/RYNArouter/issues"
+        "url": "https://github.com/rynaqrtz/TixRouter/issues"
     },
     "workspaces": [
         "apps/*",

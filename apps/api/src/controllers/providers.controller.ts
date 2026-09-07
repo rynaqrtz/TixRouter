@@ -1,8 +1,8 @@
 import type { Context } from "hono";
 import type { CreateProviderPayload } from "@/logic/providers.logic.js";
 import { ProvidersLogic } from "@/logic/providers.logic.js";
-import { deleteProviderDB } from "@rynarouter/db";
-import { AddCustomModelSchema, CreateProviderSchema, ImportModelsFromProviderSchema, VerifyProviderSchema } from "@rynarouter/types";
+import { deleteProviderDB } from "@tixrouter/db";
+import { AddCustomModelSchema, CreateProviderSchema, ImportModelsFromProviderSchema, VerifyProviderSchema } from "@tixrouter/types";
 import { loadSavedProvidersFromDB, registry } from "@/services/registry.js";
 import { Err, Ok } from "@/utils/response.js";
 

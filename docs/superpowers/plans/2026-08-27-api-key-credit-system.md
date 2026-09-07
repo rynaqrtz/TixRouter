@@ -4,7 +4,7 @@
 
 **Goal:** Implement prepaid credit limit ($ USD) and lifetime usage cost tracking for virtual API keys, with pre-flight balance guards, automatic inference cost deduction, an admin `POST /v1/keys/:id/credit` endpoint, and responsive Web UI management (CreateKeyDialog, KeyTable, AddCreditDialog).
 
-**Architecture:** Extend SQLite `api_keys` schema with `credit_limit` and `usage_cost` columns. On every authenticated completion, check available balance pre-flight and reject exhausted keys with HTTP 402; calculate exact cost post-flight using `@rynarouter/pricing` and increment `usage_cost` and `usage_tokens`. Expose an `AddCredit` admin endpoint and update the dashboard UI with live balance progress bars and an Add Credit dialog.
+**Architecture:** Extend SQLite `api_keys` schema with `credit_limit` and `usage_cost` columns. On every authenticated completion, check available balance pre-flight and reject exhausted keys with HTTP 402; calculate exact cost post-flight using `@tixrouter/pricing` and increment `usage_cost` and `usage_tokens`. Expose an `AddCredit` admin endpoint and update the dashboard UI with live balance progress bars and an Add Credit dialog.
 
 **Tech Stack:** Node.js (v22+), SQLite (`node:sqlite`), Hono 4, Zod, React 19, Lucide React, Tailwind CSS v4.
 
@@ -18,7 +18,7 @@
 
 ---
 
-### Task 1: Database Schema & Shared Types (`@rynarouter/types` and `@rynarouter/db`)
+### Task 1: Database Schema & Shared Types (`@tixrouter/types` and `@tixrouter/db`)
 
 **Files:**
 - Modify: `packages/types/src/apiKeys.ts`
@@ -42,7 +42,7 @@ import {
     deleteAPIKeyDB,
     getAPIKeyByKeyDB,
     incrementAPIKeyUsageDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 
 const createdIds: string[] = [];
 
@@ -152,7 +152,7 @@ export const AddCreditSchema = z.object({
 export type AddCreditZod = z.infer<typeof AddCreditSchema>;
 ```
 
-Build `@rynarouter/types`:
+Build `@tixrouter/types`:
 `cd packages/types && pnpm run build`
 
 - [ ] **Step 4: Update `packages/db`**
@@ -212,7 +212,7 @@ export function createAPIKeyDB(data: {
 }): DBAPIKey {
     const Id = generateId("key");
     const RandomHex = randomUUID().replace(/-/g, "").slice(0, 16);
-    const Key = `ryna-live-${RandomHex}`;
+    const Key = `tix-live-${RandomHex}`;
     const CreatedAt = Date.now();
     const AllowedModels =
         data.allowed_models && data.allowed_models.length > 0 ? data.allowed_models : null;
@@ -273,7 +273,7 @@ export function addCreditAPIKeyDB(id: string, amount: number): DBAPIKey | null {
 ```
 - Export `addCreditAPIKeyDB` in `packages/db/src/index.ts`.
 
-Build `@rynarouter/db`:
+Build `@tixrouter/db`:
 `cd packages/db && pnpm run build`
 
 - [ ] **Step 5: Run tests to verify they pass**
@@ -310,7 +310,7 @@ Create `apps/api/tests/api-keys-quota-credit.test.ts`:
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
 import { Hono } from "hono";
-import { createAPIKeyDB, deleteAPIKeyDB, incrementAPIKeyUsageDB } from "@rynarouter/db";
+import { createAPIKeyDB, deleteAPIKeyDB, incrementAPIKeyUsageDB } from "@tixrouter/db";
 import { ApiKeyAuth } from "@/middleware/ApiKeyAuth.js";
 
 const createdIds: string[] = [];
@@ -456,7 +456,7 @@ git commit -m "feat(api): enforce credit limit and token quota in ApiKeyAuth"
 **Interfaces:**
 - When an API key makes a request to `/v1/chat/completions` or `/v1/messages`:
   - Pass `apiKeyId` to `ChatLogic` (or handle in controller/logic `LogCompletion`).
-  - Calculate token cost via `@rynarouter/pricing` (`calculateCostFromTokens` / `estimateCostForUsage`).
+  - Calculate token cost via `@tixrouter/pricing` (`calculateCostFromTokens` / `estimateCostForUsage`).
   - Automatically update `usage_tokens` and `usage_cost` in DB.
 
 - [ ] **Step 1: Write test for automatic usage deduction**
@@ -465,7 +465,7 @@ Create `apps/api/tests/api-keys-usage-deduction.test.ts`:
 ```typescript
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@rynarouter/db";
+import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@tixrouter/db";
 import { ChatLogic } from "@/logic/chat.logic.js";
 
 const createdIds: string[] = [];
@@ -584,7 +584,7 @@ Create `apps/api/tests/api-keys-credit-route.test.ts`:
 ```typescript
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@rynarouter/db";
+import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@tixrouter/db";
 import { Hono } from "hono";
 import { KeysRouter } from "@/routes/v1/keys.js";
 
@@ -841,7 +841,7 @@ git commit -m "feat(web): add credit balance input in CreateKeyDialog and secret
 
 ```tsx
 import React, { useState } from "react";
-import type { DBAPIKey } from "@rynarouter/types";
+import type { DBAPIKey } from "@tixrouter/types";
 import {
     Dialog,
     DialogContent,

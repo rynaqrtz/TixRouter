@@ -4,7 +4,7 @@ import type {
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { streamLines } from "./base.js";
 
 const BASE = "https://chat.mistral.ai";

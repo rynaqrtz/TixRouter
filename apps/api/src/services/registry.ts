@@ -15,7 +15,7 @@ import {
     SEEKAI_BASE_URL,
     TABITOKEN_BASE_URL,
     TOKENROUTER_BASE_URL
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import {
     createFallbackRuleDB,
     deleteProviderDB,
@@ -24,7 +24,7 @@ import {
     getSettingDB,
     updateFallbackRuleDB,
     upsertProviderDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 import {
     AntigravityExecutor,
     AnthropicExecutor,
@@ -46,8 +46,8 @@ import {
     TabiTokenExecutor,
     TokenRouterExecutor,
     parseAccounts
-} from "@rynarouter/executors";
-import { ProviderRegistry } from "@rynarouter/providers";
+} from "@tixrouter/executors";
+import { ProviderRegistry } from "@tixrouter/providers";
 
 // Create a global ProviderRegistry instance
 export const registry = new ProviderRegistry();

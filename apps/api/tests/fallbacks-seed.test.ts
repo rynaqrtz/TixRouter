@@ -6,7 +6,7 @@ import {
     getFallbackRuleByIdDB,
     getSettingDB,
     setSettingDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 import { seedDefaultFallbacks } from "../src/services/registry.js";
 
 const SEED_IDS = [

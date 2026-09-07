@@ -6,7 +6,7 @@ import type {
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 /**
  * Converts OpenAI ChatCompletionRequest into Anthropic MessageRequest format

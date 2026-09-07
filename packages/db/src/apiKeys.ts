@@ -1,4 +1,4 @@
-import type { APIKeyZod } from "@rynarouter/types";
+import type { APIKeyZod } from "@tixrouter/types";
 import { db } from "./db.js";
 import { randomUUID } from "node:crypto";
 import { generateId, num } from "./row-utils.js";
@@ -76,7 +76,7 @@ export function getAPIKeyByKeyDB(key: string): APIKeyZod | null {
 export function createAPIKeyDB(data: APIKeyCreateInput): APIKeyZod {
     const Id = generateId("key");
     const RandomHex = randomUUID().replace(/-/g, "").slice(0, 16);
-    const Key = `ryna-live-${RandomHex}`;
+    const Key = `tix-live-${RandomHex}`;
     const CreatedAt = Date.now();
     const AllowedModels =
         data.allowed_models && data.allowed_models.length > 0 ? data.allowed_models : null;

@@ -3,7 +3,7 @@ import type {
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { DeepSeekFreeExecutor } from "./deepseek-free.js";
 
 const COOLDOWN_MS = 60_000;
@@ -45,10 +45,10 @@ export class DeepSeekFreePoolExecutor {
     constructor(options: DeepSeekFreePoolOptions) {
         const accounts = options.accounts.filter((a) => a.email && a.password);
         if (!accounts.length) {
-            throw new Error("RYNArouter Free pool requires at least one account");
+            throw new Error("TixRouter Free pool requires at least one account");
         }
         this.id = options.id ?? "deepseek-free";
-        this.name = options.name ?? "RYNArouter Free";
+        this.name = options.name ?? "TixRouter Free";
         const factory = options.executorFactory ?? ((account) => new DeepSeekFreeExecutor({ email: account.email, password: account.password }));
         this.members = accounts.map((account) => ({ executor: factory(account), blockedUntil: 0 }));
     }
@@ -65,7 +65,7 @@ export class DeepSeekFreePoolExecutor {
             }
         }
         const soonest = Math.min(...this.members.map((m) => m.blockedUntil));
-        throw new Error(`RYNArouter Free pool: all ${n} accounts cooling down, retry in ${Math.ceil((soonest - now) / 1000)}s`);
+        throw new Error(`TixRouter Free pool: all ${n} accounts cooling down, retry in ${Math.ceil((soonest - now) / 1000)}s`);
     }
 
     private bench(member: PoolMember, err: unknown): void {
@@ -79,7 +79,7 @@ export class DeepSeekFreePoolExecutor {
     }
 
     async chatCompletion(req: ChatCompletionRequest): Promise<ChatCompletionResponse> {
-        let lastErr: unknown = new Error("RYNArouter Free pool: no account could complete the request");
+        let lastErr: unknown = new Error("TixRouter Free pool: no account could complete the request");
         for (let attempt = 0; attempt < this.members.length; attempt++) {
             const member = this.pick();
             try {
@@ -109,7 +109,7 @@ export class DeepSeekFreePoolExecutor {
             }
         }
         if (!first || !iterator || !member) {
-            throw lastErr ?? new Error("RYNArouter Free pool: no account could start the stream");
+            throw lastErr ?? new Error("TixRouter Free pool: no account could start the stream");
         }
         if (first.done) return;
         yield first.value;

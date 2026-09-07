@@ -1,15 +1,15 @@
 {
     "name": "api",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "type": "module",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ryna/RYNArouter.git",
+        "url": "https://github.com/rynaqrtz/TixRouter.git",
         "directory": "apps/api"
     },
-    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "homepage": "https://github.com/rynaqrtz/TixRouter#readme",
     "bugs": {
-        "url": "https://github.com/ryna/RYNArouter/issues"
+        "url": "https://github.com/rynaqrtz/TixRouter/issues"
     },
     "license": "MIT",
     "scripts": {
@@ -22,13 +22,13 @@
     "dependencies": {
         "@hono/node-server": "^2.1.1",
         "@hono/zod-validator": "^0.4.3",
-        "@rynarouter/constants": "workspace:*",
-        "@rynarouter/db": "workspace:*",
-        "@rynarouter/executors": "workspace:*",
-        "@rynarouter/pricing": "workspace:*",
-        "@rynarouter/providers": "workspace:*",
-        "@rynarouter/translator": "workspace:*",
-        "@rynarouter/types": "workspace:*",
+        "@tixrouter/constants": "workspace:*",
+        "@tixrouter/db": "workspace:*",
+        "@tixrouter/executors": "workspace:*",
+        "@tixrouter/pricing": "workspace:*",
+        "@tixrouter/providers": "workspace:*",
+        "@tixrouter/translator": "workspace:*",
+        "@tixrouter/types": "workspace:*",
         "hono": "^4.13.7",
         "zod": "^3.25.76"
     },

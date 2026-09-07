@@ -12,7 +12,7 @@ import type {
     ToolCall,
     ToolFunctionParameters,
     UsageInfo
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 const DEFAULT_MAX_TOKENS = 4096;
 

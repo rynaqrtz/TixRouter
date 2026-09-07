@@ -3,7 +3,7 @@ import type {
     RequestLogEntry,
     UsageByModelRow,
     UsageSummary
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { db } from "./db.js";
 import { generateId, num, optStr, str } from "./row-utils.js";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Check, Copy, KeyRound, Plus, RefreshCw, ShieldCheck, Trash2 } from "lucide-react";
-import type { ProviderConfig } from "@rynarouter/types";
+import type { ProviderConfig } from "@tixrouter/types";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useCopy } from "@/hooks/useCopy";

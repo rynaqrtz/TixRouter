@@ -1,12 +1,12 @@
-import { CODEBUDDY_BASE_URL, CODEBUDDY_MODELS } from "@rynarouter/constants";
-import { accumulateChunks } from "@rynarouter/translator";
+import { CODEBUDDY_BASE_URL, CODEBUDDY_MODELS } from "@tixrouter/constants";
+import { accumulateChunks } from "@tixrouter/translator";
 import type {
     AIProvider,
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { parseDataLine, streamLines } from "./base.js";
 
 function stripProviderPrefix(model: string): string {

@@ -1,5 +1,5 @@
 import type { Context } from "hono";
-import type { ModelListResponse } from "@rynarouter/types";
+import type { ModelListResponse } from "@tixrouter/types";
 import { ModelsLogic } from "@/logic/models.logic.js";
 import { Err, Ok } from "@/utils/response.js";
 import { GetApiKeyRow, IsModelAllowed } from "@/middleware/ModelAccess.js";

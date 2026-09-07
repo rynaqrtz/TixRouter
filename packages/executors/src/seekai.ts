@@ -1,4 +1,4 @@
-import { SEEKAI_BASE_URL } from "@rynarouter/constants";
+import { SEEKAI_BASE_URL } from "@tixrouter/constants";
 import { OpenAIExecutor, type OpenAIExecutorOptions } from "./openai.js";
 
 export interface SeekAIExecutorOptions extends OpenAIExecutorOptions {}

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { ChatCompletionRequestSchema } from "@rynarouter/types";
+import { ChatCompletionRequestSchema } from "@tixrouter/types";
 import { ChatController } from "@/controllers/chat.controller.js";
 import { ValidateJson } from "@/middleware/Validation.js";
 import { ApiKeyAuth } from "@/middleware/ApiKeyAuth.js";

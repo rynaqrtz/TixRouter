@@ -6,7 +6,7 @@ import {
     deleteAPIKeyDB,
     getAPIKeyByKeyDB,
     incrementAPIKeyUsageDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 
 const createdIds: string[] = [];
 

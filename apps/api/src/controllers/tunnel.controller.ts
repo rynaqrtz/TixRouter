@@ -1,6 +1,6 @@
 import type { Context } from "hono";
 import { Err, Ok } from "@/utils/response.js";
-import { TunnelConfigSchema } from "@rynarouter/types";
+import { TunnelConfigSchema } from "@tixrouter/types";
 import {
     getInstallStatus,
     getTunnelDomain,

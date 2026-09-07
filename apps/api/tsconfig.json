@@ -12,13 +12,13 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["./src/*"],
-            "@rynarouter/types": ["../../packages/types/src/index.ts"],
-            "@rynarouter/constants": ["../../packages/constants/src/index.ts"],
-            "@rynarouter/pricing": ["../../packages/pricing/src/index.ts"],
-            "@rynarouter/translator": ["../../packages/translator/src/index.ts"],
-            "@rynarouter/providers": ["../../packages/providers/src/index.ts"],
-            "@rynarouter/executors": ["../../packages/executors/src/index.ts"],
-            "@rynarouter/db": ["../../packages/db/src/index.ts"]
+            "@tixrouter/types": ["../../packages/types/src/index.ts"],
+            "@tixrouter/constants": ["../../packages/constants/src/index.ts"],
+            "@tixrouter/pricing": ["../../packages/pricing/src/index.ts"],
+            "@tixrouter/translator": ["../../packages/translator/src/index.ts"],
+            "@tixrouter/providers": ["../../packages/providers/src/index.ts"],
+            "@tixrouter/executors": ["../../packages/executors/src/index.ts"],
+            "@tixrouter/db": ["../../packages/db/src/index.ts"]
         },
         "rootDir": "./src",
         "outDir": "./dist"

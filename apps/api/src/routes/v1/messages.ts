@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { AnthropicMessageRequestSchema } from "@rynarouter/types";
+import { AnthropicMessageRequestSchema } from "@tixrouter/types";
 import { MessagesController } from "@/controllers/messages.controller.js";
 import { ApiKeyAuth } from "@/middleware/ApiKeyAuth.js";
 import { EnforceRateLimit } from "@/middleware/RateLimit.js";

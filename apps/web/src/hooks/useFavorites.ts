@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-const STORAGE_KEY = "rynarouter_favorite_models";
-const EVENT_NAME = "rynarouter:favorites-updated";
+const STORAGE_KEY = "tixrouter_favorite_models";
+const EVENT_NAME = "tixrouter:favorites-updated";
 
 function loadFavorites(): string[] {
     try {

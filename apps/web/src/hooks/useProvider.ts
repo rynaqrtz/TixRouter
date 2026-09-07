@@ -6,7 +6,7 @@ import type {
     ProviderCategory,
     ProviderDefinition,
     ProviderProtocol
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 export interface AddConnectionPayload {
     id?: string;

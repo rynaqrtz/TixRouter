@@ -1,5 +1,5 @@
-import { calculateCostFromTokens, getPricingForModel } from "@rynarouter/pricing";
-import type { JSONValue } from "@rynarouter/types";
+import { calculateCostFromTokens, getPricingForModel } from "@tixrouter/pricing";
+import type { JSONValue } from "@tixrouter/types";
 
 export interface UsageBreakdown {
     prompt_tokens: number;

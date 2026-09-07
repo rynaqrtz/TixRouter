@@ -7,7 +7,7 @@ import type {
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 const LOGIN_PATH = "/api/v0/users/login";
 const SESSION_PATH = "/api/v0/chat_session/create";
@@ -68,13 +68,13 @@ export class DeepSeekFreeExecutor extends DeepSeekScraperExecutor {
     constructor(options: DeepSeekFreeExecutorOptions = {}) {
         super({
             id: options.id ?? "deepseek-free",
-            name: options.name ?? "RYNArouter Free",
+            name: options.name ?? "TixRouter Free",
             token: options.token ?? ""
         });
         this.email = options.email?.trim() ?? "";
         this.password = options.password ?? "";
         if (!this.email || !this.password) {
-            throw new Error("RYNArouter Free requires email and password");
+            throw new Error("TixRouter Free requires email and password");
         }
     }
 
@@ -114,7 +114,7 @@ export class DeepSeekFreeExecutor extends DeepSeekScraperExecutor {
         const token = biz?.user?.token;
         if (!token) {
             const msg = String((res as { msg?: unknown }).msg ?? "no token in response");
-            throw new Error(`RYNArouter Free login failed: ${msg}`);
+            throw new Error(`TixRouter Free login failed: ${msg}`);
         }
         this.token = token;
         this.loggedIn = true;
@@ -155,7 +155,7 @@ export class DeepSeekFreeExecutor extends DeepSeekScraperExecutor {
                         try {
                             resolve(JSON.parse(Buffer.concat(chunks).toString("utf8")) as Record<string, unknown>);
                         } catch {
-                            reject(new Error(`RYNArouter Free upload: invalid response (HTTP ${res.statusCode})`));
+                            reject(new Error(`TixRouter Free upload: invalid response (HTTP ${res.statusCode})`));
                         }
                     });
                     res.on("error", reject);
@@ -169,7 +169,7 @@ export class DeepSeekFreeExecutor extends DeepSeekScraperExecutor {
 
     async uploadFile(file: ParsedDataUrl): Promise<string> {
         if (file.buffer.length > 20 * 1024 * 1024) {
-            throw new Error("RYNArouter Free upload too large (max 20MB)");
+            throw new Error("TixRouter Free upload too large (max 20MB)");
         }
         const key = crypto.createHash("sha256").update(file.buffer).digest("hex");
         const cached = this.uploads.get(key);
@@ -189,7 +189,7 @@ export class DeepSeekFreeExecutor extends DeepSeekScraperExecutor {
                 data?: { biz_data?: { id?: string } };
             };
             if (res.code !== 0 || !res.data?.biz_data?.id) {
-                throw new Error(`RYNArouter Free upload failed: ${res.msg ?? "unknown"}`);
+                throw new Error(`TixRouter Free upload failed: ${res.msg ?? "unknown"}`);
             }
             const fileId = res.data.biz_data.id;
             for (let i = 0; i < 20; i++) {
@@ -197,9 +197,9 @@ export class DeepSeekFreeExecutor extends DeepSeekScraperExecutor {
                 const poll = await this.request("GET", `${FILES_PATH}?file_ids=${fileId}`);
                 const files = (poll?.data?.biz_data as { files?: Array<{ status?: string; error_code?: string }> } | undefined)?.files;
                 if (files?.[0]?.status === "SUCCESS") return fileId;
-                if (files?.[0]?.status === "FAILED") throw new Error(`RYNArouter Free file processing failed: ${files[0].error_code ?? "unknown"}`);
+                if (files?.[0]?.status === "FAILED") throw new Error(`TixRouter Free file processing failed: ${files[0].error_code ?? "unknown"}`);
             }
-            throw new Error("RYNArouter Free file processing timeout");
+            throw new Error("TixRouter Free file processing timeout");
         })();
         this.uploads.set(key, pending);
         pending.catch(() => this.uploads.delete(key));
@@ -222,7 +222,7 @@ export class DeepSeekFreeExecutor extends DeepSeekScraperExecutor {
         const biz = res?.data?.biz_data as Record<string, unknown> | undefined;
         const sessionId =
             (biz?.id as string | undefined) ?? ((biz?.chat_session as { id?: string } | undefined)?.id ?? null);
-        if (!sessionId) throw new Error("RYNArouter Free: failed to create chat session");
+        if (!sessionId) throw new Error("TixRouter Free: failed to create chat session");
         return sessionId;
     }
 

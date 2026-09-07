@@ -4,7 +4,7 @@ import {
     CLAUDE_OAUTH_REDIRECT_URI,
     CLAUDE_OAUTH_SCOPE,
     CLAUDE_OAUTH_TOKEN_URL
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import type { OAuthTokenResponse, PKCEPair } from "./base.js";
 
 export interface ClaudeOAuthOptions {

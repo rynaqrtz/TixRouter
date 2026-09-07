@@ -5,7 +5,7 @@ import type {
     TokenSaverPreviewRequest,
     TokenSaverPreviewResponse,
     TokenSaverSettings
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 export const DEFAULT_TOKEN_SAVER_SETTINGS: TokenSaverSettings = {
     enabled: true,

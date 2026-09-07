@@ -6,7 +6,7 @@ import type {
     APIKeyZod,
     ModelListResponse,
     UpdateAPIKeyZod
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { api } from "@/lib/api";
 import { cn, formatCompactNumber } from "@/lib/utils";
 import { useCopy } from "@/hooks/useCopy";

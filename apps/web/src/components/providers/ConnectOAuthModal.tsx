@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Loader2, Copy, Check, X, Key, Globe, ExternalLink } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { AuthPollStatus, type ProviderConfig, type ProviderDefinition } from "@rynarouter/types";
+import { AuthPollStatus, type ProviderConfig, type ProviderDefinition } from "@tixrouter/types";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface ConnectOAuthModalProps {
@@ -98,7 +98,7 @@ export function ConnectOAuthModal({ provider, open, onOpenChange }: ConnectOAuth
             if (
                 event.data &&
                 typeof event.data === "object" &&
-                event.data.type === "RYNAROUTER_OAUTH_SUCCESS"
+                event.data.type === "TIXROUTER_OAUTH_SUCCESS"
             ) {
                 if (popupRef.current && !popupRef.current.closed) {
                     popupRef.current.close();

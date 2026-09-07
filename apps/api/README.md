@@ -1,8 +1,8 @@
-# RYNArouter API
+# TixRouter API
 
-The RYNArouter API is the runtime gateway that sits between clients and upstream AI providers. It exposes OpenAI-compatible and Anthropic-compatible endpoints, manages provider connections, handles API-key authentication, records telemetry, and runs background OAuth token refresh for supported providers.
+The TixRouter API is the runtime gateway that sits between clients and upstream AI providers. It exposes OpenAI-compatible and Anthropic-compatible endpoints, manages provider connections, handles API-key authentication, records telemetry, and runs background OAuth token refresh for supported providers.
 
-Part of the [`RYNArouter`](../../README.md) monorepo.
+Part of the [`TixRouter`](../../README.md) monorepo.
 
 ## What this app does
 
@@ -12,7 +12,7 @@ Client / SDK
     │ OpenAI or Anthropic compatible HTTP
     ▼
 ┌───────────────────────────────┐
-│        RYNArouter API             │
+│        TixRouter API             │
 │                               │
 │ auth → validation → routing   │
 │       ↘ translation           │
@@ -93,7 +93,7 @@ The app reads these gateway-level environment variables:
 | --------------- | --------------- | ----------------------- |
 | `PORT`          | `3000`          | HTTP server port        |
 | `OAUTH_PORT`    | `1455`          | OAuth callback listener |
-| `DATABASE_PATH` | `rynarouter.db`    | SQLite database path    |
+| `DATABASE_PATH` | `tixrouter.db`    | SQLite database path    |
 | `NODE_ENV`      | `development`   | Runtime environment     |
 | `WEB_DIST_PATH` | `apps/web/dist` | Built dashboard path    |
 
@@ -134,7 +134,7 @@ For a single test file during development, run the underlying `tsx --test` comma
 ## Related packages
 
 - [`apps/web`](../web/README.md) — React dashboard
-- [`apps/cli`](../cli/README.md) — RYNArouter CLI
+- [`apps/cli`](../cli/README.md) — TixRouter CLI
 - [`packages/providers`](../../packages/providers/README.md) — provider registry and OAuth state
 - [`packages/executors`](../../packages/executors/README.md) — upstream provider drivers
 - [`packages/translator`](../../packages/translator/README.md) — protocol translation

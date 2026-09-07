@@ -7,7 +7,7 @@ import {
     getAllFallbackRulesDB,
     getFallbackRuleByIdDB,
     updateFallbackRuleDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 
 const createdRuleIds: string[] = [];
 

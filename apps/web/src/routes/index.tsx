@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { formatCompactNumber } from "@/lib/utils";
-import type { UsageStats } from "@rynarouter/types";
+import type { UsageStats } from "@tixrouter/types";
 import { ModelUsageOverview } from "@/components/dashboard/ModelUsageOverview";
 import { NetworkStatus } from "@/components/dashboard/NetworkStatus";
 import { GatewayTopologyMap } from "@/components/dashboard/GatewayTopologyMap";

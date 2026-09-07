@@ -4,8 +4,8 @@ import {
     getRequireApiKeyDB,
     setRequireApiKeyDB,
     setSettingDB
-} from "@rynarouter/db";
-import { UpdateSettingsSchema } from "@rynarouter/types";
+} from "@tixrouter/db";
+import { UpdateSettingsSchema } from "@tixrouter/types";
 import { Err, Ok } from "@/utils/response.js";
 
 export class SettingsController {

@@ -1,4 +1,4 @@
-import type { ProviderCategory, ProviderConfig, ProviderProtocol } from "@rynarouter/types";
+import type { ProviderCategory, ProviderConfig, ProviderProtocol } from "@tixrouter/types";
 import { db } from "./db.js";
 import { num, optStr, str } from "./row-utils.js";
 

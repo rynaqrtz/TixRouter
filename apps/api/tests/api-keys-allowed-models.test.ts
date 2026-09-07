@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@rynarouter/db";
+import { createAPIKeyDB, deleteAPIKeyDB, getAPIKeyByKeyDB } from "@tixrouter/db";
 import { IsModelAllowed } from "@/middleware/ModelAccess.js";
 
 const createdIds: string[] = [];
@@ -58,7 +58,7 @@ test("IsModelAllowed enforces allow-list membership", () => {
     assert.equal(IsModelAllowed(Allowed, "claude-3-5-sonnet-20241022"), true);
 });
 
-test("IsModelAllowed ignores rynarouter/ prefix when matching", () => {
-    assert.equal(IsModelAllowed(["gpt-4o"], "rynarouter/gpt-4o"), true);
-    assert.equal(IsModelAllowed(["rynarouter/gpt-4o"], "gpt-4o"), true);
+test("IsModelAllowed ignores tixrouter/ prefix when matching", () => {
+    assert.equal(IsModelAllowed(["gpt-4o"], "tixrouter/gpt-4o"), true);
+    assert.equal(IsModelAllowed(["tixrouter/gpt-4o"], "gpt-4o"), true);
 });

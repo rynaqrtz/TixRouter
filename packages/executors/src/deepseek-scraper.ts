@@ -15,7 +15,7 @@ import type {
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { parseDataLine } from "./base.js";
 
 // ── Constants ────────────────────────────────────────────────────────────────

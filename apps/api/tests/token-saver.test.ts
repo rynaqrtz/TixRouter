@@ -5,8 +5,8 @@ import {
     DEFAULT_TOKEN_SAVER_SETTINGS,
     getTokenSaverSettingsDB,
     setTokenSaverSettingsDB
-} from "@rynarouter/db";
-import type { TokenSaverSettings } from "@rynarouter/types";
+} from "@tixrouter/db";
+import type { TokenSaverSettings } from "@tixrouter/types";
 import { TokenSaverController } from "../src/controllers/tokenSaver.controller.js";
 
 afterEach(() => {

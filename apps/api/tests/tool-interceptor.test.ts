@@ -5,8 +5,8 @@ import type {
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse
-} from "@rynarouter/types";
-import { deleteLogsByProviderDB } from "@rynarouter/db";
+} from "@tixrouter/types";
+import { deleteLogsByProviderDB } from "@tixrouter/db";
 import {
     extractSearchQuery,
     isToolProvidedByClient,
@@ -39,7 +39,7 @@ test("shouldInterceptToolCall detects search tools not in client tools", () => {
 });
 
 test("extractSearchQuery parses JSON objects and raw strings", () => {
-    assert.equal(extractSearchQuery('{"query":"GitHub ryna"}'), "GitHub ryna");
+    assert.equal(extractSearchQuery('{"query":"GitHub tixrouter"}'), "GitHub tixrouter");
     assert.equal(extractSearchQuery('{"q":"search test"}'), "search test");
     assert.equal(extractSearchQuery('{"searchTerm":"antigravity"}'), "antigravity");
     assert.equal(extractSearchQuery("raw search text"), "raw search text");
@@ -74,7 +74,7 @@ const mockProvider: AIProvider = {
                                     type: "function",
                                     function: {
                                         name: "web_search",
-                                        arguments: JSON.stringify({ query: "GitHub ryna" })
+                                        arguments: JSON.stringify({ query: "GitHub tixrouter" })
                                     }
                                 }
                             ]
@@ -99,7 +99,7 @@ const mockProvider: AIProvider = {
                     index: 0,
                     message: {
                         role: "assistant",
-                        content: "Found GitHub profile for ryna."
+                        content: "Found GitHub profile for tixrouter."
                     },
                     finish_reason: "stop"
                 }
@@ -151,7 +151,7 @@ const mockProvider: AIProvider = {
                                 {
                                     index: 0,
                                     function: {
-                                        arguments: '"GitHub ryna"}'
+                                        arguments: '"GitHub tixrouter"}'
                                     }
                                 }
                             ]
@@ -171,7 +171,7 @@ const mockProvider: AIProvider = {
                     {
                         index: 0,
                         delta: {
-                            content: "Streaming response with search results for ryna."
+                            content: "Streaming response with search results for tixrouter."
                         },
                         finish_reason: "stop"
                     }
@@ -194,18 +194,18 @@ afterEach(() => {
 test("ChatLogic intercepts non-streaming web_search and returns final answer without tool error", async () => {
     const req: ChatCompletionRequest = {
         model: `${mockInterceptProviderId}/test-model`,
-        messages: [{ role: "user", content: "Who is GitHub ryna?" }]
+        messages: [{ role: "user", content: "Who is GitHub tixrouter?" }]
     };
 
     const res = await ChatLogic.ProcessNonStreamingCompletion(req, Date.now());
     assert.equal(mockCallCount, 2);
-    assert.equal(res.choices[0]?.message?.content, "Found GitHub profile for ryna.");
+    assert.equal(res.choices[0]?.message?.content, "Found GitHub profile for tixrouter.");
 });
 
 test("ChatLogic intercepts streaming web_search and yields final answer stream to client", async () => {
     const req: ChatCompletionRequest = {
         model: `${mockInterceptProviderId}/test-model`,
-        messages: [{ role: "user", content: "Who is GitHub ryna?" }],
+        messages: [{ role: "user", content: "Who is GitHub tixrouter?" }],
         stream: true
     };
 
@@ -216,5 +216,5 @@ test("ChatLogic intercepts streaming web_search and yields final answer stream t
 
     assert.equal(mockCallCount, 2);
     const text = chunks.map((c) => c.choices[0]?.delta?.content || "").join("");
-    assert.equal(text, "Streaming response with search results for ryna.");
+    assert.equal(text, "Streaming response with search results for tixrouter.");
 });

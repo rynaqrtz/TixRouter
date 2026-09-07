@@ -1,10 +1,10 @@
-import { OPENCODE_ZEN_BASE_URL } from "@rynarouter/constants";
+import { OPENCODE_ZEN_BASE_URL } from "@tixrouter/constants";
 import type {
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { OpenAIExecutor, type OpenAIExecutorOptions } from "./openai.js";
 
 const OPENCODE_ZEN_MAX_TOKENS = 512;

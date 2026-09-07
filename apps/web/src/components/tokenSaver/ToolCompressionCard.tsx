@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
-import type { CompressToolOutputSettings } from "@rynarouter/types";
+import type { CompressToolOutputSettings } from "@tixrouter/types";
 
 interface ToolCompressionCardProps {
     settings: CompressToolOutputSettings;

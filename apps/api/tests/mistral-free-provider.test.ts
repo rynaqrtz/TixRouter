@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import type { ChatCompletionChunk, ProviderConfig } from "@rynarouter/types";
-import { MistralFreeExecutor, applyMistralPatch } from "@rynarouter/executors";
-import { upsertProviderDB } from "@rynarouter/db";
+import type { ChatCompletionChunk, ProviderConfig } from "@tixrouter/types";
+import { MistralFreeExecutor, applyMistralPatch } from "@tixrouter/executors";
+import { upsertProviderDB } from "@tixrouter/db";
 import { loadSavedProvidersFromDB, registry } from "../src/services/registry.js";
 
 class FixtureExecutor extends MistralFreeExecutor {

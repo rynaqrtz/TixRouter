@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import type { ChatCompletionRequest, ChatCompletionResponse } from "@rynarouter/types";
-import { setSettingDB, getSettingDB } from "@rynarouter/db";
+import type { ChatCompletionRequest, ChatCompletionResponse } from "@tixrouter/types";
+import { setSettingDB, getSettingDB } from "@tixrouter/db";
 import { getCachedResponse, setCachedResponse } from "../src/services/responseCache.js";
 
 function req(content: string): ChatCompletionRequest {

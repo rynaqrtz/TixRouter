@@ -15,9 +15,9 @@ import { useCopy } from "@/hooks/useCopy";
 import { useFallbacks } from "@/hooks/useFallbacks";
 import { ProviderIcon } from "@/components/ProviderIcon";
 import { Button } from "@/components/ui/button";
-import { CLI_VERSION, KNOWN_PROVIDERS } from "@rynarouter/constants";
-import type { APIKeyZod, ModelListResponse } from "@rynarouter/types";
-import type { FallbackRule } from "@rynarouter/types";
+import { CLI_VERSION, KNOWN_PROVIDERS } from "@tixrouter/constants";
+import type { APIKeyZod, ModelListResponse } from "@tixrouter/types";
+import type { FallbackRule } from "@tixrouter/types";
 
 /* ─── Tool Definitions ────────────────────────────────────────────── */
 
@@ -100,7 +100,7 @@ const CLI_TOOLS: CLIToolDef[] = [
 function buildOpenCodeConfig(baseUrl: string, apiKey: string, model: string) {
     return {
         provider: {
-            rynarouter: {
+            tixrouter: {
                 npm: "@ai-sdk/openai-compatible",
                 options: { baseURL: baseUrl, apiKey },
                 models: {
@@ -146,10 +146,10 @@ function buildClineConfig(baseUrl: string, apiKey: string, model: string) {
 function buildCodexConfig(baseUrl: string, apiKey: string, model: string) {
     return {
         configToml: `model = "${model}"
-model_provider = "rynarouter"
+model_provider = "tixrouter"
 
-[model_providers.rynarouter]
-name = "RYNA"
+[model_providers.tixrouter]
+name = "TixRouter"
 base_url = "${baseUrl}"
 wire_api = "responses"
 http_headers = { Authorization = "Bearer ${apiKey}" }
@@ -167,7 +167,7 @@ function buildCopilotConfig(baseUrl: string, apiKey: string, model: string) {
     const baseUrlWithHash = `${baseUrl}/chat/completions#models.ai.azure.com`;
     return [
         {
-            name: "RYNA",
+            name: "TixRouter",
             vendor: "azure",
             apiKey,
             models: [
@@ -192,7 +192,7 @@ function getToolConfig(toolId: string, baseUrl: string, apiKey: string, model: s
         case "cline": return buildClineConfig(baseUrl, apiKey, model);
         case "codex": return buildCodexConfig(baseUrl, apiKey, model);
         case "copilot": return buildCopilotConfig(baseUrl, apiKey, model);
-        default: return { provider: { name: "rynarouter", api_base_url: baseUrl, api_key: apiKey }, model };
+        default: return { provider: { name: "tixrouter", api_base_url: baseUrl, api_key: apiKey }, model };
     }
 }
 

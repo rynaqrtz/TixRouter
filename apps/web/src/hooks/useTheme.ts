@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export type Theme = "light" | "dark";
 
-const STORAGE_KEY = "rynarouter-theme";
+const STORAGE_KEY = "tixrouter-theme";
 
 function getInitialTheme(): Theme {
     if (typeof window === "undefined") return "dark";

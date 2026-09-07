@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { adminAuthStore, type AdminAuthStore } from "@rynarouter/db";
+import { adminAuthStore, type AdminAuthStore } from "@tixrouter/db";
 import { AdminController } from "@/controllers/admin.controller.js";
 import type { Context } from "hono";
 
@@ -14,7 +14,7 @@ export function CreateAdminRoute(Options: AdminRouteOptions = {}): Hono {
     const Store = Options.store ?? adminAuthStore;
     const GetClientAddress = Options.getClientAddress ?? AdminController.GetDirectClientAddress;
     const Now = Options.now ?? (() => Date.now());
-    const SecureCookies = Options.secureCookies ?? process.env.RYNAROUTER_SECURE_COOKIES === "true";
+    const SecureCookies = Options.secureCookies ?? process.env.TIXROUTER_SECURE_COOKIES === "true";
     const FailedLogins = new Map<string, { count: number; blockedUntil: number }>();
     const Route = new Hono();
 

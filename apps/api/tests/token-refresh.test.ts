@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { deleteProviderDB, getProviderByIdDB, upsertProviderDB } from "@rynarouter/db";
-import { CodexExecutor } from "@rynarouter/executors";
-import type { ProviderConfig } from "@rynarouter/types";
+import { deleteProviderDB, getProviderByIdDB, upsertProviderDB } from "@tixrouter/db";
+import { CodexExecutor } from "@tixrouter/executors";
+import type { ProviderConfig } from "@tixrouter/types";
 import { registry } from "../src/services/registry.js";
 import {
     isDueForRefresh,

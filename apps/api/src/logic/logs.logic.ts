@@ -1,7 +1,7 @@
-import { getAllProvidersDB, getRecentLogsDB, getSavingsSummaryDB, getUsageByModelDB, getUsageSummaryDB } from "@rynarouter/db";
-import { KNOWN_PROVIDERS } from "@rynarouter/constants";
-import type { RequestLogEntry, UsageStats } from "@rynarouter/types";
-import { formatCost } from "@rynarouter/pricing";
+import { getAllProvidersDB, getRecentLogsDB, getSavingsSummaryDB, getUsageByModelDB, getUsageSummaryDB } from "@tixrouter/db";
+import { KNOWN_PROVIDERS } from "@tixrouter/constants";
+import type { RequestLogEntry, UsageStats } from "@tixrouter/types";
+import { formatCost } from "@tixrouter/pricing";
 
 export class LogsLogic {
     public static getRecentLogs(limit: number = 50): RequestLogEntry[] {

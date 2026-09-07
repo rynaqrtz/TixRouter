@@ -23,7 +23,7 @@ import { ProviderIcon } from "@/components/ProviderIcon";
 import { formatModelDisplayName, getModelCapabilities } from "./combo.dialog";
 import { useCopy } from "@/hooks/useCopy";
 import { toast } from "sonner";
-import type { FallbackRule } from "@rynarouter/types";
+import type { FallbackRule } from "@tixrouter/types";
 
 interface ComboListProps {
     fallbacks: FallbackRule[];

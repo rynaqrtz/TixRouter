@@ -51,11 +51,11 @@ routes/v1 → controllers → logic → services / packages/{db,executors,provid
 - Server state flows through TanStack Query hooks — no manual `useEffect` + `fetch` state machines.
 - File-based routes in `apps/web/src/routes/`; pages compose domain components from `components/`.
 - The API client (`lib/api.ts`) normalizes the `/v1` base URL; components never build endpoint strings themselves.
-- Styling uses the OKLCH theme tokens in `styles.css`; versions come from `@rynarouter/constants`.
+- Styling uses the OKLCH theme tokens in `styles.css`; versions come from `@tixrouter/constants`.
 
 ## CLI practice
 
-- Any command that writes tool config snapshots the original into `~/.rynarouter/backups/` first.
+- Any command that writes tool config snapshots the original into `~/.tixrouter/backups/` first.
 - Interactive prompts go through `@clack/prompts`; flags exist for non-interactive linking.
 
 ## YAGNI

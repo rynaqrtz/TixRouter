@@ -5,8 +5,8 @@ import {
     deleteFallbackRuleDB,
     deleteLogsByProviderDB,
     getRecentLogsDB
-} from "@rynarouter/db";
-import type { AIProvider } from "@rynarouter/types";
+} from "@tixrouter/db";
+import type { AIProvider } from "@tixrouter/types";
 import { ChatLogic } from "../src/logic/chat.logic.js";
 import { registry } from "../src/services/registry.js";
 

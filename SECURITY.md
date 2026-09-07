@@ -1,6 +1,6 @@
 # Security Policy
 
-The RYNA team and community take the security of our gateway, credentials, and routing infrastructure seriously.
+The TixRouter team and community take the security of our gateway, credentials, and routing infrastructure seriously.
 
 ---
 
@@ -16,13 +16,13 @@ The RYNA team and community take the security of our gateway, credentials, and r
 
 ### 1. Local-First Credential Isolation
 
-- OAuth tokens, refresh keys, and provider secrets are stored exclusively in your local SQLite database (`rynarouter.db`) on your own infrastructure or device
-- RYNA never phones home, collects telemetry, or sends your API keys to third-party tracking servers
+- OAuth tokens, refresh keys, and provider secrets are stored exclusively in your local SQLite database (`tixrouter.db`) on your own infrastructure or device
+- TixRouter never phones home, collects telemetry, or sends your API keys to third-party tracking servers
 - All data remains under your control at all times
 
-### 2. Virtual Client Keys (`ryna-live-...`)
+### 2. Virtual Client Keys (`tix-live-...`)
 
-- Clients and downstream applications interact with RYNA using virtual API keys
+- Clients and downstream applications interact with TixRouter using virtual API keys
 - Your upstream master provider keys are completely isolated and never exposed to clients
 - Keys can be individually scoped with rate limits, token quotas, credit limits, and model allowlists
 
@@ -49,12 +49,12 @@ The RYNA team and community take the security of our gateway, credentials, and r
 
 ## Reporting a Vulnerability
 
-If you discover a potential security vulnerability or sensitive information exposure in RYNA, please do **NOT** disclose it in a public GitHub issue.
+If you discover a potential security vulnerability or sensitive information exposure in TixRouter, please do **NOT** disclose it in a public GitHub issue.
 
 Please report it privately via:
 
-- **Email**: `security@ryna.dev` (or open a private GitHub Security Advisory)
-- **GitHub**: [Security Advisories](https://github.com/ryna/RYNArouter/security/advisories/new)
+- **Email**: `security@rynaqrtz.dev` (or open a private GitHub Security Advisory)
+- **GitHub**: [Security Advisories](https://github.com/rynaqrtz/TixRouter/security/advisories/new)
 
 ### What to include in your report
 
@@ -94,14 +94,14 @@ The following are out of scope:
 
 ## Security Best Practices
 
-When deploying RYNA, follow these recommendations:
+When deploying TixRouter, follow these recommendations:
 
 ### Production Deployment
 
 1. **Enable HTTPS**: Use a reverse proxy (nginx, Caddy) or Cloudflare Tunnel
-2. **Set `RYNAROUTER_SECURE_COOKIES=true`**: Enables Secure flag on admin session cookies
+2. **Set `TIXROUTER_SECURE_COOKIES=true`**: Enables Secure flag on admin session cookies
 3. **Enable API key authentication**: Set `Require API Key: Required` in Settings
-4. **Restrict CORS**: Configure `RYNAROUTER_CORS_ORIGINS` to allow only trusted origins
+4. **Restrict CORS**: Configure `TIXROUTER_CORS_ORIGINS` to allow only trusted origins
 5. **Use strong admin passwords**: Choose a unique, complex password
 6. **Keep updated**: Apply updates promptly
 
@@ -132,7 +132,7 @@ To check for updates:
 
 ```bash
 # Via CLI
-npx @rynarouter/cli doctor
+npx @tixrouter/cli doctor
 
 # Via API
 curl http://localhost:3000/v1/settings | jq .version
@@ -144,6 +144,6 @@ curl http://localhost:3000/v1/settings | jq .version
 
 For security-related questions or concerns:
 
-- **Security issues**: `security@ryna.dev`
-- **General questions**: [GitHub Discussions](https://github.com/ryna/RYNArouter/discussions)
-- **Bug reports**: [GitHub Issues](https://github.com/ryna/RYNArouter/issues)
+- **Security issues**: `security@rynaqrtz.dev`
+- **General questions**: [GitHub Discussions](https://github.com/rynaqrtz/TixRouter/discussions)
+- **Bug reports**: [GitHub Issues](https://github.com/rynaqrtz/TixRouter/issues)

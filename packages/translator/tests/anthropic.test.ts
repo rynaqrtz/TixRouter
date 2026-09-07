@@ -9,7 +9,7 @@ import type {
     AnthropicMessageRequest,
     ChatCompletionChunk,
     ChatCompletionResponse
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 test("anthropicToOpenAIRequest maps system string, messages, and tools", () => {
     const req: AnthropicMessageRequest = {

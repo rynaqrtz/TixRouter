@@ -11,7 +11,7 @@ import {
     type ProviderConfig,
     type TokenImportBody,
     type TokenImportParams
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { Err, Ok } from "@/utils/response.js";
 
 async function ExtractState(c: Context): Promise<string | undefined> {

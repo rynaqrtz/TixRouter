@@ -1,4 +1,4 @@
-import { OPENAI_BASE_URL } from "@rynarouter/constants";
+import { OPENAI_BASE_URL } from "@tixrouter/constants";
 import type {
     AIProvider,
     ChatCompletionChunk,
@@ -6,8 +6,8 @@ import type {
     ChatCompletionResponse,
     ModelListResponse,
     ModelObject
-} from "@rynarouter/types";
-import { isToolCallingNotSupportedError } from "@rynarouter/pricing";
+} from "@tixrouter/types";
+import { isToolCallingNotSupportedError } from "@tixrouter/pricing";
 import { parseDataLine, streamLines } from "./base.js";
 import { fetchWithRetry } from "./retry.js";
 
@@ -91,7 +91,7 @@ export class OpenAIExecutor implements AIProvider {
     private getHeaders(accept?: string): Record<string, string> {
         const headers: Record<string, string> = {
             "Content-Type": "application/json",
-            "User-Agent": "RYNArouter/1.0.0 (Node.js)",
+            "User-Agent": "TixRouter/1.0.0 (Node.js)",
             "Accept-Encoding": "identity",
             Accept: accept ?? "application/json"
         };

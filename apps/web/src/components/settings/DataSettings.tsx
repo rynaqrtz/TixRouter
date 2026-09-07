@@ -179,7 +179,7 @@ export function DataSettings({
                                 <span>Import Configuration</span>
                             </div>
                             <p className="text-[11px] text-muted-foreground">
-                                Restore preferences from a previously saved RYNA settings JSON
+                                Restore preferences from a previously saved TixRouter settings JSON
                                 file.
                             </p>
                         </div>

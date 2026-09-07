@@ -6,7 +6,7 @@ import {
     deleteAPIKeyDB,
     getRequireApiKeyDB,
     setRequireApiKeyDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 import { ApiKeyAuth, CreateApiKeyAuth } from "../src/middleware/ApiKeyAuth.js";
 
 const createdKeyIds: string[] = [];

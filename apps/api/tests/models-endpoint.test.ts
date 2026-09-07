@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { afterEach, beforeEach, test } from "node:test";
 import { Hono } from "hono";
-import type { AIProvider } from "@rynarouter/types";
-import { createFallbackRuleDB } from "@rynarouter/db";
+import type { AIProvider } from "@tixrouter/types";
+import { createFallbackRuleDB } from "@tixrouter/db";
 import { ModelsRouter } from "../src/routes/v1/models.js";
 import { registry } from "../src/services/registry.js";
 import { ModelsLogic } from "../src/logic/models.logic.js";
@@ -144,5 +144,5 @@ test("GET /v1/models exposes combo source models", async () => {
         data: Array<{ id: string; owned_by: string }>;
     };
 
-    assert.ok(body.data.some((model) => model.id === "rynarouter/smart-route"));
+    assert.ok(body.data.some((model) => model.id === "tixrouter/smart-route"));
 });

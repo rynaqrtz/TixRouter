@@ -5,8 +5,8 @@ import {
     getAllFallbackRulesDB,
     getFallbackRuleByIdDB,
     updateFallbackRuleDB
-} from "@rynarouter/db";
-import { FallbackRuleSchema, UpdateFallbackRuleSchema } from "@rynarouter/types";
+} from "@tixrouter/db";
+import { FallbackRuleSchema, UpdateFallbackRuleSchema } from "@tixrouter/types";
 import { Err, Ok } from "@/utils/response.js";
 
 export class FallbacksController {

@@ -1,10 +1,10 @@
-import { performWebSearch, type WebSearchResponse } from "@rynarouter/executors";
+import { performWebSearch, type WebSearchResponse } from "@tixrouter/executors";
 import type {
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatMessage,
     ToolCall
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 export const INTERCEPTED_SEARCH_TOOLS = new Set([
     "web_search",

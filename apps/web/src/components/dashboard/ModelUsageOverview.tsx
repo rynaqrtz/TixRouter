@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { ArrowDown, ArrowUp, Cpu, Layers, BarChart2 } from "lucide-react";
-import type { UsageStats } from "@rynarouter/types";
+import type { UsageStats } from "@tixrouter/types";
 import { ProviderIcon } from "@/components/ProviderIcon";
 import { formatCompactNumber } from "@/lib/utils";
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { useKeys } from "@/hooks/useKeys";
-import type { CreateAPIKeyZod, APIKeyZod } from "@rynarouter/types";
+import type { CreateAPIKeyZod, APIKeyZod } from "@tixrouter/types";
 import { Button } from "@/components/ui/button";
 import { KeysSkeleton } from "@/components/skeletons";
 

@@ -18,7 +18,7 @@ import {
     ChevronLeft,
     ChevronRight
 } from "lucide-react";
-import type { RequestLogEntry } from "@rynarouter/types";
+import type { RequestLogEntry } from "@tixrouter/types";
 import { Badge } from "@/components/ui/badge";
 import {
     Table,

@@ -4,7 +4,7 @@ import {
     isSeedProvider,
     providerAlias,
     providerBaseId
-} from "@rynarouter/constants";
+} from "@tixrouter/constants";
 import type {
     CreateProviderZod,
     ModelObject,
@@ -13,14 +13,14 @@ import type {
     ProviderDefinition,
     ProviderProtocol,
     VerifyProviderZod
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import {
     addCustomModelDB,
     deleteCustomModelDB,
     getAllProvidersDB,
     getCustomModelsByProviderDB,
     upsertProviderDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 import { loadSavedProvidersFromDB, registry } from "@/services/registry.js";
 import { AssertPublicUrl } from "@/utils/ssrf.js";
 
@@ -426,7 +426,7 @@ export class ProvidersLogic {
                 }
 
                 const Headers: Record<string, string> = {
-                    "User-Agent": "RYNArouter/1.1.0 (Node.js)",
+                    "User-Agent": "TixRouter/1.1.0 (Node.js)",
                     Accept: "application/json",
                     "anthropic-version": "2023-06-01"
                 };
@@ -524,7 +524,7 @@ export class ProvidersLogic {
             }
 
             const Headers: Record<string, string> = {
-                "User-Agent": "RYNArouter/1.1.0 (Node.js)",
+                "User-Agent": "TixRouter/1.1.0 (Node.js)",
                 "Accept-Encoding": "identity",
                 Accept: "application/json"
             };

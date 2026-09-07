@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { COMMANDCODE_BASE_URL, COMMANDCODE_MODELS_URL } from "@rynarouter/constants";
+import { COMMANDCODE_BASE_URL, COMMANDCODE_MODELS_URL } from "@tixrouter/constants";
 import type {
     AIProvider,
     ChatCompletionChunk,
@@ -7,14 +7,14 @@ import type {
     ChatCompletionResponse,
     ModelListResponse,
     ModelObject
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import {
     accumulateChunks,
     buildRequestBody,
     commandCodeEventToOpenAIChunk,
     createCommandCodeStreamState,
     type CommandCodeEvent
-} from "@rynarouter/translator";
+} from "@tixrouter/translator";
 import { parseDataLine, streamLines } from "./base.js";
 
 export interface CommandCodeExecutorOptions {

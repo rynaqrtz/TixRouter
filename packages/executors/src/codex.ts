@@ -4,8 +4,8 @@ import type {
     ChatCompletionRequest,
     ChatCompletionResponse,
     ModelObject
-} from "@rynarouter/types";
-import { CODEX_BASE_URL, CODEX_MODELS_URL } from "@rynarouter/constants";
+} from "@tixrouter/types";
+import { CODEX_BASE_URL, CODEX_MODELS_URL } from "@tixrouter/constants";
 import {
     accumulateChunks,
     ChatToResponsesBody,
@@ -15,7 +15,7 @@ import {
     ResponsesEventToChunk,
     type ResponsesRequestBody,
     type ResponsesStreamEventData
-} from "@rynarouter/translator";
+} from "@tixrouter/translator";
 import { parseDataLine, streamLines } from "./base.js";
 import { extractSseErrorMessage, MODEL_CAPACITY_MESSAGE } from "./sse.js";
 
@@ -73,7 +73,7 @@ const CODEX_DEFAULT_INSTRUCTIONS = `You are Codex, based on GPT-5. You are runni
 
 /**
  * Codex Executor — talks to ChatGPT backend Responses API.
- * Ported from 9router open-sse/executors/codex.js (simplified for RYNArouter).
+ * Ported from 9router open-sse/executors/codex.js (simplified for TixRouter).
  */
 export class CodexExecutor implements AIProvider {
     id: string;

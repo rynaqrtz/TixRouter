@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { APP_VERSION } from "@rynarouter/constants";
+import { APP_VERSION } from "@tixrouter/constants";
 
 export const CURRENT_VERSION = `v${APP_VERSION}`;
-export const GITHUB_REPO = "rynaqrtz/RYNArouter";
+export const GITHUB_REPO = "rynaqrtz/TixRouter";
 
 export interface GitHubTag {
     name: string;

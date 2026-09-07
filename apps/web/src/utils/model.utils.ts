@@ -1,7 +1,7 @@
-import type { ModelObject } from "@rynarouter/types";
+import type { ModelObject } from "@tixrouter/types";
 
 export function providerFor(model: ModelObject): string {
-    return model.owned_by ?? model.id.split("/")[0] ?? "ryna";
+    return model.owned_by ?? model.id.split("/")[0] ?? "tixrouter";
 }
 
 export function getProviderBadgeColor(provider: string): string {

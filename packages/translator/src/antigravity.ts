@@ -4,7 +4,7 @@ import type {
     ChatCompletionResponse,
     JSONObject,
     JSONValue
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import crypto from "node:crypto";
 
 export interface GeminiFunctionCall {

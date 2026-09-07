@@ -1,5 +1,5 @@
-import { BAI_BASE_URL, BAI_DEFAULT_MODELS } from "@rynarouter/constants";
-import type { ModelObject } from "@rynarouter/types";
+import { BAI_BASE_URL, BAI_DEFAULT_MODELS } from "@tixrouter/constants";
+import type { ModelObject } from "@tixrouter/types";
 import { OpenAIExecutor, type OpenAIExecutorOptions } from "./openai.js";
 
 export interface BAIExecutorOptions extends OpenAIExecutorOptions {}

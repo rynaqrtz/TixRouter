@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { PassThrough } from "node:stream";
-import type { ProviderConfig } from "@rynarouter/types";
-import { DeepSeekFreeExecutor, DeepSeekFreePoolExecutor, imageDataUrls, normalizeModel, parseAccounts, parseDataUrl } from "@rynarouter/executors";
-import { deleteProviderDB, upsertProviderDB } from "@rynarouter/db";
+import type { ProviderConfig } from "@tixrouter/types";
+import { DeepSeekFreeExecutor, DeepSeekFreePoolExecutor, imageDataUrls, normalizeModel, parseAccounts, parseDataUrl } from "@tixrouter/executors";
+import { deleteProviderDB, upsertProviderDB } from "@tixrouter/db";
 import { loadSavedProvidersFromDB, registry } from "../src/services/registry.js";
 
 const createdIds: string[] = [];
@@ -71,7 +71,7 @@ test("registry wires deepseek-free connections from email:password api key", () 
     const config: ProviderConfig = {
         id,
         providerId: "deepseek-free",
-        name: "RYNArouter Free Test",
+        name: "TixRouter Free Test",
         category: "free_tier",
         protocol: "openai",
         apiKey: "user@test.local:secret",
@@ -82,7 +82,7 @@ test("registry wires deepseek-free connections from email:password api key", () 
     loadSavedProvidersFromDB();
     const provider = registry.getProvider(id);
     assert.ok(provider, "executor should be registered for deepseek-free connection");
-    assert.equal(provider.name, "RYNArouter Free Test");
+    assert.equal(provider.name, "TixRouter Free Test");
 });
 
 test("stream yields reasoning_content then content for r1", async () => {
@@ -248,7 +248,7 @@ test("registry wires multi-account key into a pool executor", () => {
     const config: ProviderConfig = {
         id,
         providerId: "deepseek-free",
-        name: "RYNArouter Free Pool",
+        name: "TixRouter Free Pool",
         category: "free_tier",
         protocol: "openai",
         apiKey: "a@x.com:pw1;b@x.com:pw2",

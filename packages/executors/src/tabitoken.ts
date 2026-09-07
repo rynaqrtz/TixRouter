@@ -1,4 +1,4 @@
-import { TABITOKEN_BASE_URL } from "@rynarouter/constants";
+import { TABITOKEN_BASE_URL } from "@tixrouter/constants";
 import { OpenAIExecutor, type OpenAIExecutorOptions } from "./openai.js";
 
 export interface TabiTokenExecutorOptions extends OpenAIExecutorOptions {}

@@ -1,15 +1,15 @@
 {
-    "name": "@rynarouter/pricing",
-    "version": "1.1.0",
+    "name": "@tixrouter/pricing",
+    "version": "1.2.0",
     "type": "module",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ryna/RYNArouter.git",
+        "url": "https://github.com/ryna/TixRouter.git",
         "directory": "packages/pricing"
     },
-    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "homepage": "https://github.com/ryna/TixRouter#readme",
     "bugs": {
-        "url": "https://github.com/ryna/RYNArouter/issues"
+        "url": "https://github.com/ryna/TixRouter/issues"
     },
     "license": "MIT",
     "main": "dist/index.js",
@@ -27,7 +27,7 @@
         "update": "tsx scripts/update.ts"
     },
     "dependencies": {
-        "@rynarouter/types": "workspace:*"
+        "@tixrouter/types": "workspace:*"
     },
     "devDependencies": {
         "@types/node": "^26.4.1",

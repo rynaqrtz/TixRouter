@@ -26,25 +26,25 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.3
         version: 0.4.3(hono@4.13.7)(zod@3.25.76)
-      '@rynarouter/constants':
+      '@tixrouter/constants':
         specifier: workspace:*
         version: link:../../packages/constants
-      '@rynarouter/db':
+      '@tixrouter/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@rynarouter/executors':
+      '@tixrouter/executors':
         specifier: workspace:*
         version: link:../../packages/executors
-      '@rynarouter/pricing':
+      '@tixrouter/pricing':
         specifier: workspace:*
         version: link:../../packages/pricing
-      '@rynarouter/providers':
+      '@tixrouter/providers':
         specifier: workspace:*
         version: link:../../packages/providers
-      '@rynarouter/translator':
+      '@tixrouter/translator':
         specifier: workspace:*
         version: link:../../packages/translator
-      '@rynarouter/types':
+      '@tixrouter/types':
         specifier: workspace:*
         version: link:../../packages/types
       hono:
@@ -78,12 +78,6 @@ importers:
       '@fontsource/jetbrains-mono':
         specifier: ^5.3.0
         version: 5.3.0
-      '@rynarouter/constants':
-        specifier: workspace:*
-        version: link:../../packages/constants
-      '@rynarouter/types':
-        specifier: workspace:*
-        version: link:../../packages/types
       '@tanstack/react-query':
         specifier: ^5.102.8
         version: 5.102.8(react@19.2.8)
@@ -93,6 +87,12 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@tixrouter/constants':
+        specifier: workspace:*
+        version: link:../../packages/constants
+      '@tixrouter/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@xyflow/react':
         specifier: ^12.11.6
         version: 12.11.6(@types/react-dom@19.2.7(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -164,7 +164,7 @@ importers:
 
   packages/constants:
     dependencies:
-      '@rynarouter/types':
+      '@tixrouter/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
@@ -174,10 +174,10 @@ importers:
 
   packages/db:
     dependencies:
-      '@rynarouter/constants':
+      '@tixrouter/constants':
         specifier: workspace:*
         version: link:../constants
-      '@rynarouter/types':
+      '@tixrouter/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
@@ -190,16 +190,16 @@ importers:
 
   packages/executors:
     dependencies:
-      '@rynarouter/constants':
+      '@tixrouter/constants':
         specifier: workspace:*
         version: link:../constants
-      '@rynarouter/pricing':
+      '@tixrouter/pricing':
         specifier: workspace:*
         version: link:../pricing
-      '@rynarouter/translator':
+      '@tixrouter/translator':
         specifier: workspace:*
         version: link:../translator
-      '@rynarouter/types':
+      '@tixrouter/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
@@ -215,7 +215,7 @@ importers:
 
   packages/pricing:
     dependencies:
-      '@rynarouter/types':
+      '@tixrouter/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
@@ -231,10 +231,10 @@ importers:
 
   packages/providers:
     dependencies:
-      '@rynarouter/constants':
+      '@tixrouter/constants':
         specifier: workspace:*
         version: link:../constants
-      '@rynarouter/types':
+      '@tixrouter/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
@@ -250,13 +250,13 @@ importers:
 
   packages/translator:
     dependencies:
-      '@rynarouter/constants':
+      '@tixrouter/constants':
         specifier: workspace:*
         version: link:../constants
-      '@rynarouter/pricing':
+      '@tixrouter/pricing':
         specifier: workspace:*
         version: link:../pricing
-      '@rynarouter/types':
+      '@tixrouter/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:

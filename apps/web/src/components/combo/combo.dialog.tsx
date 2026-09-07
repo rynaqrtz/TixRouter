@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Brain, Eye, Info, Layers, Search, X } from "lucide-react";
 import { api } from "@/lib/api";
 import { ProviderIcon } from "@/components/ProviderIcon";
-import { ANTIGRAVITY_MODELS, KNOWN_PROVIDERS } from "@rynarouter/constants";
-import type { ModelListResponse } from "@rynarouter/types";
+import { ANTIGRAVITY_MODELS, KNOWN_PROVIDERS } from "@tixrouter/constants";
+import type { ModelListResponse } from "@tixrouter/types";
 
 export interface ComboModelItem {
     id: string;

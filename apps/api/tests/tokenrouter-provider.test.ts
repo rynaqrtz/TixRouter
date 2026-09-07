@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { deleteProviderDB, upsertProviderDB } from "@rynarouter/db";
-import type { ProviderConfig } from "@rynarouter/types";
+import { deleteProviderDB, upsertProviderDB } from "@tixrouter/db";
+import type { ProviderConfig } from "@tixrouter/types";
 import { AuthLogic } from "../src/logic/auth.logic.js";
 import { AuthHandlers } from "../src/services/authHandlers.js";
 

@@ -31,7 +31,7 @@ import { useTokenSaver } from "@/hooks/useTokenSaver";
 import { ProviderIcon } from "@/components/ProviderIcon";
 import { api, getGatewayBaseUrl } from "@/lib/api";
 import { isProviderConnected, getConnectedCount } from "@/utils/provider.utils";
-import type { RequestLogEntry } from "@rynarouter/types";
+import type { RequestLogEntry } from "@tixrouter/types";
 import type { ListResponse } from "@/lib/types";
 
 type SelectedNodeInfo = {
@@ -66,7 +66,7 @@ function CentralCoreHubNode({ data, selected }: NodeProps) {
                     </div>
                     <div className="min-w-0">
                         <span className="block text-[9px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Central Hub</span>
-                        <h3 className="text-xs font-bold text-foreground truncate">RYNA Core</h3>
+                        <h3 className="text-xs font-bold text-foreground truncate">TixRouter Core</h3>
                     </div>
                 </div>
                 <span className={`rounded border px-1.5 py-0.5 text-[8.5px] font-mono font-bold transition-colors ${hasActiveTraffic ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-500" : "border-border/70 bg-secondary/80 text-foreground"}`}>
@@ -161,7 +161,7 @@ function NodeDetailInspector({ selectedNode, onClose, tokenSaverSettings, onTrig
                         <div className="space-y-2.5">
                             <div className="flex items-center gap-2">
                                 <Zap className="size-3.5 text-foreground" />
-                                <span className="text-xs font-bold text-foreground">RYNA Core Gateway</span>
+                                <span className="text-xs font-bold text-foreground">TixRouter Core Gateway</span>
                             </div>
                             <p className="text-[11px] text-muted-foreground leading-relaxed">High-speed proxy middleware hub dispatching requests directly to surrounding upstream providers.</p>
                             <div className="space-y-1.5 rounded-lg border border-border/60 bg-secondary/30 p-2.5 text-[10.5px]">
@@ -251,7 +251,7 @@ function ProviderMatrixView({ displayedProviders, isTokenSaverActive, activeProv
                 <div className="flex items-center gap-2.5">
                     <div className="flex size-7 shrink-0 items-center justify-center rounded-md border border-border/80 bg-card text-foreground"><Zap className="size-3.5" /></div>
                     <div>
-                        <div className="text-xs font-bold text-foreground">RYNA Core Gateway</div>
+                        <div className="text-xs font-bold text-foreground">TixRouter Core Gateway</div>
                         <div className="text-[10px] text-muted-foreground truncate max-w-sm">{apiBase}</div>
                     </div>
                 </div>
@@ -433,7 +433,7 @@ function GatewayTopologyCanvas() {
                                 </span>
                             )}
                         </div>
-                        <p className="text-[11px] text-muted-foreground mt-0.5">Hub-and-spoke radial constellation of RYNA Core dispatching directly to all connected providers.</p>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">Hub-and-spoke radial constellation of TixRouter Core dispatching directly to all connected providers.</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-secondary/30 p-1">

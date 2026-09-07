@@ -1,5 +1,5 @@
 import type { Context, MiddlewareHandler } from "hono";
-import type { APIKeyZod } from "@rynarouter/types";
+import type { APIKeyZod } from "@tixrouter/types";
 import { Err } from "@/utils/response.js";
 import { GetDirectClientAddress } from "@/middleware/ApiKeyAuth.js";
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { api, getGatewayBaseUrl } from "@/lib/api";
-import type { APIKeyZod } from "@rynarouter/types";
+import type { APIKeyZod } from "@tixrouter/types";
 
 export interface GatewayInfo {
     baseUrl: string;

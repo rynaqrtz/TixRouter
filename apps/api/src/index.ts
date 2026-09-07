@@ -23,17 +23,17 @@ import { resolveWebDistPath } from "@/services/webDist.js";
 import { warmModelRegistry } from "@/services/registry.js";
 import { bootstrapAdminAccountFromEnv } from "@/services/adminAuth.js";
 import { autostartTunnelIfEnabled } from "@/services/cloudflareTunnel.js";
-import { adminAuthStore } from "@rynarouter/db";
+import { adminAuthStore } from "@tixrouter/db";
 
 import { HTTPException } from "hono/http-exception";
-import { API_VERSION } from "@rynarouter/constants";
+import { API_VERSION } from "@tixrouter/constants";
 
 const app = new Hono();
 
 // Security Headers & Version Middleware
 app.use("/*", async (c, next) => {
     await next();
-    c.header("X-Powered-By", "RYNA");
+    c.header("X-Powered-By", "TixRouter");
     c.header("X-Version", API_VERSION);
     c.header("X-Content-Type-Options", "nosniff");
     c.header("X-Frame-Options", "DENY");
@@ -41,7 +41,7 @@ app.use("/*", async (c, next) => {
     c.header("Referrer-Policy", "strict-origin-when-cross-origin");
 });
 
-// CORS: loopback origins always pass; public origins require RYNAROUTER_CORS_ORIGINS.
+// CORS: loopback origins always pass; public origins require TIXROUTER_CORS_ORIGINS.
 const CorsAllowlist = ParseAllowedOrigins();
 app.use("/*", CreateCorsMiddleware(CorsAllowlist));
 
@@ -51,7 +51,7 @@ app.use("/v1/*", CreateCsrfOriginGuard(CorsAllowlist));
 // Reject oversized bodies before they are buffered into memory.
 app.use("/v1/*", CreateBodyLimitMiddleware());
 
-// Bootstrap the admin account only when RYNAROUTER_ADMIN_PASSWORD is set.
+// Bootstrap the admin account only when TIXROUTER_ADMIN_PASSWORD is set.
 // Otherwise first-run setup happens through the dashboard.
 bootstrapAdminAccountFromEnv(adminAuthStore);
 
@@ -59,7 +59,7 @@ bootstrapAdminAccountFromEnv(adminAuthStore);
 autostartTunnelIfEnabled();
 
 const apiInfo = () => ({
-    name: "RYNArouter API",
+    name: "TixRouter API",
     status: "ok",
     version: API_VERSION,
     documentation: "Multi-Provider OpenAI & Anthropic Compatible LLM Gateway"
@@ -161,7 +161,7 @@ serve(
         port
     },
     (info) => {
-        console.log(`🚀 RYNArouter Server running at http://localhost:${info.port}`);
+        console.log(`🚀 TixRouter Server running at http://localhost:${info.port}`);
         if (hasWebDist) {
             console.log(`🌐 Web Dashboard & API live at http://localhost:${info.port}`);
         } else {

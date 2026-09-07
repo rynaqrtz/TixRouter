@@ -8,13 +8,13 @@ import {
     deleteProviderDB,
     setRequireApiKeyDB,
     upsertProviderDB
-} from "@rynarouter/db";
+} from "@tixrouter/db";
 import type {
     AIProvider,
     ChatCompletionRequest,
     ChatCompletionResponse,
     ProviderConfig
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { MessagesRouter } from "../src/routes/v1/messages.js";
 
 const app = new Hono();
@@ -57,7 +57,7 @@ test("POST /v1/messages returns Anthropic message response for non-streaming req
                         index: 0,
                         message: {
                             role: "assistant",
-                            content: "Hello from Claude via RYNArouter!"
+                            content: "Hello from Claude via TixRouter!"
                         },
                         finish_reason: "stop"
                     }
@@ -104,7 +104,7 @@ test("POST /v1/messages returns Anthropic message response for non-streaming req
     assert.equal(data.model, "claude-3-7-sonnet-20250219");
     assert.equal(data.stop_reason, "end_turn");
     assert.equal(data.content[0]?.type, "text");
-    assert.equal(data.content[0]?.text, "Hello from Claude via RYNArouter!");
+    assert.equal(data.content[0]?.text, "Hello from Claude via TixRouter!");
     assert.equal(data.usage.input_tokens, 15);
     assert.equal(data.usage.output_tokens, 8);
 });

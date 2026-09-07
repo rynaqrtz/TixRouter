@@ -5,8 +5,8 @@ import {
     deleteAPIKeyDB,
     addCreditAPIKeyDB,
     updateAPIKeyDB
-} from "@rynarouter/db";
-import { CreateAPIKeySchema, AddCreditSchema, UpdateAPIKeySchema } from "@rynarouter/types";
+} from "@tixrouter/db";
+import { CreateAPIKeySchema, AddCreditSchema, UpdateAPIKeySchema } from "@tixrouter/types";
 import { Err, Ok } from "@/utils/response.js";
 
 export class KeysController {

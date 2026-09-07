@@ -1,10 +1,10 @@
-import { CODEBUDDY_CN_DOMAIN, CODEBUDDY_CN_USER_AGENT, isProviderBaseId } from "@rynarouter/constants";
+import { CODEBUDDY_CN_DOMAIN, CODEBUDDY_CN_USER_AGENT, isProviderBaseId } from "@tixrouter/constants";
 import type {
     LiveModelQuotaItem,
     ProviderQuotaAccount,
     ProviderUsageMetric,
     QuotaResponse
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { getProviderModelUsageDB } from "./logs.js";
 import { getAllProvidersDB } from "./providers.js";
 import { num, str } from "./row-utils.js";

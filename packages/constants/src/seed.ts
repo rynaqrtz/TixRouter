@@ -1,4 +1,4 @@
-import type { ProviderCategory, ProviderProtocol } from "@rynarouter/types";
+import type { ProviderCategory, ProviderProtocol } from "@tixrouter/types";
 import { KNOWN_PROVIDERS } from "./providers.js";
 
 export interface DefaultProviderSeed {

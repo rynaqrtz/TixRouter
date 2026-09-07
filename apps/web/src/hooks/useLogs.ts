@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { RequestLogEntry } from "@rynarouter/types";
+import type { RequestLogEntry } from "@tixrouter/types";
 
 export type LogStatusFilter = "all" | "success" | "error";
 

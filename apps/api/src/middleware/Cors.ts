@@ -3,7 +3,7 @@ import type { MiddlewareHandler } from "hono";
 
 const LOOPBACK_ORIGIN = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/;
 
-export function ParseAllowedOrigins(EnvValue = process.env.RYNAROUTER_CORS_ORIGINS): Set<string> {
+export function ParseAllowedOrigins(EnvValue = process.env.TIXROUTER_CORS_ORIGINS): Set<string> {
     return new Set(
         (EnvValue ?? "")
             .split(",")

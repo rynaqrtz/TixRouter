@@ -1,4 +1,4 @@
-import { BLUESMINDS_BASE_URL } from "@rynarouter/constants";
+import { BLUESMINDS_BASE_URL } from "@tixrouter/constants";
 import { OpenAIExecutor, type OpenAIExecutorOptions } from "./openai.js";
 
 export interface BluesMindsExecutorOptions extends OpenAIExecutorOptions {}

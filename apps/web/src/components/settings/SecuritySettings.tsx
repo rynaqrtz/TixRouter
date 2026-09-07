@@ -48,7 +48,7 @@ export function SecuritySettings({
   -H "Content-Type: application/json" \\
 ${
     requireApiKey
-        ? '  -H "Authorization: Bearer ryna-live-your_virtual_key" \\\n'
+        ? '  -H "Authorization: Bearer tix-live-your_virtual_key" \\\n'
         : '  # -H "Authorization: Bearer <optional_key>" \\\n'
 }  -d '{
     "model": "antigravity/gemini-2.5-flash",
@@ -63,13 +63,13 @@ ${
 
 const client = new OpenAI({
   baseURL: "${apiBase}",
-  apiKey: "${requireApiKey ? "ryna-live-your_virtual_key" : "optional_or_any_string"}",
+  apiKey: "${requireApiKey ? "tix-live-your_virtual_key" : "optional_or_any_string"}",
 });
 
 async function main() {
   const response = await client.chat.completions.create({
     model: "antigravity/gemini-2.5-flash",
-    messages: [{ role: "user", content: "Hello RYNA!" }],
+    messages: [{ role: "user", content: "Hello TixRouter!" }],
   });
 
   console.log(response.choices[0].message.content);
@@ -82,12 +82,12 @@ main();`;
 
 client = OpenAI(
     base_url="${apiBase}",
-    api_key="${requireApiKey ? "ryna-live-your_virtual_key" : "optional_or_any_string"}"
+    api_key="${requireApiKey ? "tix-live-your_virtual_key" : "optional_or_any_string"}"
 )
 
 response = client.chat.completions.create(
     model="antigravity/gemini-2.5-flash",
-    messages=[{"role": "user", "content": "Hello RYNA!"}]
+    messages=[{"role": "user", "content": "Hello TixRouter!"}]
 )
 
 print(response.choices[0].message.content)`;
@@ -176,8 +176,8 @@ print(response.choices[0].message.content)`;
                             </div>
                             <p className="text-[11px] text-muted-foreground leading-relaxed max-w-xl">
                                 {requireApiKey
-                                    ? "Gateway endpoints will reject unauthenticated requests with HTTP 401 Unauthorized unless a valid virtual RYNA key is supplied in the Authorization header."
-                                    : "Open access mode: Anyone can query RYNA models without an API key. Ideal for localhost development, IDE extensions, or private network deployments."}
+                                    ? "Gateway endpoints will reject unauthenticated requests with HTTP 401 Unauthorized unless a valid virtual TixRouter key is supplied in the Authorization header."
+                                    : "Open access mode: Anyone can query TixRouter models without an API key. Ideal for localhost development, IDE extensions, or private network deployments."}
                             </p>
                         </div>
 

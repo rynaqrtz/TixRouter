@@ -4,7 +4,7 @@ import type {
     TokenSaverSettings,
     TokenSaverPreviewResponse,
     TrimMessagesSettings
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 const ANSI_REGEX = /\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])/g;
 

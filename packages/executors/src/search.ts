@@ -242,7 +242,7 @@ export async function performWebSearch(
         const wikiRes = await fetch(
             `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(trimmedQuery)}&format=json`,
             {
-                headers: { "User-Agent": "RYNArouter/1.0" },
+                headers: { "User-Agent": "TixRouter/1.0" },
                 signal: AbortSignal.timeout(4000)
             }
         );

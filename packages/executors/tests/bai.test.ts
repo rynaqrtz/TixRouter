@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { BAIExecutor } from "../src/bai.js";
-import { BAI_BASE_URL, BAI_DEFAULT_MODELS } from "@rynarouter/constants";
+import { BAI_BASE_URL, BAI_DEFAULT_MODELS } from "@tixrouter/constants";
 
 describe("BAIExecutor", () => {
     it("initializes with default options", () => {

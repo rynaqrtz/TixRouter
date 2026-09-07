@@ -21,9 +21,9 @@ function createTestApp(options: { address?: string } = {}) {
 }
 
 function getSessionCookie(response: Response): string {
-    const cookie = response.headers.get("set-cookie")?.match(/rynarouter_admin_session=([^;]+)/)?.[1];
+    const cookie = response.headers.get("set-cookie")?.match(/tixrouter_admin_session=([^;]+)/)?.[1];
     assert.ok(cookie);
-    return `rynarouter_admin_session=${cookie}`;
+    return `tixrouter_admin_session=${cookie}`;
 }
 
 test("admin status reports setup and authentication state", async () => {

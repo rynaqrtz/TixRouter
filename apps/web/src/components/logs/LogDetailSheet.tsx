@@ -1,5 +1,5 @@
 import { ScrollText } from "lucide-react";
-import type { RequestLogEntry } from "@rynarouter/types";
+import type { RequestLogEntry } from "@tixrouter/types";
 import {
     Sheet,
     SheetContent,

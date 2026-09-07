@@ -139,7 +139,7 @@ async function main(): Promise<void> {
             const reasoning: string[] = [];
             for await (const chunk of exec.chatCompletionStream({
                 model,
-                messages: [{ role: "user", content: "Reply with exactly: RYNA OK" }]
+                messages: [{ role: "user", content: "Reply with exactly: TixRouter OK" }]
             })) {
                 const delta = chunk.choices[0]?.delta;
                 if (delta?.content) content.push(delta.content);

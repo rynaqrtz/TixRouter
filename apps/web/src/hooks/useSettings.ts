@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
-import { APP_VERSION } from "@rynarouter/constants";
+import { APP_VERSION } from "@tixrouter/constants";
 
 export interface AppSettings {
     // Appearance
@@ -48,7 +48,7 @@ const DEFAULT_SETTINGS: AppSettings = {
     streamResponse: true
 };
 
-const STORAGE_KEY = "rynarouter_app_settings";
+const STORAGE_KEY = "tixrouter_app_settings";
 
 export function useSettings() {
     const [settings, setSettings] = useState<AppSettings>(() => {
@@ -99,7 +99,7 @@ export function useSettings() {
         downloadAnchor.setAttribute("href", dataStr);
         downloadAnchor.setAttribute(
             "download",
-            `ryna-settings-${new Date().toISOString().slice(0, 10)}.json`
+            `tixrouter-settings-${new Date().toISOString().slice(0, 10)}.json`
         );
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();

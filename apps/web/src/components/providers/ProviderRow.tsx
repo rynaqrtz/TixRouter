@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Cpu, Layers } from "lucide-react";
-import type { ProviderDefinition } from "@rynarouter/types";
+import type { ProviderDefinition } from "@tixrouter/types";
 import { ProviderIcon } from "@/components/ProviderIcon";
 import { getConnectedCount } from "@/utils/provider.utils";
 

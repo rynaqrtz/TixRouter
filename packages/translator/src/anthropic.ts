@@ -14,7 +14,7 @@ import type {
     FinishReason,
     ToolCall,
     ToolDefinition
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 
 function mapSystemPrompt(system: AnthropicMessageRequest["system"]): ChatMessage | null {
     if (!system) return null;

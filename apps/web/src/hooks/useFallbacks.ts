@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import type { FallbackRule } from "@rynarouter/types";
+import type { FallbackRule } from "@tixrouter/types";
 
 export function useFallbacks() {
     const [fallbacks, setFallbacks] = useState<FallbackRule[]>([]);

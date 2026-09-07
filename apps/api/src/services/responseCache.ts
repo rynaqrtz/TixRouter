@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import type { ChatCompletionRequest, ChatCompletionResponse } from "@rynarouter/types";
-import { getSettingDB } from "@rynarouter/db";
+import type { ChatCompletionRequest, ChatCompletionResponse } from "@tixrouter/types";
+import { getSettingDB } from "@tixrouter/db";
 
 const CACHE_TTL_MS = 60_000;
 const CACHE_MAX_ENTRIES = 500;

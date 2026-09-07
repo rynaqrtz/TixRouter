@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Plug, CheckCircle2, Globe, Key, X } from "lucide-react";
 import { toast } from "sonner";
-import type { ProviderDefinition, ProviderProtocol } from "@rynarouter/types";
+import type { ProviderDefinition, ProviderProtocol } from "@tixrouter/types";
 import {
     Dialog,
     DialogContent,

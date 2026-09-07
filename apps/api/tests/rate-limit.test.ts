@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
 import { Hono } from "hono";
-import { createAPIKeyDB, deleteAPIKeyDB } from "@rynarouter/db";
+import { createAPIKeyDB, deleteAPIKeyDB } from "@tixrouter/db";
 import { CreateRateLimitMiddleware } from "../src/middleware/RateLimit.js";
-import type { APIKeyZod } from "@rynarouter/types";
+import type { APIKeyZod } from "@tixrouter/types";
 
 const createdKeyIds: string[] = [];
 

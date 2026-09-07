@@ -1,6 +1,6 @@
 import type { Context, MiddlewareHandler, Next } from "hono";
 import { getCookie } from "hono/cookie";
-import { adminAuthStore, type AdminAuthStore } from "@rynarouter/db";
+import { adminAuthStore, type AdminAuthStore } from "@tixrouter/db";
 import { Err } from "@/utils/response.js";
 import { ADMIN_SESSION_COOKIE, verifyAdminSession } from "@/services/adminAuth.js";
 

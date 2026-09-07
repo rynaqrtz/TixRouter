@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { deleteProviderDB, getProviderByIdDB, upsertProviderDB } from "@rynarouter/db";
-import type { ProviderConfig } from "@rynarouter/types";
+import { deleteProviderDB, getProviderByIdDB, upsertProviderDB } from "@tixrouter/db";
+import type { ProviderConfig } from "@tixrouter/types";
 import { AuthLogic } from "../src/logic/auth.logic.js";
 import { AuthHandlers } from "../src/services/authHandlers.js";
 
@@ -89,8 +89,8 @@ test("pollQoderDeviceToken polls upstream and creates provider when user authori
         }
         if (urlStr.includes("/userinfo")) {
             return Response.json({
-                name: "RYNA Dev",
-                email: "ryna@example.com"
+                name: "TixRouter Dev",
+                email: "tixrouter@example.com"
             });
         }
         return Response.json({});
@@ -102,5 +102,5 @@ test("pollQoderDeviceToken polls upstream and creates provider when user authori
     createdIds.push(pollResult.provider.id);
 
     assert.equal(pollResult.provider.accessToken, "dt-polled-device-token");
-    assert.equal(pollResult.provider.name, "Qoder (RYNA Dev)");
+    assert.equal(pollResult.provider.name, "Qoder (TixRouter Dev)");
 });

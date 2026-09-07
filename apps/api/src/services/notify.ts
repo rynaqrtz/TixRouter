@@ -1,4 +1,4 @@
-import { getSettingDB } from "@rynarouter/db";
+import { getSettingDB } from "@tixrouter/db";
 
 const NOTIFY_COOLDOWN_MS = 5 * 60_000;
 let lastNotifiedAt = 0;
@@ -11,7 +11,7 @@ export async function notifyProviderFailure(model: string, err: unknown): Promis
     lastNotifiedAt = now;
     const body = JSON.stringify({
         event: "provider_failure",
-        service: "RYNArouter",
+        service: "TixRouter",
         provider: model.split("/")[0] || "default",
         model,
         error: err instanceof Error ? err.message : String(err),

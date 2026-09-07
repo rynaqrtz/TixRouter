@@ -5,12 +5,12 @@ import {
     fetchCodeBuddyCNLiveQuota,
     saveOAuthSessionDB,
     upsertProviderDB
-} from "@rynarouter/db";
-import { CODEBUDDY_CN_BASE_URL, providerById } from "@rynarouter/constants";
-import type { ProviderConfig } from "@rynarouter/types";
+} from "@tixrouter/db";
+import { CODEBUDDY_CN_BASE_URL, providerById } from "@tixrouter/constants";
+import type { ProviderConfig } from "@tixrouter/types";
 import { AuthLogic } from "../src/logic/auth.logic.js";
 import { AuthHandlers } from "../src/services/authHandlers.js";
-import { CodeBuddyCNOAuth } from "@rynarouter/providers";
+import { CodeBuddyCNOAuth } from "@tixrouter/providers";
 import { ProvidersLogic } from "../src/logic/providers.logic.js";
 
 const createdIds: string[] = [];

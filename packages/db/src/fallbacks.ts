@@ -2,7 +2,7 @@ import type {
     CreateFallbackRuleInput,
     FallbackRule,
     UpdateFallbackRuleInput
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { db } from "./db.js";
 import { generateId, num, optStr, str } from "./row-utils.js";
 

@@ -1,6 +1,6 @@
-import type { ModelObject } from "@rynarouter/types";
-import { getAllCustomModelsDB, getAllFallbackRulesDB } from "@rynarouter/db";
-import { providerAlias, providerBaseId } from "@rynarouter/constants";
+import type { ModelObject } from "@tixrouter/types";
+import { getAllCustomModelsDB, getAllFallbackRulesDB } from "@tixrouter/db";
+import { providerAlias, providerBaseId } from "@tixrouter/constants";
 import { registry } from "@/services/registry.js";
 
 export class ModelsLogic {
@@ -35,14 +35,14 @@ export class ModelsLogic {
         }
 
         for (const ComboModel of ComboModels) {
-            const VirtualModelId = ComboModel.startsWith("rynarouter/")
+            const VirtualModelId = ComboModel.startsWith("tixrouter/")
                 ? ComboModel
-                : `rynarouter/${ComboModel}`;
+                : `tixrouter/${ComboModel}`;
 
             Merged.set(ComboModel.toLowerCase(), {
                 id: VirtualModelId,
                 object: "model",
-                owned_by: "rynarouter",
+                owned_by: "tixrouter",
                 custom: true
             });
         }
@@ -83,11 +83,11 @@ export class ModelsLogic {
     ): Promise<ModelObject | undefined> {
         if (!ModelId) return undefined;
         const Models = await registry.listAllModels(undefined, ForceRefresh);
-        const CleanId = ModelId.replace(/^rynarouter\//, "");
+        const CleanId = ModelId.replace(/^tixrouter\//, "");
 
         return Models.find(
             (M) =>
-                M.id.replace(/^rynarouter\//, "") === CleanId ||
+                M.id.replace(/^tixrouter\//, "") === CleanId ||
                 M.id.endsWith(`/${CleanId}`) ||
                 CleanId.endsWith(`/${M.id}`)
         );

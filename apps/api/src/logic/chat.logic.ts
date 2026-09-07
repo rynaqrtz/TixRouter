@@ -3,11 +3,11 @@ import {
     getTokenSaverSettingsDB,
     logRequestDB,
     incrementAPIKeyUsageDB
-} from "@rynarouter/db";
-import { applyTokenSaver, estimateCostForUsage, extractUsageBreakdown } from "@rynarouter/translator";
+} from "@tixrouter/db";
+import { applyTokenSaver, estimateCostForUsage, extractUsageBreakdown } from "@tixrouter/translator";
 import { getCachedResponse, setCachedResponse } from "../services/responseCache.js";
 import { notifyProviderFailure } from "../services/notify.js";
-import { modelSupportsToolCalling } from "@rynarouter/pricing";
+import { modelSupportsToolCalling } from "@tixrouter/pricing";
 import type {
     ChatCompletionChunk,
     ChatCompletionRequest,
@@ -16,7 +16,7 @@ import type {
     FallbackRule,
     ToolCall,
     UsageInfo
-} from "@rynarouter/types";
+} from "@tixrouter/types";
 import { registry } from "@/services/registry.js";
 import { ensureFreshToken } from "@/services/tokenRefresh.js";
 import { executeInterceptedSearch, shouldInterceptToolCall } from "@/services/toolInterceptor.js";
