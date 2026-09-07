@@ -39,3 +39,12 @@ export function getRequireApiKeyDB(): boolean {
 export function setRequireApiKeyDB(required: boolean): void {
     setSettingDB("require_api_key", required ? "true" : "false");
 }
+
+export function getAcceptAnyBearerDB(): boolean {
+    const Val = getSettingDB("accept_any_bearer", "false");
+    return Val === "true" || Val === "1";
+}
+
+export function setAcceptAnyBearerDB(accepted: boolean): void {
+    setSettingDB("accept_any_bearer", accepted ? "true" : "false");
+}

@@ -48,6 +48,29 @@ export function modelSupportsToolCalling(model: string): boolean {
     return true;
 }
 
+export interface ModelLimits {
+    context_window?: number;
+    max_output_tokens?: number;
+}
+
+export function getModelLimits(model: string): ModelLimits {
+    if (!model) return {};
+
+    const data = getModelsDevData();
+    const keys = [model, stripProviderPrefix(model), model.toLowerCase(), stripProviderPrefix(model).toLowerCase()];
+
+    for (const key of keys) {
+        const entry = data[key];
+        if (entry?.limit?.context || entry?.limit?.output) {
+            return {
+                context_window: entry.limit?.context,
+                max_output_tokens: entry.limit?.output
+            };
+        }
+    }
+    return {};
+}
+
 /**
  * Detect if an error message indicates the model doesn't support tool calling.
  */

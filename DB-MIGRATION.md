@@ -1,5 +1,11 @@
 # DB Migration Notes
 
+## v1.3.0 — Shadow Arena
+
+New table `arena_trials` (id, created_at, source_model, candidate_model, judge_model,
+prompt_hash, verdict, latency_ms, candidate_cost) plus two indexes. Created automatically by
+`initDatabase()` on first start — no data migration needed.
+
 ## v1.2.0 — TixRouter rebrand (data path migration)
 
 No schema changes. Storage locations were renamed; migration happens automatically on the first

@@ -1,7 +1,10 @@
 import type { Context } from "hono";
 import {
     getAllSettingsDB,
+    getAcceptAnyBearerDB,
+    getArenaStatsDB,
     getRequireApiKeyDB,
+    setAcceptAnyBearerDB,
     setRequireApiKeyDB,
     setSettingDB
 } from "@tixrouter/db";
@@ -13,8 +16,13 @@ export class SettingsController {
         return Ok(c, {
             require_api_key: getRequireApiKeyDB(),
             requireApiKey: getRequireApiKeyDB(),
+            accept_any_bearer: getAcceptAnyBearerDB(),
             settings: getAllSettingsDB()
         });
+    }
+
+    public static GetArenaStats(c: Context): Response {
+        return Ok(c, { stats: getArenaStatsDB() });
     }
 
     public static async UpdateSettings(c: Context): Promise<Response> {
@@ -28,6 +36,9 @@ export class SettingsController {
             if (typeof Parsed.data.require_api_key === "boolean") {
                 setRequireApiKeyDB(Parsed.data.require_api_key);
             }
+            if (typeof Parsed.data.accept_any_bearer === "boolean") {
+                setAcceptAnyBearerDB(Parsed.data.accept_any_bearer);
+            }
             if (Parsed.data.settings) {
                 for (const [key, value] of Object.entries(Parsed.data.settings)) {
                     if (typeof value === "string") {
@@ -40,6 +51,7 @@ export class SettingsController {
                 message: "Settings updated successfully",
                 require_api_key: getRequireApiKeyDB(),
                 requireApiKey: getRequireApiKeyDB(),
+                accept_any_bearer: getAcceptAnyBearerDB(),
                 settings: getAllSettingsDB()
             });
         } catch (error) {

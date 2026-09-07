@@ -4,6 +4,7 @@ import { getConnInfo } from "@hono/node-server/conninfo";
 import {
     adminAuthStore,
     getAPIKeyByKeyDB,
+    getAcceptAnyBearerDB,
     getRequireApiKeyDB,
     type AdminAuthStore
 } from "@tixrouter/db";
@@ -53,7 +54,7 @@ export function CreateApiKeyAuth(Options: ApiKeyAuthOptions = {}) {
 
         const ClientAddress = GetClientAddress(c);
         const IsLoopback = isLoopbackAddress(ClientAddress);
-        const IsRequired = getRequireApiKeyDB() || !IsLoopback;
+        const IsRequired = getRequireApiKeyDB() || (!IsLoopback && !getAcceptAnyBearerDB());
         const AuthHeader = c.req.header("Authorization") || c.req.header("authorization");
         const XApiKey =
             c.req.header("x-api-key") || c.req.header("X-Api-Key") || c.req.header("X-API-KEY");

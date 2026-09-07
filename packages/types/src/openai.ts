@@ -146,6 +146,8 @@ export interface ModelObject {
     owned_by: string;
     /** True when the entry was manually added by the user (custom_models table). */
     custom?: boolean;
+    context_window?: number;
+    max_output_tokens?: number;
 }
 
 export interface ModelListResponse {

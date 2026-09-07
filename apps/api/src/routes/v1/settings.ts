@@ -8,6 +8,7 @@ import { ApiKeyAuth } from "@/middleware/ApiKeyAuth.js";
 export const SettingsRouter = new Hono();
 
 SettingsRouter.get("/settings", ApiKeyAuth, SettingsController.GetSettings);
+SettingsRouter.get("/settings/arena", ApiKeyAuth, SettingsController.GetArenaStats);
 SettingsRouter.get("/settings/token-saver", ApiKeyAuth, TokenSaverController.GetSettings);
 SettingsRouter.get("/settings/fallbacks", ApiKeyAuth, FallbacksController.GetFallbacks);
 

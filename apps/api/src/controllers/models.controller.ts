@@ -1,5 +1,6 @@
 import type { Context } from "hono";
 import type { ModelListResponse } from "@tixrouter/types";
+import { getModelLimits } from "@tixrouter/pricing";
 import { ModelsLogic } from "@/logic/models.logic.js";
 import { Err, Ok } from "@/utils/response.js";
 import { GetApiKeyRow, IsModelAllowed } from "@/middleware/ModelAccess.js";
@@ -51,7 +52,7 @@ export class ModelsController {
         const Model = await ModelsLogic.GetModelById(ModelId, ForceRefresh);
         if (Model) {
             c.header("Cache-Control", MODEL_CACHE_CONTROL);
-            return Ok(c, Model);
+            return Ok(c, { ...Model, ...getModelLimits(Model.id) });
         }
 
         return Err(c, `Model '${ModelId}' not found`, 404, {

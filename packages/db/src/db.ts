@@ -263,6 +263,28 @@ export function initDatabase(): void {
         CREATE INDEX IF NOT EXISTS idx_custom_models_provider
         ON custom_models(provider_id, created_at ASC);
     `);
+
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS arena_trials (
+            id TEXT PRIMARY KEY,
+            created_at INTEGER NOT NULL,
+            source_model TEXT NOT NULL,
+            candidate_model TEXT NOT NULL,
+            judge_model TEXT,
+            prompt_hash TEXT NOT NULL,
+            verdict TEXT NOT NULL,
+            latency_ms INTEGER,
+            candidate_cost REAL
+        );
+    `);
+
+    db.exec(`
+        CREATE INDEX IF NOT EXISTS idx_arena_created
+        ON arena_trials(created_at DESC);
+
+        CREATE INDEX IF NOT EXISTS idx_arena_candidate
+        ON arena_trials(candidate_model);
+    `);
 }
 
 // Auto-run schema initialization

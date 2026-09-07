@@ -20,8 +20,19 @@ import type {
 import { registry } from "@/services/registry.js";
 import { ensureFreshToken } from "@/services/tokenRefresh.js";
 import { executeInterceptedSearch, shouldInterceptToolCall } from "@/services/toolInterceptor.js";
+import { MaybeRunShadowTrial } from "@/logic/arena.logic.js";
 
 const MAX_INTERCEPT_DEPTH = 3;
+
+export interface ChatRouteMeta {
+    requestedModel?: string;
+    model?: string;
+    provider?: string;
+    fallbackOccurred?: boolean;
+    fallbackPath?: string[];
+    cached?: boolean;
+    attempts?: number;
+}
 
 interface AssembledStreamingToolCall {
     id: string;
@@ -96,6 +107,10 @@ function ResolveCandidates(originalModel: string): CandidateModel[] {
         }
     }
     return candidates;
+}
+
+export function PreviewCandidateModels(originalModel: string): string[] {
+    return ResolveCandidates(originalModel).map((Candidate) => Candidate.model);
 }
 
 function LogCompletion(
@@ -192,12 +207,14 @@ export class ChatLogic {
         body: ChatCompletionRequest,
         startTime: number,
         depth = 0,
-        apiKeyId?: string
+        apiKeyId?: string,
+        meta?: ChatRouteMeta
     ): Promise<ChatCompletionResponse> {
         const maxInputTokens = body.max_tokens ?? 4096;
         const effectiveBody =
             depth === 0 ? applyTokenSaver(body, getTokenSaverSettingsDB(), maxInputTokens).request : body;
         const originalModel = effectiveBody.model;
+        if (depth === 0 && meta) meta.requestedModel = originalModel;
         const candidates = ResolveCandidates(originalModel);
 
         let lastError: Error | ErrorWithStatus | string | null = null;
@@ -233,6 +250,14 @@ export class ChatLogic {
                     fallbackReason,
                     apiKeyId
                 });
+                if (meta) {
+                    meta.model = currentModel;
+                    meta.provider = providerId;
+                    meta.fallbackOccurred = fallbackOccurred;
+                    meta.fallbackPath = [...fallbackPath];
+                    meta.attempts = i + 1;
+                    meta.cached = true;
+                }
                 return cached;
             }
 
@@ -282,7 +307,8 @@ export class ChatLogic {
                         followUpRequest,
                         startTime,
                         depth + 1,
-                        apiKeyId
+                        apiKeyId,
+                        meta
                     );
                 }
 
@@ -294,6 +320,20 @@ export class ChatLogic {
                     fallbackReason,
                     apiKeyId
                 });
+
+                if (meta) {
+                    meta.model = currentModel;
+                    meta.provider = providerId;
+                    meta.fallbackOccurred = fallbackOccurred;
+                    meta.fallbackPath = [...fallbackPath];
+                    meta.attempts = i + 1;
+                    meta.cached = false;
+                }
+                MaybeRunShadowTrial(
+                    effectiveBody,
+                    currentModel,
+                    choice?.message?.content ?? JSON.stringify(choice?.message?.tool_calls ?? "")
+                );
 
                 return response;
             } catch (err) {
@@ -492,6 +532,12 @@ export class ChatLogic {
                     fallbackReason,
                     apiKeyId
                 });
+
+                MaybeRunShadowTrial(
+                    effectiveBody,
+                    currentModel,
+                    assistantContent || JSON.stringify(assembledToolCalls)
+                );
 
                 return;
             } catch (err) {

@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.2.0-blue" alt="version 1.2.0" />
+  <img src="https://img.shields.io/badge/version-1.3.0-blue" alt="version 1.3.0" />
   <img src="https://img.shields.io/badge/node-%E2%89%A522-green" alt="node >= 22" />
   <img src="https://img.shields.io/badge/license-MIT-orange" alt="MIT" />
   <img src="https://img.shields.io/badge/providers-57%2B-purple" alt="57+ providers" />

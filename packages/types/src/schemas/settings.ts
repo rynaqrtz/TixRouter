@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const UpdateSettingsSchema = z.object({
     require_api_key: z.boolean().optional(),
+    accept_any_bearer: z.boolean().optional(),
     settings: z.record(z.string()).optional()
 });
 
