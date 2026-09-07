@@ -103,22 +103,7 @@ export function getRecentLogsDB(limit = 50): RequestLogEntry[] {
     return Rows.map(mapLogRow);
 }
 
-export function getUsageSummaryDB(): UsageSummary {
-    const Query = db.prepare(`
-        SELECT 
-            COUNT(*) as totalRequests,
-            COALESCE(SUM(total_tokens), 0) as totalTokens,
-            COALESCE(SUM(prompt_tokens), 0) as totalPromptTokens,
-            COALESCE(SUM(completion_tokens), 0) as totalCompletionTokens,
-            COALESCE(SUM(cached_tokens), 0) as totalCachedTokens,
-            COALESCE(SUM(cache_creation_tokens), 0) as totalCacheCreationTokens,
-            COALESCE(SUM(reasoning_tokens), 0) as totalReasoningTokens,
-            COALESCE(SUM(estimated_cost), 0) as totalEstimatedCost
-        FROM request_logs
-    `);
-
-    const Result = Query.get() as unknown as UsageSummaryRow | undefined;
-
+function mapUsageSummaryRow(Result: UsageSummaryRow | undefined): UsageSummary {
     return {
         totalRequests: num(Result?.totalRequests),
         totalTokens: num(Result?.totalTokens),
@@ -133,9 +118,26 @@ export function getUsageSummaryDB(): UsageSummary {
     };
 }
 
+export function getUsageSummaryDB(): UsageSummary {
+    const Query = db.prepare(`
+        SELECT
+            COUNT(*) as totalRequests,
+            COALESCE(SUM(total_tokens), 0) as totalTokens,
+            COALESCE(SUM(prompt_tokens), 0) as totalPromptTokens,
+            COALESCE(SUM(completion_tokens), 0) as totalCompletionTokens,
+            COALESCE(SUM(cached_tokens), 0) as totalCachedTokens,
+            COALESCE(SUM(cache_creation_tokens), 0) as totalCacheCreationTokens,
+            COALESCE(SUM(reasoning_tokens), 0) as totalReasoningTokens,
+            COALESCE(SUM(estimated_cost), 0) as totalEstimatedCost
+        FROM request_logs
+    `);
+
+    return mapUsageSummaryRow(Query.get() as unknown as UsageSummaryRow | undefined);
+}
+
 export function getProviderUsageSummaryDB(providerId: string): UsageSummary {
     const Query = db.prepare(`
-        SELECT 
+        SELECT
             COUNT(*) as totalRequests,
             COALESCE(SUM(total_tokens), 0) as totalTokens,
             COALESCE(SUM(prompt_tokens), 0) as totalPromptTokens,
@@ -148,25 +150,12 @@ export function getProviderUsageSummaryDB(providerId: string): UsageSummary {
         WHERE provider_id = ?
     `);
 
-    const Result = Query.get(providerId) as unknown as UsageSummaryRow | undefined;
-
-    return {
-        totalRequests: num(Result?.totalRequests),
-        totalTokens: num(Result?.totalTokens),
-        totalPromptTokens: num(Result?.totalPromptTokens),
-        totalCompletionTokens: num(Result?.totalCompletionTokens),
-        totalCachedTokens: num(Result?.totalCachedTokens),
-        totalCacheCreationTokens: num(Result?.totalCacheCreationTokens),
-        totalReasoningTokens: num(Result?.totalReasoningTokens),
-        totalEstimatedCost: num(Result?.totalEstimatedCost),
-        totalInputTokens: num(Result?.totalPromptTokens),
-        totalOutputTokens: num(Result?.totalCompletionTokens)
-    };
+    return mapUsageSummaryRow(Query.get(providerId) as unknown as UsageSummaryRow | undefined);
 }
 
 export function getProviderModelUsageDB(providerId: string): ModelUsageSummaryRow[] {
     const Query = db.prepare(`
-        SELECT 
+        SELECT
             model,
             COUNT(*) as totalRequests,
             COALESCE(SUM(total_tokens), 0) as totalTokens,
@@ -199,7 +188,7 @@ export function getSavingsSummaryDB(freeProviders: string[]): { freeRequests: nu
     if (!freeProviders.length) return { freeRequests: 0, freeTokens: 0, savedCost: 0 };
     const placeholders = freeProviders.map(() => "?").join(", ");
     const Query = db.prepare(`
-        SELECT 
+        SELECT
             COUNT(*) as freeRequests,
             COALESCE(SUM(total_tokens), 0) as freeTokens,
             COALESCE(SUM(estimated_cost), 0) as savedCost
@@ -218,7 +207,7 @@ export function getSavingsSummaryDB(freeProviders: string[]): { freeRequests: nu
 
 export function getUsageByModelDB(): UsageByModelRow[] {
     const Query = db.prepare(`
-        SELECT 
+        SELECT
             model,
             COUNT(*) as totalRequests,
             COALESCE(SUM(prompt_tokens), 0) as totalInputTokens,

@@ -40,9 +40,6 @@ interface ErrorWithStatus {
     message?: string;
 }
 
-/**
- * Strip tools and tool_choice from request body for models that don't support tool calling.
- */
 function stripToolsFromBody(body: ChatCompletionRequest): ChatCompletionRequest {
     const stripped = { ...body };
     delete stripped.tools;
@@ -50,7 +47,7 @@ function stripToolsFromBody(body: ChatCompletionRequest): ChatCompletionRequest 
     return stripped;
 }
 
-function ExtractStatusCode(
+export function ExtractStatusCode(
     err: Error | ErrorWithStatus | string | null | undefined
 ): number | undefined {
     if (!err) return undefined;
@@ -148,6 +145,48 @@ function LogCompletion(
     });
 }
 
+function BuildCandidateRequest(
+    effectiveBody: ChatCompletionRequest,
+    currentModel: string
+): ChatCompletionRequest {
+    let currentReq: ChatCompletionRequest = { ...effectiveBody, model: currentModel };
+    if (
+        currentReq.tools &&
+        currentReq.tools.length > 0 &&
+        !modelSupportsToolCalling(currentModel)
+    ) {
+        currentReq = stripToolsFromBody(currentReq);
+    }
+    return currentReq;
+}
+
+function* CachedResponseToChunks(
+    cached: ChatCompletionResponse
+): Generator<ChatCompletionChunk, void, void> {
+    const choice = cached.choices[0];
+    yield {
+        id: cached.id,
+        object: "chat.completion.chunk",
+        created: cached.created,
+        model: cached.model,
+        choices: [
+            {
+                index: 0,
+                delta: { role: "assistant", content: choice?.message.content ?? "" },
+                finish_reason: null
+            }
+        ]
+    };
+    yield {
+        id: cached.id,
+        object: "chat.completion.chunk",
+        created: cached.created,
+        model: cached.model,
+        choices: [{ index: 0, delta: {}, finish_reason: choice?.finish_reason ?? "stop" }],
+        usage: cached.usage
+    };
+}
+
 export class ChatLogic {
     public static async ProcessNonStreamingCompletion(
         body: ChatCompletionRequest,
@@ -155,7 +194,7 @@ export class ChatLogic {
         depth = 0,
         apiKeyId?: string
     ): Promise<ChatCompletionResponse> {
-        const maxInputTokens = body.max_tokens ?? 4096; // Extract or default max_tokens
+        const maxInputTokens = body.max_tokens ?? 4096;
         const effectiveBody =
             depth === 0 ? applyTokenSaver(body, getTokenSaverSettingsDB(), maxInputTokens).request : body;
         const originalModel = effectiveBody.model;
@@ -178,15 +217,23 @@ export class ChatLogic {
 
             const currentModel = candidate.model;
             const providerId = currentModel.split("/")[0] || "default";
+            const currentReq = BuildCandidateRequest(effectiveBody, currentModel);
 
-            // Proactively strip tools if model doesn't support tool calling
-            let currentReq: ChatCompletionRequest = { ...effectiveBody, model: currentModel };
-            if (
-                currentReq.tools &&
-                currentReq.tools.length > 0 &&
-                !modelSupportsToolCalling(currentModel)
-            ) {
-                currentReq = stripToolsFromBody(currentReq);
+            const cached = getCachedResponse(currentReq);
+            if (cached) {
+                if (isFallbackAttempt) {
+                    fallbackOccurred = true;
+                    fallbackPath.push(currentModel);
+                }
+                LogCompletion(providerId, currentModel, startTime, {
+                    statusCode: 200,
+                    usage: cached.usage,
+                    fallbackOccurred,
+                    fallbackPath,
+                    fallbackReason,
+                    apiKeyId
+                });
+                return cached;
             }
 
             try {
@@ -274,15 +321,13 @@ export class ChatLogic {
         throw lastError;
     }
 
-    public static processNonStreamingCompletion = ChatLogic.ProcessNonStreamingCompletion;
-
     public static async *ProcessStreamingCompletion(
         body: ChatCompletionRequest,
         startTime: number,
         depth = 0,
         apiKeyId?: string
     ): AsyncGenerator<ChatCompletionChunk, void, void> {
-        const maxInputTokens = body.max_tokens ?? 4096; // Extract or default max_tokens
+        const maxInputTokens = body.max_tokens ?? 4096;
         const effectiveBody =
             depth === 0 ? applyTokenSaver(body, getTokenSaverSettingsDB(), maxInputTokens).request : body;
         const originalModel = effectiveBody.model;
@@ -305,19 +350,14 @@ export class ChatLogic {
 
             const currentModel = candidate.model;
             const providerId = currentModel.split("/")[0] || "default";
-
-            // Proactively strip tools if model doesn't support tool calling
-            let currentReq: ChatCompletionRequest = { ...effectiveBody, model: currentModel };
-            if (
-                currentReq.tools &&
-                currentReq.tools.length > 0 &&
-                !modelSupportsToolCalling(currentModel)
-            ) {
-                currentReq = stripToolsFromBody(currentReq);
-            }
+            const currentReq = BuildCandidateRequest(effectiveBody, currentModel);
 
             const cached = getCachedResponse(currentReq);
             if (cached) {
+                if (isFallbackAttempt) {
+                    fallbackOccurred = true;
+                    fallbackPath.push(currentModel);
+                }
                 LogCompletion(providerId, currentModel, startTime, {
                     statusCode: 200,
                     usage: cached.usage,
@@ -326,7 +366,8 @@ export class ChatLogic {
                     fallbackReason,
                     apiKeyId
                 });
-                return cached;
+                yield* CachedResponseToChunks(cached);
+                return;
             }
 
             let yieldedAny = false;
@@ -478,6 +519,4 @@ export class ChatLogic {
 
         if (lastError) throw lastError;
     }
-
-    public static processStreamingCompletion = ChatLogic.ProcessStreamingCompletion;
 }

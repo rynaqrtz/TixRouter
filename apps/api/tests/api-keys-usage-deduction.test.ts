@@ -15,7 +15,7 @@ afterEach(() => {
 test("ChatLogic.ProcessNonStreamingCompletion records usage tokens and dollar cost for apiKeyId", async () => {
     const key = createAPIKeyDB({
         name: "Deduction Key",
-        creditLimit: 10
+        credit_limit: 10
     });
     createdIds.push(key.id);
 

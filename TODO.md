@@ -4,9 +4,9 @@ Dokumentasi file-file yang menggunakan penamaan `Form` atau menangani fungsional
 
 ---
 
-## 1. File dengan Nama `*Form.tsx` (Eksplisit)
+## 1. File dengan Nama `*Form` (Eksplisit)
 
-- [x] `apps/web/src/components/forms/combo.form.tsx` — (Dipindahkan dari `combo/ComboForm.tsx`) Form konfigurasi dan pengaturan routing combo provider.
+- [x] `apps/web/src/components/combo/combo.form.tsx` — Form konfigurasi dan pengaturan routing combo provider.
 - [x] `apps/web/src/components/providers/connection.form.tsx` — Form konfigurasi koneksi provider (API key, Base URL, testing koneksi).
 
 ---
@@ -14,8 +14,8 @@ Dokumentasi file-file yang menggunakan penamaan `Form` atau menangani fungsional
 ## 2. Komponen & Dialog dengan Form Internal
 
 - [ ] `apps/web/src/components/auth/AdminAuthGate.tsx` — Berisi internal component `AdminAuthForm` untuk autentikasi master key / login admin.
-- [x] `apps/web/src/components/dialog/keys.dialogs.tsx` — Berisi form create/edit API Key, tipe data `KeyFormData`, serta custom hook `useKeyForm`.
-- [ ] `apps/web/src/components/ui/ConnectOAuthModal.tsx` — Form modal untuk integrasi OAuth & input Personal Access Token (PAT).
+- [x] `apps/web/src/components/keys/keys.dialogs.tsx` — Berisi form create/edit API Key, tipe data `KeyFormData`, serta custom hook `useKeyForm`.
+- [ ] `apps/web/src/components/providers/ConnectOAuthModal.tsx` — Form modal untuk integrasi OAuth & input Personal Access Token (PAT).
 - [ ] `apps/web/src/components/settings/SecuritySettings.tsx` — Berisi form ganti password dan pengaturan keamanan.
 
 ---
@@ -25,6 +25,5 @@ Dokumentasi file-file yang menggunakan penamaan `Form` atau menangani fungsional
 - [ ] `apps/web/src/components/settings/GatewaySettings.tsx`
 - [ ] `apps/web/src/components/settings/AppearanceSettings.tsx`
 - [ ] `apps/web/src/components/settings/LoggingSettings.tsx`
-- [ ] `apps/web/src/components/settings/PlaygroundSettings.tsx`
 - [ ] `apps/web/src/components/settings/DataSettings.tsx`
 - [ ] `apps/web/src/components/settings/SystemSettings.tsx`

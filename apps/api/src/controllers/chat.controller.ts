@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import { streamSSE } from "hono/streaming";
 import type { ChatCompletionRequest, APIKeyZod } from "@rynarouter/types";
-import { ChatLogic } from "@/logic/chat.logic.js";
+import { ChatLogic, ExtractStatusCode } from "@/logic/chat.logic.js";
 import { Err, FormatErrorPayload, Ok } from "@/utils/response.js";
 
 function NormalizeDeveloperRole(Body: ChatCompletionRequest): ChatCompletionRequest {
@@ -57,7 +57,8 @@ export class ChatController {
             return Ok(c, ResponseData);
         } catch (error) {
             const ErrorMessage = error instanceof Error ? error.message : "Internal server error";
-            return Err(c, ErrorMessage, 500);
+            const Status = ExtractStatusCode(error) ?? 500;
+            return Err(c, ErrorMessage, Status);
         }
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "RYNArouter",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "High-performance multi-provider AI Gateway and LLM proxy router built with Hono, TypeScript, and SQLite WAL",
     "author": "RYNA",
     "license": "MIT",
@@ -9,7 +9,7 @@
     "packageManager": "pnpm@9.15.9",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ryna/RYNArouter.git"
+        "url": "https://github.com/rynaqrtz/RYNArouter.git"
     },
     "keywords": [
         "ai-gateway",
@@ -24,9 +24,9 @@
         "chatgpt",
         "router"
     ],
-    "homepage": "https://github.com/ryna/RYNArouter#readme",
+    "homepage": "https://github.com/rynaqrtz/RYNArouter#readme",
     "bugs": {
-        "url": "https://github.com/ryna/RYNArouter/issues"
+        "url": "https://github.com/rynaqrtz/RYNArouter/issues"
     },
     "workspaces": [
         "apps/*",

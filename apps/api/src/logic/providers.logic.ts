@@ -2,7 +2,8 @@ import {
     DEFAULT_PROVIDER_MAP,
     isProviderCategory,
     isSeedProvider,
-    providerAlias
+    providerAlias,
+    providerBaseId
 } from "@rynarouter/constants";
 import type {
     CreateProviderZod,
@@ -41,22 +42,7 @@ function isProviderProtocol(Value: string): Value is ProviderProtocol {
     return ["openai", "anthropic", "gemini", "custom"].includes(Value);
 }
 
-const PROVIDER_IDS_BY_LENGTH = Object.keys(DEFAULT_PROVIDER_MAP).sort(
-    (Left, Right) => Right.length - Left.length
-);
-
-function BaseIdOf(ProviderId: string): string {
-    for (const Id of PROVIDER_IDS_BY_LENGTH) {
-        if (
-            ProviderId === Id ||
-            ProviderId.startsWith(`${Id}_`) ||
-            ProviderId.startsWith(`${Id}-`)
-        ) {
-            return Id;
-        }
-    }
-    return ProviderId;
-}
+const BaseIdOf = providerBaseId;
 
 function ProviderDefinitionFromConfig(Connection: ProviderConfig): ProviderDefinition {
     const Category: ProviderCategory =
@@ -440,7 +426,7 @@ export class ProvidersLogic {
                 }
 
                 const Headers: Record<string, string> = {
-                    "User-Agent": "RYNArouter/1.0.0 (Node.js)",
+                    "User-Agent": "RYNArouter/1.1.0 (Node.js)",
                     Accept: "application/json",
                     "anthropic-version": "2023-06-01"
                 };
@@ -538,7 +524,7 @@ export class ProvidersLogic {
             }
 
             const Headers: Record<string, string> = {
-                "User-Agent": "RYNArouter/1.0.0 (Node.js)",
+                "User-Agent": "RYNArouter/1.1.0 (Node.js)",
                 "Accept-Encoding": "identity",
                 Accept: "application/json"
             };

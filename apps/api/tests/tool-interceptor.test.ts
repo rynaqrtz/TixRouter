@@ -197,7 +197,7 @@ test("ChatLogic intercepts non-streaming web_search and returns final answer wit
         messages: [{ role: "user", content: "Who is GitHub ryna?" }]
     };
 
-    const res = await ChatLogic.processNonStreamingCompletion(req, Date.now());
+    const res = await ChatLogic.ProcessNonStreamingCompletion(req, Date.now());
     assert.equal(mockCallCount, 2);
     assert.equal(res.choices[0]?.message?.content, "Found GitHub profile for ryna.");
 });
@@ -210,7 +210,7 @@ test("ChatLogic intercepts streaming web_search and yields final answer stream t
     };
 
     const chunks: ChatCompletionChunk[] = [];
-    for await (const chunk of ChatLogic.processStreamingCompletion(req, Date.now())) {
+    for await (const chunk of ChatLogic.ProcessStreamingCompletion(req, Date.now())) {
         chunks.push(chunk);
     }
 

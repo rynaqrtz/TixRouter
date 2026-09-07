@@ -19,8 +19,8 @@ afterEach(() => {
 test("createAPIKeyDB stores a new virtual key with prefix ryna-live-", () => {
     const created = createAPIKeyDB({
         name: "Test Client Key",
-        rateLimit: 60,
-        quotaLimit: 50000
+        rate_limit: 60,
+        quota_limit: 50000
     });
 
     createdIds.push(created.id);

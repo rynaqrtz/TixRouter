@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { APP_VERSION } from "@rynarouter/constants";
 
 export const CURRENT_VERSION = `v${APP_VERSION}`;
-export const GITHUB_REPO = "ryna/RYNArouter";
+export const GITHUB_REPO = "rynaqrtz/RYNArouter";
 
 export interface GitHubTag {
     name: string;

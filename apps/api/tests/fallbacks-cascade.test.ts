@@ -94,7 +94,7 @@ test("ChatLogic automatically cascades non-streaming request to fallback provide
     createdRuleIds.push(rule.id);
 
     const startTime = Date.now();
-    const res = await ChatLogic.processNonStreamingCompletion(
+    const res = await ChatLogic.ProcessNonStreamingCompletion(
         {
             model: "primary_failing/model-a",
             messages: [{ role: "user", content: "Hello" }]
@@ -170,7 +170,7 @@ test("ChatLogic cascades streaming request to fallback provider before first chu
     createdRuleIds.push(rule.id);
 
     const startTime = Date.now();
-    const generator = ChatLogic.processStreamingCompletion(
+    const generator = ChatLogic.ProcessStreamingCompletion(
         {
             model: "primary_failing_stream/model-x",
             messages: [{ role: "user", content: "Stream test" }]

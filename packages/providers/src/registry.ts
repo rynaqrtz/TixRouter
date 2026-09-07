@@ -9,8 +9,7 @@ import type {
     ChatCompletionChunk,
     ChatCompletionRequest,
     ChatCompletionResponse,
-    ModelObject,
-    ProviderDefinition
+    ModelObject
 } from "@rynarouter/types";
 import { CircuitBreaker, circuitBreaker as defaultCircuitBreaker } from "./circuitBreaker.js";
 
@@ -126,10 +125,6 @@ export class ProviderRegistry {
 
     getCircuitBreaker(): CircuitBreaker {
         return this.circuitBreaker;
-    }
-
-    setModelsTtlMs(ttlMs: number): void {
-        this.modelsTtlMs = ttlMs;
     }
 
     setModelsFetchTimeoutMs(timeoutMs: number): void {
@@ -309,39 +304,6 @@ export class ProviderRegistry {
 
     getAllProviders(): Map<string, AIProvider> {
         return this.providers;
-    }
-
-    /**
-     * Live catalog derived from registered providers. One entry per base driver
-     * id, collapsing multi-account connections (e.g. openai_1700000000 → openai).
-     */
-    getCatalog(): ProviderDefinition[] {
-        const seen = new Set<string>();
-        const catalog: ProviderDefinition[] = [];
-
-        for (const provider of this.providers.values()) {
-            if (provider.id === "default") continue;
-            const baseId = providerBaseId(provider.id);
-            if (seen.has(baseId)) continue;
-            seen.add(baseId);
-
-            const connectedCount = Array.from(this.providers.keys()).filter(
-                (id) => id === baseId || id.startsWith(`${baseId}_`) || id.startsWith(`${baseId}-`)
-            ).length;
-
-            catalog.push({
-                id: baseId,
-                name: provider.name,
-                category: provider.category ?? "api_key",
-                protocol: provider.protocol ?? "openai",
-                requires_api_key: true,
-                supports_custom_url: true,
-                status: { state: "connected", connectedCount },
-                models: []
-            });
-        }
-
-        return catalog;
     }
 
     async getCandidateProvidersForModel(modelId: string): Promise<AIProvider[]> {

@@ -5,47 +5,17 @@ import {
     OpenAIToAnthropicResponse,
     OpenAIToAnthropicStream
 } from "@rynarouter/translator";
-import { AnthropicMessageRequestSchema, type AnthropicMessageRequest } from "@rynarouter/types";
+import type { AnthropicMessageRequest } from "@rynarouter/types";
 import { ChatLogic } from "@/logic/chat.logic.js";
 import { AnthropicErr, FormatAnthropicErrorPayload, Ok } from "@/utils/response.js";
-import { GetApiKeyRow, IsModelAllowed } from "@/middleware/ModelAccess.js";
-import { MAX_BODY_BYTES } from "@/middleware/BodyLimit.js";
+import { GetApiKeyRow } from "@/middleware/ModelAccess.js";
 
 export class MessagesController {
     public static async CreateMessage(c: Context): Promise<Response> {
         const startTime = Date.now();
-        const Raw = await c.req.text().catch(() => "");
-        if (Buffer.byteLength(Raw) > MAX_BODY_BYTES) {
-            return AnthropicErr(c, "Request body too large", 413, "invalid_request_error");
-        }
-        let rawBody: unknown = null;
-        try {
-            rawBody = JSON.parse(Raw);
-        } catch {
-            rawBody = null;
-        }
-        if (!rawBody || typeof rawBody !== "object") {
-            return AnthropicErr(c, "Invalid JSON request body", 400);
-        }
-
-        const parsed = AnthropicMessageRequestSchema.safeParse(rawBody);
-        if (!parsed.success) {
-            return AnthropicErr(c, parsed.error.issues[0]?.message || "Validation failed", 400);
-        }
-
-        const body = parsed.data as AnthropicMessageRequest;
+        const body = c.req.valid("json" as never) as AnthropicMessageRequest;
 
         const ApiKeyRow = GetApiKeyRow(c);
-        const AllowedModels = ApiKeyRow?.allowed_models;
-        if (!IsModelAllowed(AllowedModels, body.model)) {
-            return AnthropicErr(
-                c,
-                `Model '${body.model}' is not allowed for this API key`,
-                403,
-                "permission_error"
-            );
-        }
-
         const ApiKeyId = ApiKeyRow?.id;
         const OpenAIReq = AnthropicToOpenAIRequest(body);
         const isThinkingEnabled = Boolean(body.thinking?.type === "enabled");

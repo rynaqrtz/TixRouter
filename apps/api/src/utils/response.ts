@@ -55,13 +55,9 @@ export function FormatErrorPayload(
     };
 }
 
-export const formatErrorPayload = FormatErrorPayload;
-
 export function Ok<T>(c: Context, data: T, status: ContentfulStatusCode = 200): Response {
     return c.json(data, status);
 }
-
-export const ok = Ok;
 
 export function Err(
     c: Context,
@@ -93,8 +89,6 @@ export function FormatAnthropicErrorPayload(
         }
     };
 }
-
-export const err = Err;
 
 export function AnthropicErr(
     c: Context,

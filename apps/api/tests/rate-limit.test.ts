@@ -36,7 +36,7 @@ test("rate_limit=0 means unlimited", async () => {
 });
 
 test("requests beyond the per-minute limit get 429 with Retry-After", async () => {
-    const created = createAPIKeyDB({ name: "Rate Limit Test", rateLimit: 3 });
+    const created = createAPIKeyDB({ name: "Rate Limit Test", rate_limit: 3 });
     createdKeyIds.push(created.id);
 
     const app = createTestApp({ id: created.id, rate_limit: 3 } as APIKeyZod);

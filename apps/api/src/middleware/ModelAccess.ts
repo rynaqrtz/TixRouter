@@ -1,6 +1,6 @@
 import type { Context, MiddlewareHandler } from "hono";
 import type { APIKeyZod } from "@rynarouter/types";
-import { Err } from "@/utils/response.js";
+import { Err, FormatAnthropicErrorPayload } from "@/utils/response.js";
 
 function NormalizeModelId(model: string): string {
     return model.replace(/^rynarouter\//, "");
@@ -33,6 +33,16 @@ export function EnforceModelAccess(): MiddlewareHandler {
             const Model = Body?.model;
 
             if (Model && !IsModelAllowed(AllowedModels, Model)) {
+                if (c.req.path.startsWith("/v1/messages")) {
+                    return c.json(
+                        FormatAnthropicErrorPayload(
+                            `Model '${Model}' is not allowed for this API key`,
+                            403,
+                            "permission_error"
+                        ),
+                        403
+                    );
+                }
                 return Err(c, `Model '${Model}' is not allowed for this API key`, 403, {
                     code: "model_not_allowed"
                 });
