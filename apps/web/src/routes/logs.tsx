@@ -70,41 +70,83 @@ function LogsPage() {
                 </div>
 
                 <div className="flex items-center gap-1.5">
-                    <button
-                        type="button"
-                        onClick={() => filter.setStatusFilter("all")}
-                        className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                            filter.statusFilter === "all"
-                                ? "bg-foreground text-background font-semibold"
-                                : "bg-secondary/30 text-muted-foreground hover:text-foreground"
-                        }`}
+                    <select
+                        value={filter.modelFilter}
+                        onChange={(e) => filter.setModelFilter(e.target.value)}
+                        className="rounded-lg border border-border/60 bg-secondary/30 px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring cursor-pointer max-w-40"
+                        title="Filter by model"
                     >
-                        All ({logs.length})
-                    </button>
+                        <option value="all">All models</option>
+                        {filter.models.map((m) => (
+                            <option key={m} value={m}>
+                                {m}
+                            </option>
+                        ))}
+                    </select>
 
-                    <button
-                        type="button"
-                        onClick={() => filter.setStatusFilter("success")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                            filter.statusFilter === "success"
-                                ? "bg-emerald-500 text-white shadow-2xs"
-                                : "bg-secondary/30 text-muted-foreground hover:text-foreground"
-                        }`}
+                    <select
+                        value={filter.providerFilter}
+                        onChange={(e) => filter.setProviderFilter(e.target.value)}
+                        className="rounded-lg border border-border/60 bg-secondary/30 px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring cursor-pointer max-w-36"
+                        title="Filter by provider"
                     >
-                        Success (2xx)
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => filter.setStatusFilter("error")}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                            filter.statusFilter === "error"
-                                ? "bg-rose-500 text-white shadow-2xs"
-                                : "bg-secondary/30 text-muted-foreground hover:text-foreground"
-                        }`}
+                        <option value="all">All providers</option>
+                        {filter.providers.map((p) => (
+                            <option key={p} value={p}>
+                                {p}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select
+                        value={filter.minLatency}
+                        onChange={(e) => filter.setMinLatency(Number(e.target.value))}
+                        className="rounded-lg border border-border/60 bg-secondary/30 px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring cursor-pointer"
+                        title="Filter by minimum latency"
                     >
-                        Errors (4xx/5xx)
-                    </button>
+                        <option value={0}>Any latency</option>
+                        <option value={500}>&gt; 500ms</option>
+                        <option value={1000}>&gt; 1s</option>
+                        <option value={5000}>&gt; 5s</option>
+                    </select>
                 </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-1.5">
+                <button
+                    type="button"
+                    onClick={() => filter.setStatusFilter("all")}
+                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                        filter.statusFilter === "all"
+                            ? "bg-foreground text-background font-semibold"
+                            : "bg-secondary/30 text-muted-foreground hover:text-foreground"
+                    }`}
+                >
+                    All ({logs.length})
+                </button>
+
+                <button
+                    type="button"
+                    onClick={() => filter.setStatusFilter("success")}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                        filter.statusFilter === "success"
+                            ? "bg-emerald-500 text-white shadow-2xs"
+                            : "bg-secondary/30 text-muted-foreground hover:text-foreground"
+                    }`}
+                >
+                    Success (2xx)
+                </button>
+                <button
+                    type="button"
+                    onClick={() => filter.setStatusFilter("error")}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                        filter.statusFilter === "error"
+                            ? "bg-rose-500 text-white shadow-2xs"
+                            : "bg-secondary/30 text-muted-foreground hover:text-foreground"
+                    }`}
+                >
+                    Errors (4xx/5xx)
+                </button>
             </div>
 
             {filter.filteredLogs.length === 0 ? (

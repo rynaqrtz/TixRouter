@@ -121,6 +121,14 @@ export function LogDetailSheet({ log, onClose }: LogDetailSheetProps) {
                                 </div>
                                 <div className="flex justify-between border-b border-border/40 pb-1">
                                     <span className="text-muted-foreground">
+                                        Cached Tokens:
+                                    </span>
+                                    <span className="font-mono text-sky-500 font-medium">
+                                        {log.cachedTokens ?? 0}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between border-b border-border/40 pb-1">
+                                    <span className="text-muted-foreground">
                                         Completion (Output) Tokens:
                                     </span>
                                     <span className="font-mono text-foreground font-medium">
@@ -134,6 +142,34 @@ export function LogDetailSheet({ log, onClose }: LogDetailSheetProps) {
                                     </span>
                                 </div>
                             </div>
+
+                            {(log.retried || log.explicitFeedback) && (
+                                <div className="rounded-lg border border-border/60 bg-card p-3 space-y-2">
+                                    <span className="font-semibold text-foreground block">
+                                        Outcome Signals
+                                    </span>
+                                    {log.retried && (
+                                        <div className="flex justify-between">
+                                            <span className="text-muted-foreground">
+                                                Client retried after this request
+                                            </span>
+                                            <span className="font-mono text-amber-500 font-bold">
+                                                RETRIED
+                                            </span>
+                                        </div>
+                                    )}
+                                    {log.explicitFeedback && (
+                                        <div className="flex justify-between">
+                                            <span className="text-muted-foreground">
+                                                Explicit feedback
+                                            </span>
+                                            <span className="font-mono text-indigo-500 font-medium truncate max-w-40">
+                                                {log.explicitFeedback}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="rounded-lg border border-border/60 bg-card p-3 space-y-2">
                                 <span className="font-semibold text-foreground block">

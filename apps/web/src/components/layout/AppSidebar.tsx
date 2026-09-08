@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import {
     Boxes,
+    Brain,
     Coins,
     Cpu,
     Gauge,
@@ -9,6 +10,7 @@ import {
     LayoutDashboard,
     ScrollText,
     Settings,
+    Sparkles,
     Zap
 } from "lucide-react";
 import {
@@ -28,6 +30,8 @@ import {
 const mainNavItems = [
     { to: "/", label: "Dashboard", icon: LayoutDashboard },
     { to: "/keys", label: "API Keys", icon: KeyRound },
+    { to: "/analytics", label: "Analytics", icon: Zap },
+    { to: "/playground", label: "Playground", icon: Sparkles },
     { to: "/cli-tools", label: "CLI Tools", icon: Cpu }
 ] as const;
 
@@ -36,6 +40,7 @@ const routingNavItems = [
     { to: "/combo", label: "Combo", icon: GitFork },
     { to: "/token-saver", label: "Token Saver", icon: Coins },
     { to: "/quota", label: "Quotas & Limits", icon: Gauge },
+    { to: "/routing", label: "Routing Health", icon: Brain },
     { to: "/logs", label: "Audit Logs", icon: ScrollText }
 ] as const;
 

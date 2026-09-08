@@ -216,8 +216,16 @@ export function initDatabase(): void {
         { name: "fallback_occurred", definition: "fallback_occurred INTEGER NOT NULL DEFAULT 0" },
         { name: "fallback_path", definition: "fallback_path TEXT" },
         { name: "fallback_reason", definition: "fallback_reason TEXT" },
-        { name: "resolved_model", definition: "resolved_model TEXT" }
+        { name: "resolved_model", definition: "resolved_model TEXT" },
+        { name: "prompt_hash", definition: "prompt_hash TEXT" },
+        { name: "retried", definition: "retried INTEGER NOT NULL DEFAULT 0" },
+        { name: "explicit_feedback", definition: "explicit_feedback TEXT" }
     ]);
+
+    db.exec(`
+        CREATE INDEX IF NOT EXISTS idx_request_logs_outcome
+        ON request_logs(api_key_id, prompt_hash, created_at DESC);
+    `);
 
     // 5. Table for Fallback Rules
     db.exec(`

@@ -11,6 +11,8 @@ Repo `rynaqrtz/TixRouter` · scope `@tixrouter/*` · env `TIXROUTER_*` · prefix
 ## 🎨 UI/UX — 3 tahap (semua data sudah ada di API, tinggal ditampilkan)
 
 ### T-008 — UI/UX Foundation (P2, ~1 minggu)
+- [x] Command palette (Ctrl+K): navigasi cepat ke semua halaman
+- [x] Log detail: rincian cache/reasoning tokens, status retried, feedback klien
 - [ ] Design system refresh: logo TixRouter di sidebar + auth, token OKLCH baru (warna, radius, spacing), tipografi konsisten, dark/light polish
 - [ ] Home dashboard: kartu ringkasan real-time — request hari ini, error rate, biaya, penghematan cache + token saver, provider aktif
 - [ ] Onboarding wizard 3 langkah: tambah provider pertama → buat virtual key → tes request sukses (target < 2 menit)
@@ -20,6 +22,8 @@ Repo `rynaqrtz/TixRouter` · scope `@tixrouter/*` · env `TIXROUTER_*` · prefix
 - **Acceptance:** Lighthouse ≥ 90 · onboarding < 2 menit sampai request pertama sukses
 
 ### T-009 — UI/UX Ops Views (P2, ~1 minggu)
+- [x] Halaman Routing Health: outcome stats per model (Wilson score), cache affinity per provider, Shadow Arena verdicts
+- [x] Log viewer v2 (parsial): filter model/provider, kolom cache + retried + feedback
 - [ ] Halaman Provider Health: latency p50/p95 per driver, status circuit breaker, error rate, sisa kuota per akun
 - [ ] Quota planner: visual kuota free-tier per akun, proyeksi tanggal habis, ambang alert
 - [ ] Log viewer v2: filter (model/provider/status/latensi/rentang waktu) + drill-down per request — jalur fallback lengkap, rincian token (cache/reasoning), biaya, tombol "replay as curl"
@@ -27,7 +31,9 @@ Repo `rynaqrtz/TixRouter` · scope `@tixrouter/*` · env `TIXROUTER_*` · prefix
 - **Acceptance:** Insiden 429/down bisa dideteksi dari dashboard tanpa buka log mentah
 
 ### T-010 — UI/UX Power Features (P2, ~2 minggu)
-- [ ] Analytics/Insights: grafik biaya & token per model/provider/virtual-key dari waktu ke waktu, top model & top client, export CSV
+- [x] Analytics: biaya/token/hit/error rate harian, top model & client, tabel per model (endpoint `/v1/logs/analytics`)
+- [x] Playground: chat streaming dari dashboard + compare 2 model berdampingan
+- [ ] Analytics export CSV
 - [ ] Playground: chat langsung dari dashboard ke `/v1` sendiri (streaming), pilih model/compare 2 model berdampingan
 - [ ] Model catalog browser: telusuri 1200+ model dengan filter (gratis, context window, harga, provider), favorit
 - [ ] Fallback chain editor visual: urutkan target, trigger status, uji simulasi rantai tanpa trafik nyata
@@ -58,23 +64,23 @@ Fitur yang tidak ada di gateway mana pun (agentgateway punya shadow traffic tapi
 - Kuota free-tier surplus dipakai sebagai bahan bakar arena
 - **Acceptance:** gateway membuktikan "model X == model Y untuk tugas ini, 4× lebih murah" dari data sendiri
 
-### T-005 — Cascade-with-Verifier (P1, 3–5 hari)
-FrugalGPT productionized (riset 2023, belum ada di gateway open-source mana pun):
-- Model gratis bikin draft → verifier murah mengecek (self-consistency / judge model) → eskalasi hanya kalau gagal
-- Budget cap + kebijakan eskalasi per virtual key
-- **Acceptance:** hemat biaya terukur di log (`estimated_cost`) tanpa penurunan kualitas pada suite validator
+### ✅ T-005 — Cascade-with-Verifier (P1) — SELESAI (v1.4.0)
+FrugalGPT productionized:
+- Model gratis bikin draft → verifier murah menilai (yes/no) → eskalasi hanya kalau gagal
+- Toggle `cascade_verifier_enabled` di settings (kill-switch) + retry-detect dari log sesi
+- **Acceptance:** test suite `routing.test.ts` hijau; hemat biaya terukur di log (`estimated_cost`)
 
-### T-006 — Outcome-Feedback Routing v1 (P2, 1 minggu)
-Versi jujur yang tidak berbohong — sinyal sisi klien saja (bukan sulap):
-- Skema log tambah: `retry_within_session`, `abandoned`, `explicit_feedback`
-- Scoring per (task-type, model) → menata-ulang urutan `ResolveCandidates`
-- Kill-switch di settings; terinspirasi Wilson-bound `free-best-router` tapi level tugas agent (belum ada yang punya)
+### ✅ T-006 — Outcome-Feedback Routing v1 (P2) — SELESAI (v1.4.0)
+Sinyal sisi klien saja (jujur, bukan sulap):
+- Kolom log baru: `prompt_hash`, `retried`, `explicit_feedback` (+ index outcome)
+- Wilson lower-bound scoring per model → reorder kandidat sebelum resolve
+- Endpoint `POST /v1/logs/feedback` + kill-switch `outcome_routing_enabled`
 - **Acceptance:** urutan kandidat berubah dari data nyata, bisa dimatikan tanpa deploy ulang
 
-### T-007 — Afinitas Prefix-Cache Antar Provider (P2, 1 minggu)
-llm-d melakukannya di dalam satu cluster k8s; belum ada yang antar provider:
-- Telemetri `cached_tokens` per (provider, akun) → routing preference ke tempat prefix sudah ter-cache
-- Cached input ~10× lebih murah — langsung kelihatan di savings tracker
+### ✅ T-007 — Afinitas Prefix-Cache Antar Provider (P2) — SELESAI (v1.4.0)
+- Telemetri `cached_tokens` per (provider, model) via `affinityHook` di registry (dependency injection, package tetap bersih)
+- Kandidat diurutkan ulang ke provider dengan cache-hit terbukti
+- Kill-switch `cache_affinity_enabled`
 - **Acceptance:** rasio cache-hit naik terukur pada trafik agent berulang
 
 ---
@@ -82,9 +88,10 @@ llm-d melakukannya di dalam satu cluster k8s; belum ada yang antar provider:
 ## 📦 Distribusi
 
 ### T-011 — Docs & Distribusi (P3)
-- Landing docs (features, self-host guide, per-tool recipes: Claude Code / Cline / Codex / dsh / opencode)
-- Publish image `ghcr.io/rynaqrtz/tixrouter` otomatis via tag (workflow sudah ada)
-- README multi-bahasa (EN + ID)
+- [x] Workflow Docker: trigger manual tersedia (workflow_dispatch)
+- [ ] Landing docs (features, self-host guide, per-tool recipes: Claude Code / Cline / Codex / dsh / opencode)
+- [ ] Publish image `ghcr.io/rynaqrtz/tixrouter` otomatis via tag (workflow sudah ada)
+- [ ] README multi-bahasa (EN + ID)
 
 ---
 

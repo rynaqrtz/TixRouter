@@ -48,6 +48,11 @@ interface ServerSettingsResponse {
 interface ServerFeatureFlags {
     free_tier_failover_enabled: boolean;
     cache_enabled: boolean;
+    outcome_routing_enabled: boolean;
+    cache_affinity_enabled: boolean;
+    cascade_enabled: boolean;
+    cascade_verifier_model: string;
+    cascade_min_score: string;
     notify_webhook_url: string;
 }
 
@@ -69,13 +74,22 @@ function ServerFeaturesCard() {
     const flags: ServerFeatureFlags = {
         free_tier_failover_enabled: data["free_tier_failover_enabled"] !== "false",
         cache_enabled: data["cache_enabled"] === "true",
+        outcome_routing_enabled: data["outcome_routing_enabled"] !== "false",
+        cache_affinity_enabled: data["cache_affinity_enabled"] !== "false",
+        cascade_enabled: data["cascade_enabled"] === "true",
+        cascade_verifier_model: data["cascade_verifier_model"] ?? "",
+        cascade_min_score: data["cascade_min_score"] ?? "0.7",
         notify_webhook_url: data["notify_webhook_url"] ?? ""
     };
 
     const ToggleRow = (
         label: string,
         hint: string,
-        keyName: "free_tier_failover_enabled" | "cache_enabled",
+        keyName:
+            | "free_tier_failover_enabled"
+            | "cache_enabled"
+            | "outcome_routing_enabled"
+            | "cache_affinity_enabled",
         Icon: typeof Zap
     ) => (
         <div className="flex items-center justify-between gap-4 p-3.5">
@@ -112,6 +126,77 @@ function ServerFeaturesCard() {
                 "Serve identical requests from an in-memory cache for 60 seconds.",
                 "cache_enabled",
                 DatabaseZap
+            )}
+            {ToggleRow(
+                "Outcome-Feedback Routing",
+                "Reorder fallback candidates by proven task success (Wilson score).",
+                "outcome_routing_enabled",
+                Zap
+            )}
+            {ToggleRow(
+                "Prefix-Cache Affinity",
+                "Prefer providers that already cached this prompt prefix (10x cheaper).",
+                "cache_affinity_enabled",
+                DatabaseZap
+            )}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5">
+                <div className="space-y-0.5">
+                    <label className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                        <Zap className="size-3.5 text-muted-foreground" />
+                        <span>Cascade-with-Verifier</span>
+                    </label>
+                    <p className="text-[11px] text-muted-foreground">
+                        Draft with the requested model, verify with a cheap judge, escalate only on
+                        failure.
+                    </p>
+                </div>
+                <Switch
+                    checked={flags.cascade_enabled}
+                    disabled={mutation.isPending}
+                    onCheckedChange={(val) => mutation.mutate({ cascade_enabled: String(val) })}
+                />
+            </div>
+            {flags.cascade_enabled && (
+                <div className="flex flex-col gap-2.5 p-3.5 pt-0 border-t border-border/60">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <label className="text-[11px] font-semibold text-muted-foreground">
+                            Verifier model
+                        </label>
+                        <Input
+                            type="text"
+                            placeholder="e.g. deepseek/deepseek-chat"
+                            defaultValue={flags.cascade_verifier_model}
+                            className="w-full sm:w-64 h-8 text-xs font-mono"
+                            onBlur={(e) => {
+                                const value = e.target.value.trim();
+                                if (value !== flags.cascade_verifier_model) {
+                                    mutation.mutate({ cascade_verifier_model: value });
+                                    toast.success("Verifier model saved");
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <label className="text-[11px] font-semibold text-muted-foreground">
+                            Minimum pass score (0–1)
+                        </label>
+                        <Input
+                            type="number"
+                            min={0}
+                            max={1}
+                            step={0.05}
+                            defaultValue={flags.cascade_min_score}
+                            className="w-full sm:w-32 h-8 text-xs font-mono"
+                            onBlur={(e) => {
+                                const value = e.target.value.trim();
+                                if (value !== flags.cascade_min_score && value !== "") {
+                                    mutation.mutate({ cascade_min_score: value });
+                                    toast.success("Cascade threshold saved");
+                                }
+                            }}
+                        />
+                    </div>
+                </div>
             )}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5">
                 <div className="space-y-0.5">

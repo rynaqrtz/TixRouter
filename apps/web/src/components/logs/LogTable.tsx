@@ -246,6 +246,20 @@ export function LogTable({ logs, onSelect }: LogTableProps) {
                 )
             },
             {
+                id: "cache",
+                header: "Cache",
+                cell: ({ row }) => {
+                    const cached = row.original.cachedTokens ?? 0;
+                    return cached > 0 ? (
+                        <span className="font-mono text-[10px] text-sky-500" title={`${cached.toLocaleString()} cached tokens`}>
+                            ⚡ {cached.toLocaleString()}
+                        </span>
+                    ) : (
+                        <span className="text-muted-foreground/40 text-[10px]">—</span>
+                    );
+                }
+            },
+            {
                 accessorKey: "estimatedCost",
                 header: "Cost",
                 cell: ({ row }) => (
@@ -255,6 +269,28 @@ export function LogTable({ logs, onSelect }: LogTableProps) {
                             : "—"}
                     </span>
                 )
+            },
+            {
+                id: "flags",
+                header: "",
+                cell: ({ row }) => {
+                    const { retried, explicitFeedback } = row.original;
+                    if (!retried && !explicitFeedback) return null;
+                    return (
+                        <div className="flex items-center gap-1">
+                            {retried && (
+                                <span className="rounded border border-amber-500/30 bg-amber-500/10 px-1 py-0.2 text-[8px] font-bold text-amber-500" title="Client retried after this request">
+                                    RETRIED
+                                </span>
+                            )}
+                            {explicitFeedback && (
+                                <span className="rounded border border-indigo-500/30 bg-indigo-500/10 px-1 py-0.2 text-[8px] font-bold text-indigo-500" title={explicitFeedback}>
+                                    FEEDBACK
+                                </span>
+                            )}
+                        </div>
+                    );
+                }
             },
             {
                 id: "details",

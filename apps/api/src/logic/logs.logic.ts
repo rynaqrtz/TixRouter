@@ -1,4 +1,15 @@
-import { getAllProvidersDB, getRecentLogsDB, getSavingsSummaryDB, getUsageByModelDB, getUsageSummaryDB } from "@tixrouter/db";
+import {
+    getAllProvidersDB,
+    getAnalyticsTimeseriesDB,
+    getErrorRateTodayDB,
+    getRecentLogsDB,
+    getSavingsSummaryDB,
+    getTopClientsDB,
+    getUsageByModelDB,
+    getUsageSummaryDB,
+    ModelOutcomeStatsDB,
+    ModelCacheAffinityDB
+} from "@tixrouter/db";
 import { KNOWN_PROVIDERS } from "@tixrouter/constants";
 import type { RequestLogEntry, UsageStats } from "@tixrouter/types";
 import { formatCost } from "@tixrouter/pricing";
@@ -30,6 +41,22 @@ export class LogsLogic {
             estimated: true,
             byModel,
             savings: { ...savings, savedLabel: formatCost(savings.savedCost) }
+        };
+    }
+
+    public static getAnalytics(days = 14) {
+        return {
+            timeseries: getAnalyticsTimeseriesDB(days),
+            topClients: getTopClientsDB(),
+            errorRate: getErrorRateTodayDB(),
+            byModel: getUsageByModelDB()
+        };
+    }
+
+    public static getRoutingStats() {
+        return {
+            outcome: ModelOutcomeStatsDB(),
+            cacheAffinity: ModelCacheAffinityDB()
         };
     }
 }

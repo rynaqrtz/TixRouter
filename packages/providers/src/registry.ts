@@ -78,7 +78,10 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
     });
 }
 
+export type CacheAffinityHook = <T extends { id: string }>(providers: T[], model: string) => T[];
+
 export class ProviderRegistry {
+    affinityHook?: CacheAffinityHook;
     private providers: Map<string, AIProvider> = new Map();
     private defaultProvider: AIProvider;
     private circuitBreaker: CircuitBreaker;
@@ -360,7 +363,8 @@ export class ProviderRegistry {
 
         if (candidates.length > 0) {
             // Sort by circuit breaker health and apply round-robin shuffle among healthy candidates
-            return this.circuitBreaker.sortCandidatesByHealth(candidates);
+            const sorted = this.circuitBreaker.sortCandidatesByHealth(candidates);
+            return this.affinityHook ? this.affinityHook(sorted, modelId) : sorted;
         }
 
         if (this.defaultProvider.id !== "default") {

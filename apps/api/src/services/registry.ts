@@ -22,6 +22,8 @@ import {
     getAllProvidersDB,
     getFallbackRuleByIdDB,
     getSettingDB,
+    GetCacheAffinityEnabled,
+    ReorderProvidersByAffinity,
     updateFallbackRuleDB,
     upsertProviderDB
 } from "@tixrouter/db";
@@ -51,6 +53,9 @@ import { ProviderRegistry } from "@tixrouter/providers";
 
 // Create a global ProviderRegistry instance
 export const registry = new ProviderRegistry();
+
+registry.affinityHook = (providers, model) =>
+    GetCacheAffinityEnabled() ? ReorderProvidersByAffinity(providers, model) : providers;
 
 /**
  * Seed built-in driver rows into the providers table on first startup, so the

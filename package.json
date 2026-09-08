@@ -1,6 +1,6 @@
 {
     "name": "tixrouter",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "description": "High-performance multi-provider AI Gateway and LLM proxy router built with Hono, TypeScript, and SQLite WAL",
     "author": "TixRouter",
     "license": "MIT",

@@ -1,5 +1,14 @@
 # DB Migration Notes
 
+## v1.4.0 — Routing intelligence (cascade / outcome feedback / cache affinity)
+
+- `request_logs` gains three columns via `ensureColumns` (automatic, existing rows get defaults):
+  `prompt_hash TEXT`, `retried INTEGER NOT NULL DEFAULT 0`, `explicit_feedback TEXT`.
+- New index `idx_request_logs_outcome` on `(api_key_id, prompt_hash, created_at DESC)`.
+- New file `packages/db/src/routing.ts` (outcome stats, cache affinity) — reads only, no schema.
+
+No data migration needed; restart applies everything.
+
 ## v1.3.0 — Shadow Arena
 
 New table `arena_trials` (id, created_at, source_model, candidate_model, judge_model,

@@ -2,7 +2,13 @@ import {
     findMatchingFallbackRulesDB,
     getTokenSaverSettingsDB,
     logRequestDB,
-    incrementAPIKeyUsageDB
+    incrementAPIKeyUsageDB,
+    FindRecentFailureDB,
+    GetCacheAffinityEnabled,
+    GetOutcomeFeedbackEnabled,
+    markLogRetriedDB,
+    ModelOutcomeStatsDB,
+    ReorderCandidatesByOutcome
 } from "@tixrouter/db";
 import { applyTokenSaver, estimateCostForUsage, extractUsageBreakdown } from "@tixrouter/translator";
 import { getCachedResponse, setCachedResponse } from "../services/responseCache.js";
@@ -17,12 +23,15 @@ import type {
     ToolCall,
     UsageInfo
 } from "@tixrouter/types";
+import { createHash } from "node:crypto";
 import { registry } from "@/services/registry.js";
 import { ensureFreshToken } from "@/services/tokenRefresh.js";
 import { executeInterceptedSearch, shouldInterceptToolCall } from "@/services/toolInterceptor.js";
 import { MaybeRunShadowTrial } from "@/logic/arena.logic.js";
+import { MaybeVerifyCompletion } from "@/logic/cascade.logic.js";
 
 const MAX_INTERCEPT_DEPTH = 3;
+const RETRY_WINDOW_MS = 10 * 60_000;
 
 export interface ChatRouteMeta {
     requestedModel?: string;
@@ -32,6 +41,7 @@ export interface ChatRouteMeta {
     fallbackPath?: string[];
     cached?: boolean;
     attempts?: number;
+    escalated?: boolean;
 }
 
 interface AssembledStreamingToolCall {
@@ -95,9 +105,13 @@ function ShouldTriggerFallback(
     return status === undefined;
 }
 
+function PromptHash(body: ChatCompletionRequest): string {
+    return createHash("sha256").update(JSON.stringify(body.messages)).digest("hex").slice(0, 32);
+}
+
 function ResolveCandidates(originalModel: string): CandidateModel[] {
     const matchingRules = findMatchingFallbackRulesDB(originalModel);
-    const candidates: CandidateModel[] = [{ model: originalModel }];
+    let candidates: CandidateModel[] = [{ model: originalModel }];
     const visitedModels = new Set<string>([originalModel]);
 
     for (const rule of matchingRules) {
@@ -105,6 +119,9 @@ function ResolveCandidates(originalModel: string): CandidateModel[] {
             visitedModels.add(rule.targetModel);
             candidates.push({ model: rule.targetModel, rule });
         }
+    }
+    if (GetOutcomeFeedbackEnabled()) {
+        candidates = ReorderCandidatesByOutcome(candidates, ModelOutcomeStatsDB());
     }
     return candidates;
 }
@@ -124,6 +141,7 @@ function LogCompletion(
         fallbackPath?: string[];
         fallbackReason?: string;
         apiKeyId?: string;
+        promptHash?: string;
     }
 ): void {
     const breakdown = extractUsageBreakdown(providerId, options.usage);
@@ -155,6 +173,7 @@ function LogCompletion(
         fallbackOccurred: options.fallbackOccurred,
         fallbackPath: options.fallbackOccurred ? options.fallbackPath?.join(" -> ") : undefined,
         fallbackReason: options.fallbackReason,
+        promptHash: options.promptHash,
         statusCode: options.statusCode,
         latencyMs: Date.now() - startTime
     });
@@ -215,6 +234,9 @@ export class ChatLogic {
             depth === 0 ? applyTokenSaver(body, getTokenSaverSettingsDB(), maxInputTokens).request : body;
         const originalModel = effectiveBody.model;
         if (depth === 0 && meta) meta.requestedModel = originalModel;
+        const promptHash = PromptHash(effectiveBody);
+        const retriedLogId = apiKeyId ? FindRecentFailureDB(apiKeyId, promptHash, RETRY_WINDOW_MS) : null;
+        if (retriedLogId) markLogRetriedDB(retriedLogId);
         const candidates = ResolveCandidates(originalModel);
 
         let lastError: Error | ErrorWithStatus | string | null = null;
@@ -248,7 +270,8 @@ export class ChatLogic {
                     fallbackOccurred,
                     fallbackPath,
                     fallbackReason,
-                    apiKeyId
+                    apiKeyId,
+                    promptHash
                 });
                 if (meta) {
                     meta.model = currentModel;
@@ -318,7 +341,8 @@ export class ChatLogic {
                     fallbackOccurred,
                     fallbackPath,
                     fallbackReason,
-                    apiKeyId
+                    apiKeyId,
+                    promptHash
                 });
 
                 if (meta) {
@@ -335,7 +359,7 @@ export class ChatLogic {
                     choice?.message?.content ?? JSON.stringify(choice?.message?.tool_calls ?? "")
                 );
 
-                return response;
+                return await MaybeVerifyCompletion(effectiveBody, response, startTime, apiKeyId, meta);
             } catch (err) {
                 lastError = err instanceof Error ? err : (err as ErrorWithStatus);
                 if (!fallbackReason) {
@@ -354,7 +378,8 @@ export class ChatLogic {
             fallbackOccurred,
             fallbackPath,
             fallbackReason,
-            apiKeyId
+            apiKeyId,
+            promptHash
         });
 
         void notifyProviderFailure(originalModel, lastError);
@@ -371,6 +396,7 @@ export class ChatLogic {
         const effectiveBody =
             depth === 0 ? applyTokenSaver(body, getTokenSaverSettingsDB(), maxInputTokens).request : body;
         const originalModel = effectiveBody.model;
+        const promptHash = PromptHash(effectiveBody);
         const candidates = ResolveCandidates(originalModel);
 
         let lastError: Error | ErrorWithStatus | string | null = null;
@@ -404,7 +430,8 @@ export class ChatLogic {
                     fallbackOccurred,
                     fallbackPath,
                     fallbackReason,
-                    apiKeyId
+                    apiKeyId,
+                    promptHash
                 });
                 yield* CachedResponseToChunks(cached);
                 return;
@@ -530,7 +557,8 @@ export class ChatLogic {
                     fallbackOccurred,
                     fallbackPath,
                     fallbackReason,
-                    apiKeyId
+                    apiKeyId,
+                    promptHash
                 });
 
                 MaybeRunShadowTrial(
@@ -556,7 +584,8 @@ export class ChatLogic {
                     fallbackOccurred,
                     fallbackPath,
                     fallbackReason,
-                    apiKeyId
+                    apiKeyId,
+                    promptHash
                 });
                 void notifyProviderFailure(originalModel, err);
                 throw err;

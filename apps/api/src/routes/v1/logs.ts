@@ -6,3 +6,6 @@ export const LogsRouter = new Hono();
 
 LogsRouter.get("/logs", ApiKeyAuth, LogsController.ListLogs);
 LogsRouter.get("/logs/stats", ApiKeyAuth, LogsController.GetStats);
+LogsRouter.get("/logs/analytics", ApiKeyAuth, LogsController.GetAnalytics);
+LogsRouter.get("/logs/routing", ApiKeyAuth, LogsController.GetRoutingStats);
+LogsRouter.post("/logs/:id/feedback", ApiKeyAuth, LogsController.PostFeedback);

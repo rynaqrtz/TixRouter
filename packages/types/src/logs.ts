@@ -16,6 +16,9 @@ export interface RequestLogEntry {
     fallbackPath?: string;
     fallbackReason?: string;
     resolvedModel?: string;
+    promptHash?: string;
+    retried?: boolean;
+    explicitFeedback?: string;
     createdAt: number;
 }
 
