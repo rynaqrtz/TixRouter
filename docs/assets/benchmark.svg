@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 640" font-family="ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif">
+  <rect x="1" y="1" width="858" height="638" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="32" y="42" font-size="20" font-weight="700" fill="#0f172a">TixRouter vs LiteLLM — measured benchmark</text>
+  <text x="32" y="64" font-size="12" fill="#64748b">10 runs per model · temperature 0 · max_tokens 120 · identical payloads, same OpenRouter upstream</text>
+  <rect x="612" y="30" width="12" height="12" rx="3" fill="#6366f1"/>
+  <text x="630" y="40" font-size="12" fill="#0f172a">TixRouter</text>
+  <rect x="716" y="30" width="12" height="12" rx="3" fill="#94a3b8"/>
+  <text x="734" y="40" font-size="12" fill="#0f172a">LiteLLM</text>
+
+  <text x="32" y="104" font-size="13" font-weight="700" fill="#334155">Mean latency (ms) — lower is better</text>
+
+  <text x="180" y="139" font-size="12" fill="#475569" text-anchor="end">gpt-4o-mini</text>
+  <rect x="190" y="118" width="187" height="24" rx="4" fill="#6366f1"/>
+  <text x="385" y="134" font-size="12" font-weight="600" fill="#4f46e5">2501</text>
+  <rect x="190" y="146" width="136" height="24" rx="4" fill="#94a3b8"/>
+  <text x="334" y="162" font-size="12" font-weight="600" fill="#64748b">1823</text>
+
+  <text x="180" y="203" font-size="12" fill="#475569" text-anchor="end">llama-3.3-70b</text>
+  <rect x="190" y="182" width="193" height="24" rx="4" fill="#6366f1"/>
+  <text x="391" y="198" font-size="12" font-weight="600" fill="#4f46e5">2581</text>
+  <rect x="190" y="210" width="538" height="24" rx="4" fill="#94a3b8"/>
+  <text x="736" y="226" font-size="12" font-weight="600" fill="#64748b">7201</text>
+
+  <text x="180" y="267" font-size="12" fill="#475569" text-anchor="end">gemini-3.6-flash</text>
+  <rect x="190" y="246" width="103" height="24" rx="4" fill="#6366f1"/>
+  <text x="301" y="262" font-size="12" font-weight="600" fill="#4f46e5">1375</text>
+  <rect x="190" y="274" width="109" height="24" rx="4" fill="#94a3b8"/>
+  <text x="307" y="290" font-size="12" font-weight="600" fill="#64748b">1458</text>
+
+  <text x="32" y="330" font-size="13" font-weight="700" fill="#334155">Throughput (tokens/s) — higher is better</text>
+
+  <text x="180" y="365" font-size="12" fill="#475569" text-anchor="end">gpt-4o-mini</text>
+  <rect x="190" y="344" width="314" height="24" rx="4" fill="#6366f1"/>
+  <text x="512" y="360" font-size="12" font-weight="600" fill="#4f46e5">56</text>
+  <rect x="190" y="372" width="403" height="24" rx="4" fill="#94a3b8"/>
+  <text x="601" y="388" font-size="12" font-weight="600" fill="#64748b">72</text>
+
+  <text x="180" y="429" font-size="12" fill="#475569" text-anchor="end">llama-3.3-70b</text>
+  <rect x="190" y="408" width="325" height="24" rx="4" fill="#6366f1"/>
+  <text x="523" y="424" font-size="12" font-weight="600" fill="#4f46e5">58</text>
+  <rect x="190" y="436" width="157" height="24" rx="4" fill="#94a3b8"/>
+  <text x="355" y="452" font-size="12" font-weight="600" fill="#64748b">28</text>
+
+  <text x="180" y="493" font-size="12" fill="#475569" text-anchor="end">gemini-3.6-flash</text>
+  <rect x="190" y="472" width="476" height="24" rx="4" fill="#6366f1"/>
+  <text x="674" y="488" font-size="12" font-weight="600" fill="#4f46e5">85</text>
+  <rect x="190" y="500" width="448" height="24" rx="4" fill="#94a3b8"/>
+  <text x="646" y="516" font-size="12" font-weight="600" fill="#64748b">80</text>
+
+  <g>
+    <rect x="32" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="46" y="571" font-size="13" font-weight="700" fill="#4f46e5">−38% mean latency</text>
+    <text x="46" y="586" font-size="10.5" fill="#64748b">2.15 s vs 3.49 s, 3-model average</text>
+
+    <rect x="234" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="248" y="571" font-size="13" font-weight="700" fill="#4f46e5">3.1× steadier p95</text>
+    <text x="248" y="586" font-size="10.5" fill="#64748b">3.3 s vs 10.3 s worst-case tail</text>
+
+    <rect x="436" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="450" y="571" font-size="13" font-weight="700" fill="#4f46e5">+10% throughput</text>
+    <text x="450" y="586" font-size="10.5" fill="#64748b">66 vs 60 tokens/s average</text>
+
+    <rect x="638" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="652" y="571" font-size="13" font-weight="700" fill="#4f46e5">29/30 vs 28/30</text>
+    <text x="652" y="586" font-size="10.5" fill="#64748b">request success rate</text>
+  </g>
+
+  <text x="32" y="624" font-size="10.5" fill="#94a3b8">Reproduce it yourself: scripts/bench/bench.mjs with your own OpenRouter key — full table in the README.</text>
+</svg>
