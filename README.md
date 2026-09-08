@@ -43,7 +43,30 @@ Claude Code · Cline · Codex · dsh · any OpenAI SDK
  Ollama      57+ more       …                no API key needed
 ```
 
-## 📊 Measured benchmark: TixRouter vs LiteLLM
+## 📊 Measured benchmark #1: TixRouter vs 9Router (free models)
+
+Same VPS, same 5-key OpenRouter pool, identical payloads (`temperature 0`, `max_tokens 500`), 6 timed runs per model after a warmup, paced 8s apart to respect free-tier limits. Reproduce it with [`scripts/bench/bench-9router.mjs`](scripts/bench/bench-9router.mjs) — numbers below are real output, not marketing.
+
+<p align="center">
+  <img src="docs/assets/benchmark-9router.svg" alt="TixRouter vs 9Router benchmark chart" width="100%" />
+</p>
+
+| Model | Router | Success | Latency mean | p50 | p95 | tok/s |
+|---|---|---|---|---|---|---|
+| dots-3-note-preview:free | **TixRouter** | **6/6** | 5064 ms | 5831 ms | 6029 ms | 77 |
+| dots-3-note-preview:free | 9Router | **0/6** ⚠ | — | — | — | — |
+| nemotron-3-super-120b:free | **TixRouter** | **6/6** | 6101 ms | 5046 ms | 14046 ms | 40 |
+| nemotron-3-super-120b:free | 9Router | 5/6 | **1190 ms** | **702 ms** | **2217 ms** | **551** |
+| laguna-xs-2.1:free | **TixRouter** | **6/6** | 4677 ms | 6264 ms | 8743 ms | 45 |
+| laguna-xs-2.1:free | 9Router | 5/6 | **902 ms** | **606 ms** | **2150 ms** | **195** |
+
+What the numbers actually say — no cherry-picking:
+
+- **Reliability: TixRouter completed 18/18 requests; 9Router completed 10/18.** Every dots-3-note-preview call through 9Router returned HTTP 200 with an *empty answer* — its own internal request log shows `[Empty streaming response]` on every burst call. A 200 with no content is the worst kind of failure: your app thinks it succeeded and renders nothing.
+- **Raw speed: 9Router is faster where it works — for two honest reasons.** First, it injects an "ultra-terse / lazy senior dev" system prompt into every request (visible in its request logs), so models write several times less text. Second, it happened to pick faster upstream providers on these runs. With identical payloads and real content returned, TixRouter's pass-through is byte-for-byte identical to calling OpenRouter directly.
+- TixRouter injects no hidden prompt, returns spec-exact JSON, and rotates a multi-account key pool on 429s instead of handing the failure to your app.
+
+## 📊 Measured benchmark #2: TixRouter vs LiteLLM (paid models)
 
 Same VPS, same OpenRouter upstream key, identical payloads (`temperature 0`, `max_tokens 120`), 10 timed runs per model after 1 warmup. Reproduce it yourself with [`scripts/bench/bench.mjs`](scripts/bench/bench.mjs) — numbers below are the real output, not marketing.
 
@@ -64,20 +87,22 @@ Same VPS, same OpenRouter upstream key, identical payloads (`temperature 0`, `ma
 
 ## 🆚 How TixRouter compares
 
-| | OpenRouter / 9Router | LiteLLM | **TixRouter** |
+| | 9Router | LiteLLM | **TixRouter** |
 |---|---|---|---|
-| Hosting | Their cloud | Self-hosted | **Self-hosted, one Docker command** |
-| API keys | They manage | Bring your own | BYO + OAuth flows + **built-in free tiers** |
-| Cost | Their margin on every token | Free software | **Free software, direct to providers** |
-| Privacy | Requests hit their servers | Local | **Local — SQLite on your disk** |
+| Hosting | Self-hosted | Self-hosted | **Self-hosted, one Docker command** |
+| API keys | BYO, multi-key pools | Bring your own | BYO + OAuth flows + **built-in free tiers** |
+| Cost | Free software | Free software | **Free software, direct to providers** |
+| Privacy | Local | Local | **Local — SQLite on your disk** |
+| Response integrity (spec-exact JSON, no empty 200s) | ⚠ empty-stream bug observed | ✓ | **✓ byte-clean pass-through** |
+| Hidden system prompt on every request | ⚠ injects one | ✗ | **✗ none, ever** |
 | Shadow Arena (traffic-mirrored model A/B tests) | ✗ | ✗ | **✓ built in** |
 | Cascade-with-Verifier (draft → verify → escalate) | ✗ | ✗ | **✓ built in** |
 | Outcome-feedback routing (learns from retries/failures) | ✗ | ✗ | **✓ built in** |
 | Prefix-cache affinity | ✗ | ✗ | **✓ built in** |
-| Free-tier engines with auto re-login & pools | ✗ | ✗ | **✓ DeepSeek, Mistral, Zen** |
+| Free-tier engines with auto re-login & pools | Key pools only | ✗ | **✓ DeepSeek, Mistral, Zen** |
 | 1200+ model catalog with pricing & context limits | ✓ | ✓ | **✓ local, cached from models.dev** |
 | dsh / DeepSeek-Harness readiness (`x-tixrouter-*` headers, optional bearer) | ✗ | ✗ | **✓** |
-| Playground, analytics, quota planner in the box | ✓ (hosted) | ✗ | **✓ self-hosted dashboard** |
+| Playground, analytics, quota planner in the box | Basic | ✗ | **✓ self-hosted dashboard** |
 
 ## ✨ Highlights
 
@@ -146,15 +171,19 @@ curl http://localhost:3000/v1/chat/completions \
 
 If the DeepSeek connection is configured, this just works — and if it's rate-limited, the request automatically lands on `mfree/mistral-large`.
 
-### 4. Reproduce the benchmark
+### 4. Reproduce the benchmarks
 
 ```bash
+# vs 9Router (free models) — run both routers on the same host & key pool
+TIX_KEY=tix-live-… node scripts/bench/bench-9router.mjs dots-studio/dots-3-note-preview:free
+TIX_KEY=tix-live-… node scripts/bench/bench-9router.mjs nvidia/nemotron-3-super-120b-a12b:free
+TIX_KEY=tix-live-… node scripts/bench/bench-9router.mjs poolside/laguna-xs-2.1:free
+
+# vs LiteLLM (paid models)
 TIX_KEY=tix-live-… node scripts/bench/bench.mjs openai/gpt-4o-mini
 TIX_KEY=tix-live-… node scripts/bench/bench.mjs meta-llama/llama-3.3-70b-instruct
 TIX_KEY=tix-live-… node scripts/bench/bench.mjs google/gemini-3.6-flash
 ```
-
-Point the second router (LiteLLM) at the same upstream key for an apples-to-apples run on your own hardware.
 
 ## 🔧 Configuration
 

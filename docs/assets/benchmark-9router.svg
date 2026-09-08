@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 640" font-family="ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif">
+  <rect x="1" y="1" width="858" height="638" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="32" y="42" font-size="20" font-weight="700" fill="#0f172a">TixRouter vs 9Router — measured benchmark (free models)</text>
+  <text x="32" y="64" font-size="12" fill="#64748b">Same VPS, same 5-key OpenRouter pool, identical payloads · 6 runs per model · temperature 0 · max_tokens 500</text>
+  <rect x="612" y="30" width="12" height="12" rx="3" fill="#6366f1"/>
+  <text x="630" y="40" font-size="12" fill="#0f172a">TixRouter</text>
+  <rect x="716" y="30" width="12" height="12" rx="3" fill="#94a3b8"/>
+  <text x="734" y="40" font-size="12" fill="#0f172a">9Router</text>
+
+  <text x="32" y="104" font-size="13" font-weight="700" fill="#334155">Requests completed with real content — higher is better</text>
+
+  <text x="180" y="139" font-size="12" fill="#475569" text-anchor="end">dots-3-note:free</text>
+  <rect x="190" y="118" width="440" height="24" rx="4" fill="#6366f1"/>
+  <text x="638" y="134" font-size="12" font-weight="600" fill="#4f46e5">6/6</text>
+  <rect x="190" y="146" width="2" height="24" rx="1" fill="#94a3b8"/>
+  <text x="200" y="162" font-size="12" font-weight="600" fill="#dc2626">0/6 — empty responses</text>
+
+  <text x="180" y="203" font-size="12" fill="#475569" text-anchor="end">nemotron-3-super:free</text>
+  <rect x="190" y="182" width="440" height="24" rx="4" fill="#6366f1"/>
+  <text x="638" y="198" font-size="12" font-weight="600" fill="#4f46e5">6/6</text>
+  <rect x="190" y="210" width="367" height="24" rx="4" fill="#94a3b8"/>
+  <text x="565" y="226" font-size="12" font-weight="600" fill="#64748b">5/6</text>
+
+  <text x="180" y="267" font-size="12" fill="#475569" text-anchor="end">laguna-xs-2.1:free</text>
+  <rect x="190" y="246" width="440" height="24" rx="4" fill="#6366f1"/>
+  <text x="638" y="262" font-size="12" font-weight="600" fill="#4f46e5">6/6</text>
+  <rect x="190" y="274" width="367" height="24" rx="4" fill="#94a3b8"/>
+  <text x="565" y="290" font-size="12" font-weight="600" fill="#64748b">5/6</text>
+
+  <text x="32" y="330" font-size="13" font-weight="700" fill="#334155">Mean latency (ms) — lower is better</text>
+
+  <text x="180" y="365" font-size="12" fill="#475569" text-anchor="end">dots-3-note:free</text>
+  <rect x="190" y="344" width="318" height="24" rx="4" fill="#6366f1"/>
+  <text x="516" y="360" font-size="12" font-weight="600" fill="#4f46e5">5064</text>
+  <text x="196" y="390" font-size="11" fill="#dc2626">no output — empty streaming response</text>
+
+  <text x="180" y="429" font-size="12" fill="#475569" text-anchor="end">nemotron-3-super:free</text>
+  <rect x="190" y="408" width="384" height="24" rx="4" fill="#6366f1"/>
+  <text x="582" y="424" font-size="12" font-weight="600" fill="#4f46e5">6101</text>
+  <rect x="190" y="436" width="75" height="24" rx="4" fill="#94a3b8"/>
+  <text x="273" y="452" font-size="12" font-weight="600" fill="#64748b">1190</text>
+
+  <text x="180" y="493" font-size="12" fill="#475569" text-anchor="end">laguna-xs-2.1:free</text>
+  <rect x="190" y="472" width="294" height="24" rx="4" fill="#6366f1"/>
+  <text x="492" y="488" font-size="12" font-weight="600" fill="#4f46e5">4677</text>
+  <rect x="190" y="500" width="57" height="24" rx="4" fill="#94a3b8"/>
+  <text x="255" y="516" font-size="12" font-weight="600" fill="#64748b">902</text>
+
+  <g>
+    <rect x="32" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="46" y="571" font-size="13" font-weight="700" fill="#4f46e5">18/18 vs 10/18</text>
+    <text x="46" y="586" font-size="10.5" fill="#64748b">requests completed</text>
+
+    <rect x="234" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="248" y="571" font-size="13" font-weight="700" fill="#4f46e5">0 vs 6 empty replies</text>
+    <text x="248" y="586" font-size="10.5" fill="#64748b">empty-stream bug on dots:free</text>
+
+    <rect x="436" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="450" y="571" font-size="13" font-weight="700" fill="#4f46e5">Byte-clean pass-through</text>
+    <text x="450" y="586" font-size="10.5" fill="#64748b">spec-exact JSON, no rewrites</text>
+
+    <rect x="638" y="552" width="190" height="44" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="652" y="571" font-size="13" font-weight="700" fill="#4f46e5">No hidden prompts</text>
+    <text x="652" y="586" font-size="10.5" fill="#64748b">9Router injects one into every call</text>
+  </g>
+
+  <text x="32" y="624" font-size="10.5" fill="#94a3b8">9Router latency advantage on models 2-3 partly reflects its terse injected prompt (shorter outputs) and faster upstream provider picks. Reproduce: scripts/bench/bench-9router.mjs</text>
+</svg>
