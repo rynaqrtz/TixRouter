@@ -19,7 +19,7 @@ RUN mkdir /out/web-dist && cp -r apps/web/dist/. /out/web-dist
 
 FROM node:22-alpine
 ENV NODE_ENV=production
-ENV DATABASE_PATH=/data/rynarouter.db
+ENV DATABASE_PATH=/data/tixrouter.db
 ENV WEB_DIST_PATH=/app/web-dist
 WORKDIR /app
 RUN mkdir -p /data && chown node:node /data
