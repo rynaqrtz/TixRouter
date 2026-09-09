@@ -92,7 +92,6 @@ export class OpenAIExecutor implements AIProvider {
         const headers: Record<string, string> = {
             "Content-Type": "application/json",
             "User-Agent": "TixRouter/1.0.0 (Node.js)",
-            "Accept-Encoding": "identity",
             Accept: accept ?? "application/json"
         };
         const token = this.accessToken || this.apiKey;
@@ -176,14 +175,21 @@ export class OpenAIExecutor implements AIProvider {
         const url = `${this.baseUrl}/chat/completions`;
         const hdrs = this.getHeaders("text/event-stream, application/json, */*");
 
-        let res = await fetchWithRetry(url, { ...req, model: targetModel, stream: true } as unknown as Record<string, unknown>, hdrs);
+        let res = await fetchWithRetry(
+            url,
+            { ...req, model: targetModel, stream: true, stream_options: { include_usage: true } } as unknown as Record<string, unknown>,
+            hdrs
+        );
+        if (!res.ok && (await res.clone().text()).includes("stream_options")) {
+            res = await fetchWithRetry(url, { ...req, model: targetModel, stream: true } as unknown as Record<string, unknown>, hdrs, 1);
+        }
 
         if (!res.ok) {
             const errorText = await res.text();
 
             // If tool calling is not supported, retry without tools
             if (isToolCallingNotSupportedError(errorText) && req.tools && req.tools.length > 0) {
-                const strippedReq = stripToolsFromRequest({ ...req, model: targetModel, stream: true });
+                const strippedReq = stripToolsFromRequest({ ...req, model: targetModel, stream: true, stream_options: { include_usage: true } });
                 res = await fetchWithRetry(url, strippedReq as unknown as Record<string, unknown>, hdrs, 1);
                 if (!res.ok) {
                     const retryErrorText = await res.text();
@@ -192,7 +198,7 @@ export class OpenAIExecutor implements AIProvider {
             } else {
                 const limit = parseMaxTokensLimit(errorText);
                 if (limit !== null && req.max_tokens !== undefined && req.max_tokens > limit) {
-                    const clampedReq = { ...req, model: targetModel, stream: true, max_tokens: limit };
+                    const clampedReq = { ...req, model: targetModel, stream: true, max_tokens: limit, stream_options: { include_usage: true } };
                     res = await fetchWithRetry(url, clampedReq as unknown as Record<string, unknown>, hdrs, 1);
                     if (!res.ok) {
                         const retryErrorText = await res.text();

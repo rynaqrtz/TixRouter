@@ -13,11 +13,11 @@ export const DEFAULT_TOKEN_SAVER_SETTINGS: TokenSaverSettings = {
         minCharacterThreshold: 50
     },
     lazySeniorDev: {
-        enabled: true,
+        enabled: false,
         mode: "balanced"
     },
     compressLlmOutput: {
-        enabled: true,
+        enabled: false,
         mode: "terse",
         stripPleasantries: true
     },

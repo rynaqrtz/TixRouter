@@ -1,6 +1,7 @@
 // Shared retry/backoff helpers for upstream providers with transient errors.
 
 const MAX_RETRY_AFTER_MS = 10000;
+const RATE_LIMIT_RETRY_MAX_MS = 3000;
 const TRANSIENT_RETRY_MAX_MS = 15000;
 
 const TRANSIENT_ERROR_PATTERNS = [
@@ -109,7 +110,7 @@ export async function computeRetryDelay(
 
     if (!isTransientError(response.status, errorMessage)) return null;
 
-    const cap = response.status === 429 ? MAX_RETRY_AFTER_MS : TRANSIENT_RETRY_MAX_MS;
+    const cap = response.status === 429 ? RATE_LIMIT_RETRY_MAX_MS : TRANSIENT_RETRY_MAX_MS;
     return Math.min(1000 * 2 ** attempt, cap);
 }
 
