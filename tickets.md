@@ -85,6 +85,48 @@ Sinyal sisi klien saja (jujur, bukan sulap):
 
 ---
 
+## 🚀 Gateway Upgrades v1.5.0 (berbasis riset pasar: state-of-ai-gateways-2026, Braintrust/Portkey/LiteLLM comparison, agentgateway)
+
+### ✅ T-012 — Smart Response Cache (SELESAI, v1.5.0)
+- [x] Mode `cache_mode`: exact (default) / fuzzy (normalisasi whitespace+case, prefix fingerprint)
+- [x] TTL bisa diatur `cache_ttl_seconds` (default 60s) + toggle UI di settings
+- **Diverifikasi:** test `gateway-upgrades.test.ts`
+
+### ✅ T-013 — RPM Rate Limit per Virtual Key (SELESAI, v1.5.0)
+- [x] Kolom `rate_limit` kini benar-benar di-enforce (sliding window 60 detik, anchor DB `rate_window_start/count`)
+- [x] HTTP 429 `rate_limit_error` + header `Retry-After` saat limit tercapai
+- [x] Admin session & loopback bypass tidak terpengaruh (hanya key virtual)
+- **Diverifikasi:** test sliding window reset + block
+
+### ✅ T-014 — Alerts v2 (SELESAI, v1.5.0)
+- [x] Cooldown per event (bukan global): provider_failure 5m, budget 1 jam
+- [x] Channel Telegram Bot + webhook JSON, filter event `notify_events` (empty = semua)
+- [x] Kill-switch `budget_alerts_enabled` + UI settings (chat ID, bot token, filter)
+- **Diverifikasi:** build + test state latching
+
+### ✅ T-015 — Budget Alert (SELESAI, v1.5.0)
+- [x] Notifikasi saat virtual key melewati `credit_limit` / `quota_limit` (sebelumnya cuma blok diam-diam)
+- [x] Sink DI di package db (`setBudgetAlertSink`), latch per key di DB (`credit_alerted/quota_alerted`)
+- [x] Cooldown 1 jam per key, reset otomatis saat key di-top-up
+- **Diverifikasi:** test sink fired-once + latch reset
+
+### ✅ T-016 — Live Event Stream /v1/events/stream (SELESAI, v1.5.0)
+- [x] SSE `request.completed` (log lengkap per request) untuk admin, sink multi-subscriber di package db (`SubscribeLogEvents`)
+- [x] Sink ter-attach hanya saat ada klien SSE aktif, heartbeat 30 detik, auto-cleanup
+- **Diverifikasi:** test subscriber lifecycle
+
+### ✅ T-017 — /v1/models + Harga (SELESAI, v1.5.0)
+- [x] Field `pricing` (USD per 1M token: input/output/cached) di setiap model dari katalog pricing
+- [x] Model free → 0; model tanpa entri katalog → tanpa field (tidak menyesatkan)
+- **Diverifikasi:** test enrichment
+
+### ✅ T-018 — Fix Retry-Detect Streaming (SELESAI, v1.5.0)
+- [x] Bug: retry-detect (`retried` marking) hanya jalan di path non-streaming — agen streaming (mayoritas) tidak terhitung di outcome stats
+- [x] `FindRecentFailureDB` + `markLogRetriedDB` kini juga di `ProcessStreamingCompletion`
+- **Dampak:** skor Wilson outcome routing jadi akurat untuk trafik streaming
+
+---
+
 ## 📦 Distribusi
 
 ### T-011 — Docs & Distribusi (P3)

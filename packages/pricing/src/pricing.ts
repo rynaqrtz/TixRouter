@@ -138,3 +138,19 @@ export function formatCost(cost: number): string {
     if (cost === null || cost === undefined || isNaN(cost)) return "$0.00";
     return `$${cost.toFixed(2)}`;
 }
+
+export interface ModelPricingInfo {
+    input: number;
+    output: number;
+    cached?: number;
+}
+
+/**
+ * Per-model USD pricing (per 1M tokens) for /v1/models enrichment.
+ * Returns undefined for models with no catalog entry (avoids misleading defaults).
+ */
+export function getModelPricingForList(model: string): ModelPricingInfo | undefined {
+    const pricing = getPricingForModel(undefined, model);
+    if (pricing === DEFAULT_PRICING) return undefined;
+    return { input: pricing.input, output: pricing.output, cached: pricing.cached };
+}

@@ -1,4 +1,6 @@
 import { db } from "./db.js";
+import { getAPIKeyByIdDB } from "./apiKeys.js";
+import { getSettingDB } from "./settings.js";
 
 export interface ModelOutcomeStats {
     model: string;
@@ -108,6 +110,17 @@ export function GetCacheAffinityEnabled(): boolean {
     return row?.value !== "false";
 }
 
+export function GetCacheModeDB(): "off" | "exact" | "fuzzy" {
+    const value = getSettingDB("cache_mode", "");
+    return value === "fuzzy" || value === "exact" ? value : "exact";
+}
+
+export function getCacheTtlMsDB(defaultTtlMs: number): number {
+    const parsed = parseInt(getSettingDB("cache_ttl_seconds", ""), 10);
+    if (Number.isNaN(parsed) || parsed < 0) return defaultTtlMs;
+    return parsed * 1000;
+}
+
 export function ReorderCandidatesByOutcome<T extends { model: string }>(
     candidates: T[],
     stats: ModelOutcomeStats[]
@@ -146,4 +159,33 @@ export function FindRecentFailureDB(apiKeyId: string, promptHash: string, window
         )
         .get(apiKeyId, promptHash, Date.now() - windowMs) as unknown as { id: string } | undefined;
     return row?.id ?? null;
+}
+
+export type BudgetAlertSink = (apiKeyId: string, kind: "credit" | "quota") => void;
+
+let budgetAlertSink: BudgetAlertSink | undefined;
+
+export function setBudgetAlertSink(sink: BudgetAlertSink): void {
+    budgetAlertSink = sink;
+}
+
+const BUDGET_ALERT_COOLDOWN_MS = 60 * 60_000;
+const lastBudgetNotifiedAt = new Map<string, number>();
+
+export function NotifyBudgetThresholds(apiKeyId?: string): void {
+    if (!apiKeyId || !budgetAlertSink) return;
+    if (getSettingDB("budget_alerts_enabled", "true") === "false") return;
+    const key = getAPIKeyByIdDB(apiKeyId);
+    if (!key) return;
+
+    const now = Date.now();
+    const last = lastBudgetNotifiedAt.get(apiKeyId) ?? 0;
+    if (now - last < BUDGET_ALERT_COOLDOWN_MS) return;
+
+    const overCredit = key.credit_limit > 0 && key.usage_cost >= key.credit_limit;
+    const overQuota = key.quota_limit > 0 && key.usage_tokens >= key.quota_limit;
+    if (!overCredit && !overQuota) return;
+
+    lastBudgetNotifiedAt.set(apiKeyId, now);
+    budgetAlertSink(apiKeyId, overCredit ? "credit" : "quota");
 }

@@ -26,6 +26,16 @@ interface APIKeyWriteInput {
     allowed_models?: string[] | null;
 }
 
+interface AlertStateRow {
+    credit_alerted: number | null;
+    quota_alerted: number | null;
+}
+
+interface RateWindowRow {
+    rate_window_start: number;
+    rate_window_count: number;
+}
+
 interface APIKeyCreateInput extends APIKeyWriteInput {
     name: string;
 }
@@ -123,6 +133,71 @@ export function incrementAPIKeyUsageDB(keyId: string, tokens: number, cost = 0):
         "UPDATE api_keys SET usage_tokens = usage_tokens + ?, usage_cost = usage_cost + ? WHERE id = ?"
     );
     Query.run(tokens, cost, keyId);
+}
+
+const RPM_WINDOW_MS = 60_000;
+
+export interface RPMCheckResult {
+    allowed: boolean;
+    remaining: number;
+    retryAfterSec: number;
+}
+
+export function ConsumeAPIKeyRPMDB(keyId: string, limit: number, now = Date.now()): RPMCheckResult {
+    const Row = db
+        .prepare("SELECT rate_window_start, rate_window_count FROM api_keys WHERE id = ?")
+        .get(keyId) as unknown as { rate_window_start: number; rate_window_count: number } | undefined;
+    if (!Row) return { allowed: false, remaining: 0, retryAfterSec: 60 };
+
+    const windowStart = num(Row.rate_window_start);
+    const count = num(Row.rate_window_count);
+
+    if (now - windowStart >= RPM_WINDOW_MS) {
+        db.prepare("UPDATE api_keys SET rate_window_start = ?, rate_window_count = 1 WHERE id = ?").run(
+            now,
+            keyId
+        );
+        return { allowed: true, remaining: Math.max(0, limit - 1), retryAfterSec: 0 };
+    }
+
+    if (limit <= 0) {
+        db.prepare("UPDATE api_keys SET rate_window_count = rate_window_count + 1 WHERE id = ?").run(keyId);
+        return { allowed: true, remaining: 0, retryAfterSec: 0 };
+    }
+
+    if (count >= limit) {
+        return { allowed: false, remaining: 0, retryAfterSec: Math.ceil((windowStart + RPM_WINDOW_MS - now) / 1000) };
+    }
+
+    db.prepare("UPDATE api_keys SET rate_window_count = rate_window_count + 1 WHERE id = ?").run(keyId);
+    return { allowed: true, remaining: Math.max(0, limit - count - 1), retryAfterSec: 0 };
+}
+
+export function getAPIKeyByIdDB(id: string): APIKeyZod | null {
+    const Row = db
+        .prepare("SELECT * FROM api_keys WHERE id = ?")
+        .get(id) as unknown as APIKeyRow | undefined;
+    if (!Row) return null;
+    return mapAPIKeyRow(Row);
+}
+
+export function getAPIKeyAlertStateDB(id: string): { credit: boolean; quota: boolean } {
+    const Row = db
+        .prepare("SELECT credit_alerted, quota_alerted FROM api_keys WHERE id = ?")
+        .get(id) as unknown as { credit_alerted: number | null; quota_alerted: number | null } | undefined;
+    return {
+        credit: Boolean(Row?.credit_alerted),
+        quota: Boolean(Row?.quota_alerted)
+    };
+}
+
+export function setAPIKeyAlertStateDB(id: string, kind: "credit" | "quota", alerted: boolean): void {
+    const col = kind === "credit" ? "credit_alerted" : "quota_alerted";
+    db.prepare(`UPDATE api_keys SET ${col} = ? WHERE id = ?`).run(alerted ? 1 : 0, id);
+}
+
+export function ResetAPIKeyAlertStateDB(id: string): void {
+    db.prepare("UPDATE api_keys SET credit_alerted = 0, quota_alerted = 0 WHERE id = ?").run(id);
 }
 
 export function addCreditAPIKeyDB(id: string, amount: number): APIKeyZod | null {

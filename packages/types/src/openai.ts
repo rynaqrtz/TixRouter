@@ -149,6 +149,8 @@ export interface ModelObject {
     custom?: boolean;
     context_window?: number;
     max_output_tokens?: number;
+    /** USD per 1M tokens (input/output/cached) when listed in the pricing catalog. */
+    pricing?: { input: number; output: number; cached?: number };
 }
 
 export interface ModelListResponse {

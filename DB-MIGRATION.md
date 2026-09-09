@@ -15,6 +15,18 @@ New table `arena_trials` (id, created_at, source_model, candidate_model, judge_m
 prompt_hash, verdict, latency_ms, candidate_cost) plus two indexes. Created automatically by
 `initDatabase()` on first start — no data migration needed.
 
+## v1.5.0 — gateway upgrades (rate limiting, alerts, live events)
+
+All added via `ensureColumns`, applied automatically on first start — no data migration needed:
+
+- `api_keys.rate_window_start INTEGER NOT NULL DEFAULT 0` — RPM sliding-window anchor
+- `api_keys.rate_window_count INTEGER NOT NULL DEFAULT 0` — requests in the current window
+- `api_keys.credit_alerted INTEGER NOT NULL DEFAULT 0` — budget alert latch (credit)
+- `api_keys.quota_alerted INTEGER NOT NULL DEFAULT 0` — budget alert latch (quota)
+
+New settings (no schema impact): `cache_mode` (exact/fuzzy), `cache_ttl_seconds`,
+`budget_alerts_enabled`, `notify_telegram_bot_token`, `notify_telegram_chat_id`, `notify_events`.
+
 ## v1.2.0 — TixRouter rebrand (data path migration)
 
 No schema changes. Storage locations were renamed; migration happens automatically on the first

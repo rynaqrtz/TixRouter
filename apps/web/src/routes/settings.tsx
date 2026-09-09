@@ -54,6 +54,12 @@ interface ServerFeatureFlags {
     cascade_verifier_model: string;
     cascade_min_score: string;
     notify_webhook_url: string;
+    budget_alerts_enabled: boolean;
+    cache_mode: string;
+    cache_ttl_seconds: string;
+    notify_telegram_chat_id: string;
+    notify_telegram_bot_token: string;
+    notify_events: string;
 }
 
 function ServerFeaturesCard() {
@@ -79,7 +85,13 @@ function ServerFeaturesCard() {
         cascade_enabled: data["cascade_enabled"] === "true",
         cascade_verifier_model: data["cascade_verifier_model"] ?? "",
         cascade_min_score: data["cascade_min_score"] ?? "0.7",
-        notify_webhook_url: data["notify_webhook_url"] ?? ""
+        notify_webhook_url: data["notify_webhook_url"] ?? "",
+        budget_alerts_enabled: data["budget_alerts_enabled"] !== "false",
+        cache_mode: data["cache_mode"] === "fuzzy" ? "fuzzy" : "exact",
+        cache_ttl_seconds: data["cache_ttl_seconds"] ?? "60",
+        notify_telegram_chat_id: data["notify_telegram_chat_id"] ?? "",
+        notify_telegram_bot_token: data["notify_telegram_bot_token"] ?? "",
+        notify_events: data["notify_events"] ?? ""
     };
 
     const ToggleRow = (
@@ -222,6 +234,116 @@ function ServerFeaturesCard() {
                     }}
                 />
             </div>
+            <div className="flex flex-col gap-2.5 p-3.5 pt-0 border-t border-border/60">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <label className="text-[11px] font-semibold text-muted-foreground">
+                        Telegram chat ID (alerts via bot)
+                    </label>
+                    <Input
+                        type="text"
+                        placeholder="e.g. 123456789"
+                        defaultValue={flags.notify_telegram_chat_id}
+                        className="w-full sm:w-64 h-8 text-xs font-mono"
+                        onBlur={(e) => {
+                            const value = e.target.value.trim();
+                            if (value !== flags.notify_telegram_chat_id) {
+                                mutation.mutate({ notify_telegram_chat_id: value });
+                                toast.success("Telegram chat saved");
+                            }
+                        }}
+                    />
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <label className="text-[11px] font-semibold text-muted-foreground">
+                        Telegram bot token
+                    </label>
+                    <Input
+                        type="password"
+                        placeholder="123456:ABC-DEF..."
+                        defaultValue={flags.notify_telegram_bot_token}
+                        className="w-full sm:w-64 h-8 text-xs font-mono"
+                        onBlur={(e) => {
+                            const value = e.target.value.trim();
+                            if (value !== flags.notify_telegram_bot_token) {
+                                mutation.mutate({ notify_telegram_bot_token: value });
+                                toast.success("Telegram bot token saved");
+                            }
+                        }}
+                    />
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <label className="text-[11px] font-semibold text-muted-foreground">
+                        Alert events (comma-separated, empty = all)
+                    </label>
+                    <Input
+                        type="text"
+                        placeholder="provider_failure, budget_credit, budget_quota"
+                        defaultValue={flags.notify_events}
+                        className="w-full sm:w-64 h-8 text-xs font-mono"
+                        onBlur={(e) => {
+                            const value = e.target.value.trim();
+                            if (value !== flags.notify_events) {
+                                mutation.mutate({ notify_events: value });
+                                toast.success("Alert filter saved");
+                            }
+                        }}
+                    />
+                </div>
+            </div>
+            <div className="flex items-center justify-between gap-4 p-3.5 border-t border-border/60">
+                <div className="space-y-0.5">
+                    <label className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                        <Webhook className="size-3.5 text-muted-foreground" />
+                        <span>Budget Alerts</span>
+                    </label>
+                    <p className="text-[11px] text-muted-foreground">
+                        Notify when a virtual key reaches its credit limit or token quota.
+                    </p>
+                </div>
+                <Switch
+                    checked={flags.budget_alerts_enabled}
+                    disabled={mutation.isPending}
+                    onCheckedChange={(val) => mutation.mutate({ budget_alerts_enabled: String(val) })}
+                />
+            </div>
+            {flags.cache_enabled && (
+                <div className="flex flex-col gap-2.5 p-3.5 pt-0 border-t border-border/60">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <label className="text-[11px] font-semibold text-muted-foreground">
+                            Cache matching
+                        </label>
+                        <select
+                            value={flags.cache_mode}
+                            onChange={(e) =>
+                                mutation.mutate({ cache_mode: e.target.value })
+                            }
+                            className="w-full sm:w-40 h-8 rounded-md border border-border bg-background px-2 text-xs font-mono"
+                        >
+                            <option value="exact">Exact</option>
+                            <option value="fuzzy">Fuzzy (normalized)</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <label className="text-[11px] font-semibold text-muted-foreground">
+                            Cache TTL (seconds)
+                        </label>
+                        <Input
+                            type="number"
+                            min={5}
+                            max={86400}
+                            defaultValue={flags.cache_ttl_seconds}
+                            className="w-full sm:w-32 h-8 text-xs font-mono"
+                            onBlur={(e) => {
+                                const value = e.target.value.trim();
+                                if (value !== "" && value !== flags.cache_ttl_seconds) {
+                                    mutation.mutate({ cache_ttl_seconds: value });
+                                    toast.success("Cache TTL saved");
+                                }
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

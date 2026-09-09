@@ -95,11 +95,39 @@ export function logRequestDB(entry: Omit<RequestLogEntry, "id" | "createdAt">): 
         CreatedAt
     );
 
-    return {
+    const result: RequestLogEntry = {
         id: Id,
         ...entry,
         createdAt: CreatedAt
     };
+    emitLogEvent(result);
+    return result;
+}
+
+export interface LogEvent {
+    type: "request.completed";
+    log: RequestLogEntry;
+}
+
+type LogEventSink = (event: LogEvent) => void;
+
+const logSubscribers = new Set<LogEventSink>();
+
+export function SubscribeLogEvents(sink: LogEventSink): () => void {
+    logSubscribers.add(sink);
+    return () => {
+        logSubscribers.delete(sink);
+    };
+}
+
+function emitLogEvent(entry: RequestLogEntry): void {
+    for (const sink of logSubscribers) {
+        try {
+            sink({ type: "request.completed", log: entry });
+        } catch {
+            logSubscribers.delete(sink);
+        }
+    }
 }
 
 export function getRecentLogsDB(limit = 50): RequestLogEntry[] {

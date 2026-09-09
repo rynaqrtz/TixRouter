@@ -15,6 +15,7 @@ import { ProvidersRouter } from "@/routes/v1/providers.js";
 import { QuotaRouter } from "@/routes/v1/quota.js";
 import { SettingsRouter } from "@/routes/v1/settings.js";
 import { TunnelRouter } from "@/routes/v1/tunnel.js";
+import { EventsRouter } from "@/routes/v1/events.js";
 import { CreateCorsMiddleware, ParseAllowedOrigins } from "@/middleware/Cors.js";
 import { CreateCsrfOriginGuard } from "@/middleware/CsrfOrigin.js";
 import { CreateBodyLimitMiddleware } from "@/middleware/BodyLimit.js";
@@ -23,6 +24,8 @@ import { resolveWebDistPath } from "@/services/webDist.js";
 import { warmModelRegistry } from "@/services/registry.js";
 import { bootstrapAdminAccountFromEnv } from "@/services/adminAuth.js";
 import { autostartTunnelIfEnabled } from "@/services/cloudflareTunnel.js";
+import { notifyBudgetThreshold } from "@/services/notify.js";
+import { setBudgetAlertSink } from "@tixrouter/db";
 import { adminAuthStore } from "@tixrouter/db";
 
 import { HTTPException } from "hono/http-exception";
@@ -54,6 +57,8 @@ app.use("/v1/*", CreateBodyLimitMiddleware());
 // Bootstrap the admin account only when TIXROUTER_ADMIN_PASSWORD is set.
 // Otherwise first-run setup happens through the dashboard.
 bootstrapAdminAccountFromEnv(adminAuthStore);
+
+setBudgetAlertSink((apiKeyId, kind) => void notifyBudgetThreshold(apiKeyId, kind));
 
 // Re-launch the Cloudflare Tunnel if it was left running when the server last stopped.
 autostartTunnelIfEnabled();
@@ -131,6 +136,9 @@ app.route("/v1", SettingsRouter);
 
 // Cloudflare Tunnel management (admin-only; guard lives inside TunnelRouter)
 app.route("/v1", TunnelRouter);
+
+// Live event stream (admin-only; guard lives inside EventsRouter)
+app.route("/v1", EventsRouter);
 
 // Mount /v1/v1 compatibility routes for SDKs that append /v1 to a baseURL containing /v1
 app.route("/v1/v1", MessagesRouter);

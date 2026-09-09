@@ -6,6 +6,7 @@ import {
     getAPIKeyByKeyDB,
     getAcceptAnyBearerDB,
     getRequireApiKeyDB,
+    ConsumeAPIKeyRPMDB,
     type AdminAuthStore
 } from "@tixrouter/db";
 import { Err } from "@/utils/response.js";
@@ -98,6 +99,20 @@ export function CreateApiKeyAuth(Options: ApiKeyAuthOptions = {}) {
                         {
                             type: "insufficient_quota",
                             code: "quota_exceeded"
+                        }
+                    );
+                }
+
+                const Rate = ConsumeAPIKeyRPMDB(ApiKeyRow.id, ApiKeyRow.rate_limit);
+                if (!Rate.allowed) {
+                    c.header("Retry-After", String(Math.max(1, Rate.retryAfterSec)));
+                    return Err(
+                        c,
+                        `Rate limit exceeded. This key allows ${ApiKeyRow.rate_limit} requests per minute.`,
+                        429,
+                        {
+                            type: "rate_limit_error",
+                            code: "rate_limit_exceeded"
                         }
                     );
                 }

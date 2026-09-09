@@ -1,7 +1,7 @@
 import type { ModelObject } from "@tixrouter/types";
 import { getAllCustomModelsDB, getAllFallbackRulesDB } from "@tixrouter/db";
 import { providerAlias, providerBaseId } from "@tixrouter/constants";
-import { getModelLimits } from "@tixrouter/pricing";
+import { getModelLimits, getModelPricingForList } from "@tixrouter/pricing";
 import { registry } from "@/services/registry.js";
 
 export class ModelsLogic {
@@ -10,7 +10,10 @@ export class ModelsLogic {
         ForceRefresh = false
     ): Promise<ModelObject[]> {
         const Models = await registry.listAllModels(Provider, ForceRefresh);
-        const Enriched = Models.map((M) => ({ ...M, ...getModelLimits(M.id) }));
+        const Enriched = Models.map((M) => {
+            const pricing = getModelPricingForList(M.id);
+            return { ...M, ...getModelLimits(M.id), ...(pricing ? { pricing } : {}) };
+        });
         return this.MergeComboModels(this.MergeCustomModels(Enriched, Provider));
     }
 

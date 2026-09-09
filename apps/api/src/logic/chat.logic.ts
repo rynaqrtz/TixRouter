@@ -8,6 +8,7 @@ import {
     GetOutcomeFeedbackEnabled,
     markLogRetriedDB,
     ModelOutcomeStatsDB,
+    NotifyBudgetThresholds,
     ReorderCandidatesByOutcome
 } from "@tixrouter/db";
 import { applyTokenSaver, estimateCostForUsage, extractUsageBreakdown } from "@tixrouter/translator";
@@ -344,6 +345,7 @@ export class ChatLogic {
                     apiKeyId,
                     promptHash
                 });
+                NotifyBudgetThresholds(apiKeyId);
 
                 if (meta) {
                     meta.model = currentModel;
@@ -397,6 +399,8 @@ export class ChatLogic {
             depth === 0 ? applyTokenSaver(body, getTokenSaverSettingsDB(), maxInputTokens).request : body;
         const originalModel = effectiveBody.model;
         const promptHash = PromptHash(effectiveBody);
+        const retriedLogId = apiKeyId ? FindRecentFailureDB(apiKeyId, promptHash, RETRY_WINDOW_MS) : null;
+        if (retriedLogId) markLogRetriedDB(retriedLogId);
         const candidates = ResolveCandidates(originalModel);
 
         let lastError: Error | ErrorWithStatus | string | null = null;
@@ -560,6 +564,7 @@ export class ChatLogic {
                     apiKeyId,
                     promptHash
                 });
+                NotifyBudgetThresholds(apiKeyId);
 
                 MaybeRunShadowTrial(
                     effectiveBody,

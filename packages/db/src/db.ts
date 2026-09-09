@@ -160,7 +160,23 @@ export function initDatabase(): void {
     ensureColumns("api_keys", [
         { name: "allowed_models", definition: "allowed_models TEXT" },
         { name: "credit_limit", definition: "credit_limit REAL DEFAULT 0" },
-        { name: "usage_cost", definition: "usage_cost REAL DEFAULT 0" }
+        { name: "usage_cost", definition: "usage_cost REAL DEFAULT 0" },
+        {
+            name: "rate_window_start",
+            definition: "rate_window_start INTEGER NOT NULL DEFAULT 0"
+        },
+        {
+            name: "rate_window_count",
+            definition: "rate_window_count INTEGER NOT NULL DEFAULT 0"
+        },
+        {
+            name: "credit_alerted",
+            definition: "credit_alerted INTEGER NOT NULL DEFAULT 0"
+        },
+        {
+            name: "quota_alerted",
+            definition: "quota_alerted INTEGER NOT NULL DEFAULT 0"
+        }
     ]);
 
     // 3. Table for Request Logs & Token Analytics
